@@ -8,7 +8,7 @@ x-topic-distiller/
 ├── scripts/
 │   └── read_session.py          读 Claude Code JSONL，默认 24h，只读对话文字、不读 tool 结果（唯一的本地确定性脚本）
 └── references/
-    └── x_handle_map.md          分享型 in-session 实体 → X handle 静态表（静态 vs 动态查询待定）
+    └── x_handle_map.md          分享型 in-session 实体 → X handle 静态表（高频实体走表，长尾走 agent-reach 兜底）
 ```
 
 **只有 `read_session.py` 是脚本**——它是本地数据变换（解析/过滤 JSONL）。hotspot 取数、反思型 @ 搜索都是**调外部工具**（last30days / agent-reach），属委托，写进 SKILL.md 指令即可，不落脚本。

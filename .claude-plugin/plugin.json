@@ -1,0 +1,13 @@
+{
+  "name": "post-topic-generation",
+  "displayName": "Post Topic Generation",
+  "version": "0.1.0",
+  "description": "从一段时间的 Claude Code 对话 session 中沉淀出 X/Twitter 选题，并结合当前热点。",
+  "author": {
+    "name": "tigerless-labs"
+  },
+  "homepage": "https://github.com/tigerless-labs/post-topic-generation",
+  "repository": "https://github.com/tigerless-labs/post-topic-generation",
+  "keywords": ["x", "twitter", "content", "topic", "distill", "claude-code"],
+  "skills": "./skills/"
+}
