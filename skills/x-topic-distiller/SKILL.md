@@ -28,16 +28,18 @@ description: >
 
 **软增强**：两个都没装，就**跳过这步、照常往下走**，并在最后**提示用户**："装 last30days 或 agent-reach 可让选题结合当前热点"。别因为没热点就不出选题。
 
-### 2. 读 session
+### 2. 读对话（用脚本，过滤 tool 结果）
+
+用脚本读最近的对话——**它的关键价值是剥掉 tool 结果**、只留人-AI 对话文字，省 token（直接看上下文的话 tool 结果已占着 token，省不掉）：
 
 ```bash
 python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py"            # 默认最近 24h
 python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --hours 72 # 用户要其他范围时
 ```
 
-脚本只读**人-AI 对话文字**、**不含 tool 结果**（省 token）。仅适配 Claude Code（读其 JSONL 记录）。拿到浓缩后的对话文本用于提炼。
+仅适配 Claude Code（读 `~/.claude/projects/<cwd映射>/*.jsonl`）。
 
-> ⚠️ Claude Code 的 JSONL 格式是内部的、版本间可能变。脚本是防御式 best-effort；若某次读取明显不对，退回让用户 `/export` 导出对话再喂进来。
+> ⚠️ CC 的 JSONL 格式是内部的、版本间可能变。若脚本读出来明显不对（报错 / 缺字段 / 混入 tool 结果），**你就直接改这个脚本适配新格式**——它很短：读上述目录的 jsonl，按 role 取 user/assistant 的 text，跳过 tool_use/tool_result 块，按 timestamp 过滤时间窗。改完再跑。
 
 ### 3. 提炼（合并三来源）
 

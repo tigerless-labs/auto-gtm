@@ -47,3 +47,4 @@ append only, never rewrite old lines.
 - 2026-07-15 · output/file-structure + topic-generator · update · x_handle_map 定为"静态表+agent-reach兜底"(清待定) · 人类拍板
 - 2026-07-15 · (实现) skills/x-topic-distiller · create · 设计 → 真 skill(SKILL.md+read_session.py+x_handle_map.md) · 按 output 实现，打包成 CC 插件(.claude-plugin/plugin.json+marketplace.json)+README
 - 2026-07-15 · (验证) read_session.py · verify · 实测本会话 · 工具结果零泄漏(WebSearch/浏览器=0)，加 isSidechain 过滤去子agent噪声；注意 CC 的 JSONL 格式官方声明不稳定，脚本 best-effort
+- 2026-07-15 · ideas/session-read-range-timewindow + output/modules/session-reader + SKILL.md · update · 短暂改"agent直接读上下文"后按人类纠正改回"脚本为主" · 脚本关键价值=过滤tool结果省token；格式变了让AI自己改脚本(而非放弃脚本/走export)
