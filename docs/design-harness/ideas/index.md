@@ -13,3 +13,9 @@
 
 ## trigger: when to run
 - [trigger timing: human manual trigger](trigger-manual.md) — no automatic trigger; deliberately the opposite of content-collector's proactive trigger
+
+## post-confirm: after the human picks a topic
+- [learn the tone from hot posts and comments after topic confirmation](tone-learning-after-confirm.md) — only for the confirmed topic; agent-reach/last30days, soft-enhance; outputs tone notes + exemplars, still no body writing
+
+## downstream-publish: after the body exists (out of this skill's scope)
+- [auto-publish Markdown posts to X](auto-publish-markdown-to-x.md) — downstream extension of the chain; x-article-publisher-skill proves it works for X Articles; posts/threads + build-vs-adopt open

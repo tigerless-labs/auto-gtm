@@ -9,7 +9,7 @@ description: >
 
 # x-topic-distiller — distill X topics from a conversation session
 
-Turn a window of recent AI conversation, together with current hotspots, into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation, @-mention its author) and **reflection-type** (an original reflection/insight; @-mention a relevant account when one exists).
+Turn a window of recent AI conversation, together with current hotspots, into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation) and **reflection-type** (an original reflection/insight). Resolving the @ account, learning the tone, and drafting the post all belong to the downstream `x-content-generator` skill.
 
 ## When to trigger
 
@@ -31,16 +31,19 @@ Call an external tool for recent trends, one of:
 
 ### 2. Read the conversation (via script, filtering out tool results)
 
+**Before reading, ask the user to choose the scope** (e.g. via AskUserQuestion): **current project only** or **all projects**? Don't assume — the user decides per run. If they already stated the scope in their request (e.g. "from all my recent conversations"), skip the question and use what they said.
+
 Use the script matching the **host agent you are running in** — **its key value is stripping out tool results**, keeping only human-AI conversation text, to save tokens (reading context directly can't save this: tool results are already occupying tokens there).
 
 **In Claude Code** (`${CLAUDE_SKILL_DIR}` is set by Claude Code):
 
 ```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py"            # default: last 24h
-python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --hours 72 # when the user wants another range
+python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py"                 # default: last 24h, current project only
+python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --hours 72      # when the user wants another range
+python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --all-projects  # sessions from ALL projects (each message labeled @project)
 ```
 
-Reads `~/.claude/projects/<cwd-mapping>/*.jsonl` (per-project directories).
+Reads `~/.claude/projects/<cwd-mapping>/*.jsonl` (per-project directories) by default; `--all-projects` scans every project directory under `~/.claude/projects/` instead. Use it when the user wants topics from all their recent conversations, not just this repo's.
 
 **In Codex** (no env var — run the script via its path relative to this SKILL.md's directory, which you know from having read this file):
 
@@ -65,16 +68,16 @@ Distill from hotspots + session:
 
 **Not every conversation yields a postable topic.** If there's no real substance, **say plainly "this conversation has no topic worth posting" and stop** — don't force one.
 
-### 5. Generate X topics + @
+### 5. Generate X topics
 
-For each topic:
-- **Share-type** → @ the in-session entity: first look up [`references/x_handle_map.md`](references/x_handle_map.md) for the handle; if not found, use `agent-reach` to search X as a fallback; if still not found, skip the @.
-- **Reflection-type** → **after the topic is set**, use `agent-reach` to search X for same-theme accounts/posts to @; if `agent-reach` isn't installed, **prompt the user to install it** and give the topic without an @.
+For each topic, label the kind:
+- **Share-type** → attach the in-session entity (tool/person/product, raw name) as the candidate @ target — don't resolve the handle here.
+- **Reflection-type** → no @ target yet; searching one is downstream work.
 
 ## Output
 
-Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + suggested @ account (or mark "to-search / none") + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
+Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + candidate entity to @ (share-type only, unresolved) + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
 
 ## Boundary
 
-Only produces **topics**. Does not write the body, the title, formatting, or publish — those go to other tools/people.
+Only produces **topics**. Once the user confirms one, resolving the @, learning the tone, and drafting the post go to the **`x-content-generator`** skill; publishing goes to other tools/people.

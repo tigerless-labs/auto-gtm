@@ -1,0 +1,18 @@
+{
+  "name": "post-topic-generation",
+  "version": "0.1.0",
+  "description": "Distill X/Twitter topics from a window of recent AI coding-agent conversation (Claude Code / Codex), combined with current hotspots.",
+  "author": {
+    "name": "tigerless-labs"
+  },
+  "homepage": "https://github.com/tigerless-labs/post-topic-generation",
+  "repository": "https://github.com/tigerless-labs/post-topic-generation",
+  "license": "MIT",
+  "keywords": ["x", "twitter", "content", "topic", "distill", "codex", "claude-code"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Post Topic Generation",
+    "shortDescription": "Distill X topics from recent agent conversations",
+    "category": "Productivity"
+  }
+}

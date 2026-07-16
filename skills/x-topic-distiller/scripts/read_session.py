@@ -110,6 +110,8 @@ def main():
     ap = argparse.ArgumentParser(description="Read recent Claude Code conversation text (skipping tool results)")
     ap.add_argument("--hours", type=float, default=24, help="How many hours to look back (default 24)")
     ap.add_argument("--cwd", default=os.getcwd(), help="Target project working directory (default: current)")
+    ap.add_argument("--all-projects", action="store_true",
+                    help="Read sessions from ALL Claude Code projects, not just the one for --cwd")
     ap.add_argument("--projects-root", default=os.path.expanduser("~/.claude/projects"),
                     help="Claude Code projects root directory")
     args = ap.parse_args()
@@ -117,21 +119,44 @@ def main():
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(hours=args.hours)
 
-    proj_dir = os.path.join(args.projects_root, project_dir_for_cwd(os.path.abspath(args.cwd)))
-    if not os.path.isdir(proj_dir):
-        print(f"[read_session] no session directory for this project: {proj_dir}\n"
-              f"(this project has no Claude Code conversation yet, or the path-mapping rule changed)",
-              file=sys.stderr)
-        sys.exit(2)
-
-    files = [os.path.join(proj_dir, f) for f in os.listdir(proj_dir) if f.endswith(".jsonl")]
-    if not files:
-        print(f"[read_session] no .jsonl transcripts under {proj_dir}", file=sys.stderr)
-        sys.exit(2)
+    if args.all_projects:
+        if not os.path.isdir(args.projects_root):
+            print(f"[read_session] projects root not found: {args.projects_root}", file=sys.stderr)
+            sys.exit(2)
+        proj_dirs = sorted(
+            os.path.join(args.projects_root, d)
+            for d in os.listdir(args.projects_root)
+            if os.path.isdir(os.path.join(args.projects_root, d))
+        )
+    else:
+        proj_dir = os.path.join(args.projects_root, project_dir_for_cwd(os.path.abspath(args.cwd)))
+        if not os.path.isdir(proj_dir):
+            print(f"[read_session] no session directory for this project: {proj_dir}\n"
+                  f"(this project has no Claude Code conversation yet, or the path-mapping rule changed)",
+                  file=sys.stderr)
+            sys.exit(2)
+        proj_dirs = [proj_dir]
 
     rows = []
-    for path in files:
-        rows.extend(read_file(path, cutoff, fallback_ok=True))
+    seen_files = 0
+    for proj_dir in proj_dirs:
+        # In all-projects mode, label each row with its project (mangled dir name) for attribution
+        label = os.path.basename(proj_dir).lstrip("-") if args.all_projects else ""
+        try:
+            names = os.listdir(proj_dir)
+        except OSError:
+            continue
+        for name in names:
+            if not name.endswith(".jsonl"):
+                continue
+            seen_files += 1
+            for ts, role, text in read_file(os.path.join(proj_dir, name), cutoff, fallback_ok=True):
+                rows.append((ts, role, text, label))
+
+    if seen_files == 0:
+        where = args.projects_root if args.all_projects else proj_dirs[0]
+        print(f"[read_session] no .jsonl transcripts under {where}", file=sys.stderr)
+        sys.exit(2)
 
     # Timestamped rows first, sorted by time; rows without timestamps (kept via mtime) last
     rows.sort(key=lambda r: (r[0] is None, r[0] or now))
@@ -140,9 +165,10 @@ def main():
         print(f"[read_session] no usable conversation text in the last {args.hours}h", file=sys.stderr)
         sys.exit(2)
 
-    for ts, role, text in rows:
+    for ts, role, text, label in rows:
         stamp = ts.astimezone().strftime("%Y-%m-%d %H:%M") if ts else "??"
-        print(f"\n[{stamp} {role}]\n{text}")
+        head = f"[{stamp} {role} @{label}]" if label else f"[{stamp} {role}]"
+        print(f"\n{head}\n{text}")
 
 
 if __name__ == "__main__":

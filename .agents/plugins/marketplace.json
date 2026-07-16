@@ -1,0 +1,18 @@
+{
+  "name": "tigerless-labs",
+  "interface": {
+    "displayName": "tigerless-labs plugins"
+  },
+  "plugins": [
+    {
+      "name": "post-topic-generation",
+      "source": "./",
+      "description": "Distill X topics from a conversation session (includes the x-topic-distiller skill)",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -51,3 +51,15 @@ append only, never rewrite old lines.
 - 2026-07-16 · (repo) all files · i18n · Chinese → English across skill + design workspace (17 docs via subagent, skill/README/manifests by main); fixed 2 stale index/title one-liners · public repo, all-English
 - 2026-07-16 · (repo) canvas.html + docs/canvas-preview.png · add · gitignored → committed; canvas embedded in README · human asked to ship canvas in git + show in README
 - 2026-07-16 · output/system → output/0-system (rename) + inbound links (index, target) · sort · builder orders output panels by sorted(rglob) path; prefix makes system sort first · put system node first in output world without editing the shared builder
+- 2026-07-16 · ideas/tone-learning-after-confirm · create · ∅ → after the human confirms a topic, learn the tone from hot posts+comments (agent-reach/last30days, soft-enhance; tone notes+exemplars, no body writing) · transcribe human judgment
+- 2026-07-16 · output/modules/tone-learner + output/0-system + output/index · sync · 4 modules → 5 (tone-learner downstream of topic-generator); both diagrams gained confirm→tone-learn stage · with idea
+- 2026-07-16 · (implementation) skills/x-topic-distiller/SKILL.md · update · +step 6 (tone learning after confirmation), repo+installed cache · with idea
+- 2026-07-16 · (implementation) read_session.py + SKILL.md · update · +--all-projects (scan all CC projects, @project labels) + ask-user-scope before reading · human asked for all-projects reading and per-run scope choice
+- 2026-07-16 · sources/skills/x-article-publisher · create · ∅ → wshuyi/x-article-publisher-skill (Markdown→X Articles draft, browser automation, draft-only, 834⭐), new tag downstream-publish · human asked to record it
+- 2026-07-16 · ideas/auto-publish-markdown-to-x · create · ∅ → auto-publish Markdown posts to X as downstream chain extension (out of scope; Articles vs posts + build-vs-adopt open) · transcribe human's new idea
+- 2026-07-16 · sources/index + ideas/index · update · +downstream-publish groups · projection synced with the cards
+- 2026-07-16 · output/0-system.md · update · one skill skeleton → two skills (x-topic-distiller: trigger→sources→gate→topics; x-content-generator: confirmed topic→@→tone→draft), separate flow+architecture diagrams · human ordered @-finding + tone-learning split into a content-generation skill, output edited directly
+- 2026-07-16 · output/modules · update · topic-generator narrowed (@ left unresolved); tone-learner reassigned to skill 2; ∅ → at-finder, content-writer · same split
+- 2026-07-16 · output/index + file-structure · update · re-derived for two skills (x_handle_map → x-content-generator/references, +read_codex_session.py) · projection of the split
+- 2026-07-16 · (implementation) skills/ · update · x-topic-distiller steps 5b+6 → new skills/x-content-generator (@ + tone + 1-2 drafts), x_handle_map moved, plugin.json description updated · with the split
+- 2026-07-16 · output/modules (topic-generator, at-finder, tone-learner) · update · downstream links → plain text (forward-only reference rule; validator caught cycles) · fix so the canvas can build

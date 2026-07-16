@@ -16,3 +16,6 @@
 ## external-signal: supplements topics with external trending/data (external-validation source for topics, not extracted from the conversation)
 - [Agent-Reach](skills/agent-reach.md) — 16-platform general data-fetching base, breadth+raw material, strong on domestic platforms
 - [last30days](skills/last30days.md) — 8-source recent-sentiment research, depth+finished product, built-in 30-day window+engagement
+
+## downstream-publish: does the "publish" half after the body exists (out of this skill's scope, adjacent link in the chain)
+- [x-article-publisher-skill](skills/x-article-publisher.md) — one-command Markdown → X Articles draft via browser automation, draft-only (834⭐)
