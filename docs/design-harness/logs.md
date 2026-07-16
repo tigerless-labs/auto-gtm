@@ -63,3 +63,11 @@ append only, never rewrite old lines.
 - 2026-07-16 · output/index + file-structure · update · re-derived for two skills (x_handle_map → x-content-generator/references, +read_codex_session.py) · projection of the split
 - 2026-07-16 · (implementation) skills/ · update · x-topic-distiller steps 5b+6 → new skills/x-content-generator (@ + tone + 1-2 drafts), x_handle_map moved, plugin.json description updated · with the split
 - 2026-07-16 · output/modules (topic-generator, at-finder, tone-learner) · update · downstream links → plain text (forward-only reference rule; validator caught cycles) · fix so the canvas can build
+- 2026-07-16 · output/modules/at-finder · update · x_handle_map table + share/reflection kind-split → handle from source URL else agent-reach else skip · shipped skill dropped x_handle_map.md and the kind-split @ path
+- 2026-07-16 · output/modules/tone-learner · update · live hot-posts+comments retrieval (agent-reach/last30days) → static maintained tone-examples.md + inlined voice rules, no live retrieval · shipped skill replaced live tone retrieval with a static exemplar file (voice is stable, orthogonal to topic)
+- 2026-07-16 · output/modules/content-writer · update · "tone notes" → voice from tone-examples; +source link for shares, +"if sharp, no hot-take" · shipped thin skill merged voice+draft into one step
+- 2026-07-16 · output/0-system + output/index + output/file-structure · sync · skill-2 diagrams/map re-derived: no live retrieval, references/ = tone-examples.md only (x_handle_map removed) · projection of the thin x-content-generator
+- 2026-07-16 · canvas.html · rebuild · regenerated from markdown (26 nodes, 44 edges) · truth changed, projection rebuilt in same turn
+- 2026-07-16 · ideas/voice-from-static-exemplars · create · ∅ → voice from a maintained static exemplar file (tone-examples.md), not live per-run retrieval; conflicts with tone-learning-after-confirm on mechanism (shared after-confirm timing) · transcribe human judgment made this session
+- 2026-07-16 · ideas/index · update · +voice-from-static-exemplars under post-confirm, ⚠ pending-conflict annotation on both cards · projection of the new conflict edge
+- 2026-07-16 · canvas.html · rebuild · regenerated from markdown (idea added, red conflict edge) · truth changed, projection rebuilt same turn

@@ -1,6 +1,6 @@
 # system — two skills: topic distillation → content generation
 
-The pipeline is split into **two skills**. The interface between them is **one human-confirmed topic**: `x-topic-distiller` turns conversations + hotspots into topic drafts; after the human confirms one, `x-content-generator` turns it into content (@ + tone + draft).
+The pipeline is split into **two skills**. The interface between them is **one human-confirmed topic**: `x-topic-distiller` turns conversations + hotspots into topic drafts; after the human confirms one, `x-content-generator` turns it into content (@ + voice + draft).
 
 ## Skill 1 — x-topic-distiller (conversation → topics)
 
@@ -56,12 +56,12 @@ Runs **only for the confirmed topic**, never for every draft ([tone-learning-aft
 flowchart TD
   subgraph Human
     C["Confirm which topic to go with (from skill 1's drafts, or state a topic directly)"]
-    RD["Receive @ account + tone notes + post drafts"]
+    RD["Receive @ account + post drafts"]
   end
   subgraph Agent
-    AF["Find the @: share-type looks up x_handle_map then agent-reach; reflection-type searches X for same-theme accounts"]
-    TL["Learn the tone: fetch hot posts + comments on the theme (soft-enhance)"]
-    CW["Generate content: 1-2 post drafts from topic + @ + tone notes"]
+    AF["Find the @: use the handle from the source URL, else search X via agent-reach, else skip"]
+    TL["Voice: read static exemplars (tone-examples.md) + inlined voice rules; mimic voice not opinions"]
+    CW["Draft: 1-2 posts from topic + @ + voice; @ placed naturally + source link for shares"]
   end
   C --> AF --> TL --> CW --> RD
   click AF "modules/at-finder.md"
@@ -72,9 +72,9 @@ flowchart TD
 ```mermaid
 flowchart LR
   SKILL2["SKILL.md<br/>orchestration · manual trigger · input = one confirmed topic"]
-  AF["at-finder<br/>share-type: x_handle_map static table → agent-reach fallback; reflection-type: agent-reach X search"]
-  TL["tone-learner<br/>hot posts+comments → tone notes · prompt+external tools"]
-  CW["content-writer<br/>draft posts from topic+@+tone notes · prompt"]
+  AF["at-finder<br/>handle from source URL → agent-reach fallback → skip"]
+  TL["tone-learner<br/>static tone-examples.md + inlined voice rules · no live retrieval"]
+  CW["content-writer<br/>draft posts from topic+@+voice · prompt"]
   SKILL2 --> AF --> CW
   SKILL2 --> TL --> CW
   click AF "modules/at-finder.md"
