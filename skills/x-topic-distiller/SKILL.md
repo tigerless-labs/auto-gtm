@@ -11,6 +11,17 @@ description: >
 
 Turn a window of recent AI conversation, together with current hotspots, into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation) and **reflection-type** (an original reflection/insight). Resolving the @ account, learning the tone, and drafting the post all belong to the downstream `x-content-generator` skill.
 
+## Stance: sincere altruism
+
+Every topic must be posted **for the reader's benefit** — sharing high-signal cognition with genuine felt reflection, never self-promotion or engagement bait. The test for every candidate topic: **what does the reader walk away with?** It must be at least one of:
+
+1. **A resource/tool** they can use (with attribution to its author);
+2. **A framework** — a takeaway packaged as a portable structure ("2 types of…", "3 tiers of…");
+3. **A reframe** — a counterintuitive one-line restatement of something familiar ("Learning ≠ Education");
+4. **A lived observation elevated to insight** — a first-hand scene that leads to a broader conclusion ("A student told me X → which means Y about the industry").
+
+If a candidate gives the reader none of the four, it fails the value gate below.
+
 ## When to trigger
 
 **Manual only.** Run only when the user explicitly asks to "distill X topics from the recent conversation / think up a tweet / pull a takeaway to post on X". Never automatic, never in the background.
@@ -66,17 +77,17 @@ Distill from hotspots + session:
 
 ### 4. Value gate
 
-**Not every conversation yields a postable topic.** If there's no real substance, **say plainly "this conversation has no topic worth posting" and stop** — don't force one.
+**Not every conversation yields a postable topic.** Apply the reader-takeaway test from the Stance section: each candidate must give the reader a resource, a framework, a reframe, or a lived observation elevated to insight. If no candidate passes, **say plainly "this conversation has no topic worth posting" and stop** — don't force one.
 
 ### 5. Generate X topics
 
 For each topic, label the kind:
-- **Share-type** → attach the in-session entity (tool/person/product, raw name) as the candidate @ target — don't resolve the handle here.
-- **Reflection-type** → no @ target yet; searching one is downstream work.
+- **Share-type** → attach the in-session entity (tool/person/product, raw name) as the candidate @ target — don't resolve the handle here. The strongest share-type angle is **tool + cognition claim** — not "I used X" but "X reveals something most people haven't realized yet".
+- **Reflection-type** → no @ target yet; searching one is downstream work. The strongest reflection-type angle is **first-hand scene → broader insight** — anchor the reflection in something that actually happened in the session, then elevate.
 
 ## Output
 
-Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + candidate entity to @ (share-type only, unresolved) + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
+Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + candidate entity to @ (share-type only, unresolved) + the reader takeaway (which of the four: resource / framework / reframe / observation→insight) + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
 
 ## Boundary
 
