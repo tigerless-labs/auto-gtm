@@ -58,6 +58,8 @@ Install either tool below to ground topics in current hotspots and auto-find rel
 
 ## Design
 
-This plugin was designed with [design-harness](https://github.com/) — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/), and the interactive canvas is [`canvas.html`](canvas.html) (open it locally in a browser).
+This plugin was designed with **design-harness** — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/).
 
-![Design canvas](docs/canvas-preview.png)
+**▶ [Open the interactive canvas](https://tigerless-labs.github.io/post-topic-generation/canvas.html)** — click a card to light its neighbors, double-click for detail.
+
+[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/post-topic-generation/canvas.html)
