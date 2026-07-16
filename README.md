@@ -9,14 +9,6 @@ From your recent AI chats it distills the valuable takeaways, tools you discover
 
 Hotspots and the conversation are two independent sources — a topic can come from hotspots only, the conversation only, or the overlap of both (overlap is strongest).
 
-## Design
-
-This plugin was designed with **design-harness** — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/).
-
-**▶ [Open the interactive canvas](https://tigerless-labs.github.io/auto-gtm/canvas.html)** — click a card to light its neighbors, double-click for detail.
-
-[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/auto-gtm/canvas.html)
-
 ## Quickstart
 
 ### Install
