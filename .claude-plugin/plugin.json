@@ -1,7 +1,7 @@
 {
   "name": "post-topic-generation",
   "displayName": "Post Topic Generation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Distill X/Twitter topics from a window of recent Claude Code conversation combined with current hotspots, then generate content (@ + tone + draft) for the confirmed topic.",
   "author": {
     "name": "tigerless-labs"

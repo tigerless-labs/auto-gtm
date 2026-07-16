@@ -1,6 +1,6 @@
 {
   "name": "post-topic-generation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Distill X/Twitter topics from a window of recent AI coding-agent conversation (Claude Code / Codex), combined with current hotspots.",
   "author": {
     "name": "tigerless-labs"
