@@ -43,6 +43,26 @@ mkdir -p ~/.codex/skills
 ln -s "$(pwd)/post-topic-generation/skills/x-topic-distiller" ~/.codex/skills/
 ```
 
+### Update
+
+Refresh the marketplace, then reinstall to pull the latest version.
+
+**Claude Code:**
+
+```
+/plugin marketplace update tigerless-labs
+/plugin install post-topic-generation@tigerless-labs
+```
+
+**Codex (CLI ≥ 0.144):**
+
+```
+codex plugin marketplace upgrade tigerless-labs
+codex plugin add post-topic-generation@tigerless-labs
+```
+
+Direct-clone / symlink installs just need a `git pull` in the cloned repo.
+
 ### Use
 
 Trigger it manually in Claude Code / Codex (it never runs on its own):
