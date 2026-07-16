@@ -9,6 +9,14 @@ It only does "conversation → topic": turning the valuable takeaways, tools you
 
 Hotspots and the conversation are two independent sources — a topic can come from hotspots only, the conversation only, or the overlap of both (overlap is strongest).
 
+## Design
+
+This plugin was designed with **design-harness** — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/).
+
+**▶ [Open the interactive canvas](https://tigerless-labs.github.io/post-topic-generation/canvas.html)** — click a card to light its neighbors, double-click for detail.
+
+[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/post-topic-generation/canvas.html)
+
 ## Quickstart
 
 ### Install
@@ -55,11 +63,3 @@ Install either tool below to ground topics in current hotspots and auto-find rel
 
 - `last30days` — recent-opinion aggregation (hotspots)
 - [`agent-reach`](https://github.com/Panniantong/Agent-Reach) — multi-platform retrieval / X search (finding @-targets)
-
-## Design
-
-This plugin was designed with **design-harness** — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/).
-
-**▶ [Open the interactive canvas](https://tigerless-labs.github.io/post-topic-generation/canvas.html)** — click a card to light its neighbors, double-click for detail.
-
-[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/post-topic-generation/canvas.html)
