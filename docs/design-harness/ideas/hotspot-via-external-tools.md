@@ -4,8 +4,8 @@ type: idea
 tags: [external-signal]
 ---
 
-# 热点获取走外部工具：建议用户装 last30days 或 agent-reach，skill 不自建抓取
+# Hotspot acquisition via external tools: recommend the user install last30days or agent-reach; the skill does not build its own scraping
 
-热点这一环不自建爬虫，靠现成的 external-signal 工具——[last30days](../sources/skills/last30days.md)（近期舆情成品）或 [agent-reach](../sources/skills/agent-reach.md)（多平台取数底座）。skill 只需调用，装哪个由用户定（建议装其一）。
+The hotspot step does not build its own crawler; it relies on ready-made external-signal tools — [last30days](../sources/skills/last30days.md) (a recent-sentiment finished product) or [agent-reach](../sources/skills/agent-reach.md) (a multi-platform data-fetching base). The skill only needs to call them; which one to install is up to the user (installing one is recommended).
 
-**依赖方式：软增强**——工具没装时**照常出选题**（基于 session 本身），同时**提示用户装** last30days/agent-reach 以获得热度佐证。热点是"锦上添花"，不阻塞主流程。
+**Dependency mode: soft-enhance** — when the tool is not installed, it **still produces topics** (based on the session itself) while **prompting the user to install** last30days/agent-reach to get trending evidence. The hotspot is "icing on the cake" and does not block the main flow.

@@ -4,8 +4,8 @@ type: idea
 tags: [trigger]
 ---
 
-# 触发时机：人手动触发，不自动触发
+# Trigger timing: human manual trigger, no automatic trigger
 
-该 skill 由用户**手动触发**（"帮我从最近的对话沉淀 X 选题"之类），不做后台自动/主动触发。
+This skill is **manually triggered** by the user (something like "help me distill X topics from recent conversations"); it does no background automatic/proactive triggering.
 
-这与 [content-collector-skill](../sources/skills/content-collector-skill.md) 的"渐进式披露主动触发"（发链接就自动收藏）刻意相反——沉淀选题是低频、需人工发起的动作，不适合每段对话都自动跑。
+This is deliberately the opposite of [content-collector-skill](../sources/skills/content-collector-skill.md)'s "progressive-disclosure proactive trigger" (sending a link auto-bookmarks it) — distilling topics is a low-frequency action that needs to be human-initiated, and is not suited to running automatically on every conversation.

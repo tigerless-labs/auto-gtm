@@ -2,7 +2,7 @@
   "name": "post-topic-generation",
   "displayName": "Post Topic Generation",
   "version": "0.1.0",
-  "description": "从一段时间的 Claude Code 对话 session 中沉淀出 X/Twitter 选题，并结合当前热点。",
+  "description": "Distill X/Twitter topics from a window of recent Claude Code conversation, combined with current hotspots.",
   "author": {
     "name": "tigerless-labs"
   },

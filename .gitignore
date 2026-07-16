@@ -1,8 +1,4 @@
-# design-harness 投影（可随时重建，不提交）
-canvas.html
-docs/design-harness/canvas.html
-
-# 本地设置 & 会话内部产物
+# Local settings & session-internal artifacts
 .claude/
 
 # Python

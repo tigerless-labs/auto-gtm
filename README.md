@@ -1,40 +1,63 @@
 # post-topic-generation
 
-一个 Claude Code 插件：**从一段时间的对话 session 中沉淀出 X/Twitter 选题**，并结合当前热点。
+A Claude Code / Codex plugin that **distills X/Twitter topics from a window of recent conversation**, combined with current hotspots.
 
-只做"对话 → 选题"的提炼——把你最近和 AI 聊出来的干货、发现的工具、产生的反思，变成值得发到 X 的选题；不写正文、不发布。选题分两类：
+It only does "conversation → topic": turning the valuable takeaways, tools you discovered, and reflections from your recent AI chats into topics worth posting on X. It does not write the body or publish. Topics come in two kinds:
 
-- **分享型**：分享对话里冒出的工具/人/产品，@ 其作者。
-- **反思型**：原创反思/见解，有相关博主也 @。
+- **Share-type**: share a tool/person/product that surfaced in the conversation, @-mention its author.
+- **Reflection-type**: an original reflection/insight; @-mention a relevant account when one exists.
 
-热点与对话是两个独立来源，一条选题可以只来自热点、只来自对话、或两者重合（重合最强）。
+Hotspots and the conversation are two independent sources — a topic can come from hotspots only, the conversation only, or the overlap of both (overlap is strongest).
 
 ## Quickstart
 
-### 安装
+### Install
+
+**Claude Code:**
 
 ```
 /plugin marketplace add tigerless-labs/post-topic-generation
 /plugin install post-topic-generation@tigerless-labs
 ```
 
-### 使用
-
-在 Claude Code 里手动触发（它不会自动跑）：
+**Codex (CLI ≥ 0.144):**
 
 ```
-从最近 24 小时的对话帮我沉淀几条值得发的 X 选题
+codex plugin marketplace add tigerless-labs/post-topic-generation
+codex plugin add post-topic-generation@tigerless-labs
 ```
 
-想换时间范围：
+Older Codex versions without the `plugin add` subcommand can install the skill directly (Codex scans `~/.codex/skills`; newer versions also scan `~/.agents/skills`):
 
 ```
-从最近 3 天的对话想 X 选题
+git clone https://github.com/tigerless-labs/post-topic-generation
+mkdir -p ~/.codex/skills
+ln -s "$(pwd)/post-topic-generation/skills/x-topic-distiller" ~/.codex/skills/
 ```
 
-### 可选：接热点 / 找 @ 对象（软增强）
+### Use
 
-装了下面任一工具，选题能结合当前热点、并自动找相关博主 @；**没装也能出选题**，只是不带热度佐证。
+Trigger it manually in Claude Code / Codex (it never runs on its own):
 
-- `last30days` — 近期舆情聚合（热点）
-- [`agent-reach`](https://github.com/Panniantong/Agent-Reach) — 多平台取数 / X 精准检索（找 @ 对象）
+```
+Distill a few X-worthy topics from the last 24 hours of our conversation
+```
+
+Change the time range:
+
+```
+Come up with X topics from the last 3 days of conversation
+```
+
+### Optional: hotspots / finding @-targets (soft-enhance)
+
+Install either tool below to ground topics in current hotspots and auto-find relevant accounts to @. **Topics still work without them** — you just don't get the hotspot grounding.
+
+- `last30days` — recent-opinion aggregation (hotspots)
+- [`agent-reach`](https://github.com/Panniantong/Agent-Reach) — multi-platform retrieval / X search (finding @-targets)
+
+## Design
+
+This plugin was designed with [design-harness](https://github.com/) — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/), and the interactive canvas is [`canvas.html`](canvas.html) (open it locally in a browser).
+
+![Design canvas](docs/canvas-preview.png)

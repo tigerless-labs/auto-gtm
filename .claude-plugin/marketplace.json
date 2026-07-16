@@ -3,12 +3,12 @@
   "owner": {
     "name": "tigerless-labs"
   },
-  "description": "tigerless-labs 的 Claude Code 插件集",
+  "description": "Claude Code plugins by tigerless-labs",
   "plugins": [
     {
       "name": "post-topic-generation",
       "source": "./",
-      "description": "从对话 session 沉淀 X 选题（含 x-topic-distiller skill）"
+      "description": "Distill X topics from a conversation session (includes the x-topic-distiller skill)"
     }
   ]
 }

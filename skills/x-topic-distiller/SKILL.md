@@ -1,67 +1,80 @@
 ---
 name: x-topic-distiller
 description: >
-  从一段时间的 Claude Code 对话 session 中沉淀出 X/Twitter 的 post topic（选题），并结合当前热点。
-  **由用户手动触发**——当用户说"从最近的对话帮我想 X 选题 / 沉淀推特选题 / 提炼一条值得发的 X"之类时使用。
-  只做"对话 → 选题"的提炼，不写正文/标题/发布。
+  Distill X/Twitter post topics from a window of recent AI coding-agent conversation (Claude Code or Codex), combined with current hotspots.
+  **Manually triggered** — use when the user says things like "help me come up with X topics from our recent chat /
+  distill a tweet idea / pull one X-worthy takeaway from this conversation".
+  Only does "conversation → topic" distillation; does not write the body/title or publish.
 ---
 
-# x-topic-distiller — 从对话 session 沉淀 X 选题
+# x-topic-distiller — distill X topics from a conversation session
 
-把最近一段时间和 AI 的对话，连同当前热点，提炼成值得发到 X 的选题。选题分两类：**分享型**（分享对话里冒出的工具/人/产品，@ 其作者）和**反思型**（原创反思/见解，有相关博主也 @）。
+Turn a window of recent AI conversation, together with current hotspots, into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation, @-mention its author) and **reflection-type** (an original reflection/insight; @-mention a relevant account when one exists).
 
-## 何时触发
+## When to trigger
 
-**仅手动触发**。用户明确要"从最近对话沉淀 X 选题 / 想条推特 / 提炼干货发 X"时才跑。不自动、不后台运行。
+**Manual only.** Run only when the user explicitly asks to "distill X topics from the recent conversation / think up a tweet / pull a takeaway to post on X". Never automatic, never in the background.
 
-## 两个独立来源
+## Two independent sources
 
-热点和 session 是**独立来源**，一条选题可来自：只来自热点 / 只来自 session / 两者重合（重合最强）。不要假设谁先谁后，最后一起考量。
+Hotspots and the session are **independent sources**. A topic can come from: hotspot only / session only / the overlap of both (overlap is strongest). Don't assume any ordering between them — weigh them together at the end.
 
-## 流程
+## Flow
 
-### 1. 查热点（软增强）
+### 1. Fetch hotspots (soft-enhance)
 
-调外部工具取近期热度，二选一：
-- `last30days`（若已安装为 skill）——近期舆情聚合，最合适。
-- `agent-reach`（若已安装）——多平台取数。
+Call an external tool for recent trends, one of:
+- `last30days` (if installed as a skill) — recent-opinion aggregation, best fit.
+- `agent-reach` (if installed) — multi-platform retrieval.
 
-**软增强**：两个都没装，就**跳过这步、照常往下走**，并在最后**提示用户**："装 last30days 或 agent-reach 可让选题结合当前热点"。别因为没热点就不出选题。
+**Soft-enhance:** if neither is installed, **skip this step and continue as normal**, and at the end **prompt the user**: "Install last30days or agent-reach to ground topics in current hotspots." Don't withhold topics just because there are no hotspots.
 
-### 2. 读对话（用脚本，过滤 tool 结果）
+### 2. Read the conversation (via script, filtering out tool results)
 
-用脚本读最近的对话——**它的关键价值是剥掉 tool 结果**、只留人-AI 对话文字，省 token（直接看上下文的话 tool 结果已占着 token，省不掉）：
+Use the script matching the **host agent you are running in** — **its key value is stripping out tool results**, keeping only human-AI conversation text, to save tokens (reading context directly can't save this: tool results are already occupying tokens there).
+
+**In Claude Code** (`${CLAUDE_SKILL_DIR}` is set by Claude Code):
 
 ```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py"            # 默认最近 24h
-python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --hours 72 # 用户要其他范围时
+python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py"            # default: last 24h
+python3 "${CLAUDE_SKILL_DIR}/scripts/read_session.py" --hours 72 # when the user wants another range
 ```
 
-仅适配 Claude Code（读 `~/.claude/projects/<cwd映射>/*.jsonl`）。
+Reads `~/.claude/projects/<cwd-mapping>/*.jsonl` (per-project directories).
 
-> ⚠️ CC 的 JSONL 格式是内部的、版本间可能变。若脚本读出来明显不对（报错 / 缺字段 / 混入 tool 结果），**你就直接改这个脚本适配新格式**——它很短：读上述目录的 jsonl，按 role 取 user/assistant 的 text，跳过 tool_use/tool_result 块，按 timestamp 过滤时间窗。改完再跑。
+**In Codex** (no env var — run the script via its path relative to this SKILL.md's directory, which you know from having read this file):
 
-### 3. 提炼（合并三来源）
+```bash
+python3 <skill-dir>/scripts/read_codex_session.py                # default: last 24h, current project only
+python3 <skill-dir>/scripts/read_codex_session.py --hours 72     # another range
+python3 <skill-dir>/scripts/read_codex_session.py --all-projects # across all projects
+```
 
-从 热点 + session 里提炼：
-- **抽实体**：对话里提到的工具/产品/人 → 候选 @ 对象。
-- **抽洞察/反思**：一句能立住的结论，或一个值得说的反思。
-- 合并考量三种来源（热点only / session only / 重合）。
+Reads `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` (global, date-partitioned; the script filters to the current project by each file's `session_meta.payload.cwd`).
 
-### 4. 价值闸门
+> ⚠️ Both agents' JSONL formats are internal and may change between versions. If a script's output is clearly wrong (errors / missing fields / tool results leaking in), **just edit that script to fit the new format** — each is short and documents its parsing strategy in the header: Claude Code = take `text` of user/assistant messages by `role`, skip `tool_use`/`tool_result` blocks; Codex = prefer `event_msg` lines of type `user_message`/`agent_message`, fall back to `response_item` messages minus injected context. Filter by `timestamp` within the window, then rerun.
 
-**不是每段对话都有可发的选题**。没有真干货就**直说"这段没有值得发的选题"并停下**，不硬凑。
+### 3. Distill (merge the three sources)
 
-### 5. 生成 X 选题 + @
+Distill from hotspots + session:
+- **Entity extraction:** tools/products/people mentioned in the conversation → candidate @-targets.
+- **Insight/reflection extraction:** one takeaway that stands on its own, or one reflection worth sharing.
+- Weigh all three source combinations (hotspot only / session only / overlap).
 
-对每条选题：
-- **分享型** → @ in-session 实体：先查 [`references/x_handle_map.md`](references/x_handle_map.md) 拿 handle；查不到用 `agent-reach` 搜 X 兜底；再查不到就不 @。
-- **反思型** → **定完选题后**用 `agent-reach` 搜 X 找同主题博主/帖子来 @；`agent-reach` 没装则**提示用户装**、同时不带 @ 照常给选题。
+### 4. Value gate
 
-## 输出
+**Not every conversation yields a postable topic.** If there's no real substance, **say plainly "this conversation has no topic worth posting" and stop** — don't force one.
 
-输出格式不强制。默认每条选题给：**一句选题角度 + 类型（分享/反思）+ 建议 @ 的账号（或标注"待搜索/无"）+ 为什么值得发（1 句）**。用户要别的格式就按用户的。
+### 5. Generate X topics + @
 
-## 边界
+For each topic:
+- **Share-type** → @ the in-session entity: first look up [`references/x_handle_map.md`](references/x_handle_map.md) for the handle; if not found, use `agent-reach` to search X as a fallback; if still not found, skip the @.
+- **Reflection-type** → **after the topic is set**, use `agent-reach` to search X for same-theme accounts/posts to @; if `agent-reach` isn't installed, **prompt the user to install it** and give the topic without an @.
 
-只出**选题（topic）**。不写正文、不写标题、不排版、不发布——那些交给别的工具/人。
+## Output
+
+Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + suggested @ account (or mark "to-search / none") + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
+
+## Boundary
+
+Only produces **topics**. Does not write the body, the title, formatting, or publish — those go to other tools/people.

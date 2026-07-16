@@ -1,15 +1,15 @@
-# topic-generator — 生成 X 选题（两类内容）+ 价值闸门
+# topic-generator — generate X topics (two content types) + value gate
 
-责任：
-- 组装 X post topic，来源可为**热点only / session only / 重合**（[topic-source-independence](../../ideas/topic-source-independence.md)）
-- **两类内容 + @ 顺序**（[at-ordering](../../ideas/at-ordering.md)）：
-  - 分享型：直接 @ **in-session 实体**（distiller 已抽出）——先查 `x_handle_map` 静态表得 handle，查不到用 agent-reach 兜底或跳过
-  - 反思型：**定完选题后**用 **agent-reach 搜 X** 找同主题博主/帖子来 @（out-of-session）；**没装则提示用户装**、同时不带 @ 照常出题
-- **价值闸门**：没干货就跳过、不硬凑
-- 判断性步骤 → 走 **prompt**
+Responsibilities:
+- Assemble the X post topic, where the source can be **hotspot only / session only / overlap** ([topic-source-independence](../../ideas/topic-source-independence.md))
+- **Two content types + @ ordering** ([at-ordering](../../ideas/at-ordering.md)):
+  - Share-type: @ the **in-session entity** directly (already extracted by the distiller) — first look up the `x_handle_map` static table for the handle; if not found, fall back to agent-reach or skip
+  - Reflection-type: **after the topic is set**, use **agent-reach to search X** for bloggers/posts on the same subject to @ (out-of-session); **if not installed, prompt the user to install it** while still producing topics without the @
+- **Value gate**: if there's no substance, skip it, don't force it
+- Judgment steps → go through a **prompt**
 
-边界：
-- 只出选题（topic），不写正文/标题/发布
-- 输出格式暂不约束（不定固定 schema）
+Boundary:
+- Only produces topics, does not write body/title/publishing
+- Output format not constrained for now (no fixed schema)
 
-依据：[X 选题风格 idea](../../ideas/x-topic-style-ganhuo-at-creators.md)、上游 distiller 的产物
+Basis: [X topic style idea](../../ideas/x-topic-style-ganhuo-at-creators.md), the upstream distiller's output

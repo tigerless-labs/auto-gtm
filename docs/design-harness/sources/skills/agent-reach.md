@@ -2,16 +2,16 @@
 tags: [external-signal]
 ---
 
-# Agent-Reach — 通用互联网访问底座，16 平台原始取数（广度 + 原料）
+# Agent-Reach — general internet-access base, raw data-fetching across 16 platforms (breadth + raw material)
 
-开源 Agent Skill（约 55k⭐），给 agent（Claude Code / Cursor / OpenClaw / Windsurf）装"眼睛"：统一 CLI + MCP，包装一堆免 API-key 的爬虫/工具（exa、yt-dlp、gh、xreach、curl）。
+An open-source Agent Skill (~55k⭐) that gives an agent (Claude Code / Cursor / OpenClaw / Windsurf) "eyes": a unified CLI + MCP that wraps a bunch of API-key-free scrapers/tools (exa, yt-dlp, gh, xreach, curl).
 
-**覆盖**：16 平台——X、Reddit、YouTube、GitHub、B站、小红书、抖音、微博、公众号、小宇宙、LinkedIn、IG、V2EX、RSS、Exa 搜索、任意 URL。**国内平台覆盖是它的强项**。
+**Coverage**: 16 platforms — X, Reddit, YouTube, GitHub, Bilibili, Xiaohongshu, Douyin, Weibo, WeChat Official Accounts, Xiaoyuzhou, LinkedIn, IG, V2EX, RSS, Exa search, any URL. **Coverage of domestic platforms is its strength**.
 
-**产出**：原始内容——读帖/搜索/下字幕/看 timeline/抓页面，agent 自己组装成研究。无内置时间窗、无 engagement 聚合，是**取数原语**而非成品。
+**Output**: raw content — reading posts/searching/downloading subtitles/viewing timelines/scraping pages, with the agent assembling it into research itself. No built-in time window, no engagement aggregation; it is a **data-fetching primitive**, not a finished product.
 
-**摩擦**：分渠道配（Exa key、`gh` auth、社交平台 cookie/登录），`agent-reach doctor` 查可用性；上游 CLI 不在 PyPI，需按装机指南单独装。
+**Friction**: configured per channel (Exa key, `gh` auth, social-platform cookie/login), `agent-reach doctor` checks availability; the upstream CLIs are not on PyPI and must be installed separately per the setup guide.
 
-**对本项目的关系（external-signal）**：若选题 skill 需要**原始素材 + 国内平台覆盖**来做外部热度佐证，可挂它当取数层。与 last30days 是同类的两个选项（广度/原料 vs 成品/舆情）。注意：它补的是"选题的外部来源"，不是从对话 session 提炼选题本身。
+**Relationship to this project (external-signal)**: if the topic skill needs **raw material + domestic-platform coverage** to supply external trending evidence, it can be hooked in as the data-fetching layer. It and last30days are two options of the same kind (breadth/raw material vs. finished product/sentiment). Note: it supplements the "external source for topics," not the extraction of topics from the conversation session itself.
 
-原始来源：[github.com/Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach)
+Original source: [github.com/Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach)
