@@ -21,4 +21,4 @@ The target platform is pinned to **X/Twitter**. It only handles the "conversatio
 - input=conversation session history → [session-reader](output/modules/session-reader.md)
 - combine current hotspots → [hotspot-fetcher](output/modules/hotspot-fetcher.md)
 - output=post topic (format unconstrained) → [topic-generator](output/modules/topic-generator.md)
-- architecture=SKILL.md orchestration + script execution → [system.md](output/system.md) + [file-structure.md](output/file-structure.md)
+- architecture=SKILL.md orchestration + script execution → [system.md](output/0-system.md) + [file-structure.md](output/file-structure.md)

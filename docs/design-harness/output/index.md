@@ -2,7 +2,7 @@
 
 X topic-distillation skill design (system-design form):
 
-- [system.md](system.md) — skeleton: flowchart (human/agent swimlanes) + architecture diagram (modules)
+- [system.md](0-system.md) — skeleton: flowchart (human/agent swimlanes) + architecture diagram (modules)
 - [file-structure.md](file-structure.md) — design landed on disk: file tree + module→file mapping
 - modules/ — one file per module
   - [session-reader](modules/session-reader.md) — reads the 24h Claude Code session
