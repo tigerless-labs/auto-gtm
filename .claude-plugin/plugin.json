@@ -1,13 +1,13 @@
 {
-  "name": "post-topic-generation",
-  "displayName": "Post Topic Generation",
-  "version": "0.2.2",
-  "description": "Distill X/Twitter topics from a window of recent Claude Code conversation combined with current hotspots, then generate content (@ + tone + draft) for the confirmed topic.",
+  "name": "auto-gtm",
+  "displayName": "Auto GTM",
+  "version": "0.2.3",
+  "description": "Automate the build-in-public slice of go-to-market: distill X/Twitter angles from recent AI-coding-agent conversations (Claude Code / Codex) plus current hotspots, then draft the post (@ + voice) for the topic you confirm. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
   },
-  "homepage": "https://github.com/tigerless-labs/post-topic-generation",
-  "repository": "https://github.com/tigerless-labs/post-topic-generation",
+  "homepage": "https://github.com/tigerless-labs/auto-gtm",
+  "repository": "https://github.com/tigerless-labs/auto-gtm",
   "keywords": ["x", "twitter", "content", "topic", "distill", "claude-code"],
   "skills": "./skills/"
 }

@@ -1,8 +1,8 @@
-# post-topic-generation
+# auto-gtm
 
-A Claude Code / Codex plugin that **distills X/Twitter topics from a window of recent conversation**, combined with current hotspots.
+A Claude Code / Codex plugin that **automates the build-in-public slice of go-to-market**: it turns your recent AI-coding sessions, combined with current hotspots, into X/Twitter posts.
 
-It only does "conversation → topic": turning the valuable takeaways, tools you discovered, and reflections from your recent AI chats into topics worth posting on X. It does not write the body or publish. Topics come in two kinds:
+From your recent AI chats it distills the valuable takeaways, tools you discovered, and reflections into topics worth posting on X, then drafts the post (@ + voice) for the one you confirm. It stops at drafts — it never publishes. Topics come in two kinds:
 
 - **Share-type**: share a tool/person/product that surfaced in the conversation, @-mention its author.
 - **Reflection-type**: an original reflection/insight; @-mention a relevant account when one exists.
@@ -13,9 +13,9 @@ Hotspots and the conversation are two independent sources — a topic can come f
 
 This plugin was designed with **design-harness** — an evidence board where every design decision traces back to sources. The full reasoning (sources → ideas → output) lives under [`docs/design-harness/`](docs/design-harness/).
 
-**▶ [Open the interactive canvas](https://tigerless-labs.github.io/post-topic-generation/canvas.html)** — click a card to light its neighbors, double-click for detail.
+**▶ [Open the interactive canvas](https://tigerless-labs.github.io/auto-gtm/canvas.html)** — click a card to light its neighbors, double-click for detail.
 
-[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/post-topic-generation/canvas.html)
+[![Design canvas](docs/canvas-preview.png)](https://tigerless-labs.github.io/auto-gtm/canvas.html)
 
 ## Quickstart
 
@@ -24,23 +24,23 @@ This plugin was designed with **design-harness** — an evidence board where eve
 **Claude Code:**
 
 ```
-/plugin marketplace add tigerless-labs/post-topic-generation
-/plugin install post-topic-generation@tigerless-labs
+/plugin marketplace add tigerless-labs/auto-gtm
+/plugin install auto-gtm@tigerless-labs
 ```
 
 **Codex (CLI ≥ 0.144):**
 
 ```
-codex plugin marketplace add tigerless-labs/post-topic-generation
-codex plugin add post-topic-generation@tigerless-labs
+codex plugin marketplace add tigerless-labs/auto-gtm
+codex plugin add auto-gtm@tigerless-labs
 ```
 
 Older Codex versions without the `plugin add` subcommand can install the skill directly (Codex scans `~/.codex/skills`; newer versions also scan `~/.agents/skills`):
 
 ```
-git clone https://github.com/tigerless-labs/post-topic-generation
+git clone https://github.com/tigerless-labs/auto-gtm
 mkdir -p ~/.codex/skills
-ln -s "$(pwd)/post-topic-generation/skills/x-topic-distiller" ~/.codex/skills/
+ln -s "$(pwd)/auto-gtm/skills/x-topic-distiller" ~/.codex/skills/
 ```
 
 ### Update
@@ -51,14 +51,14 @@ Refresh the marketplace, then reinstall to pull the latest version.
 
 ```
 /plugin marketplace update tigerless-labs
-/plugin install post-topic-generation@tigerless-labs
+/plugin install auto-gtm@tigerless-labs
 ```
 
 **Codex (CLI ≥ 0.144):**
 
 ```
 codex plugin marketplace upgrade tigerless-labs
-codex plugin add post-topic-generation@tigerless-labs
+codex plugin add auto-gtm@tigerless-labs
 ```
 
 Direct-clone / symlink installs just need a `git pull` in the cloned repo.

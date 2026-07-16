@@ -6,9 +6,9 @@
   "description": "Claude Code plugins by tigerless-labs",
   "plugins": [
     {
-      "name": "post-topic-generation",
+      "name": "auto-gtm",
       "source": "./",
-      "description": "Distill X topics from a conversation session (includes the x-topic-distiller skill)"
+      "description": "Automate build-in-public GTM content from your AI-coding sessions: topic -> @ + voice -> draft"
     }
   ]
 }

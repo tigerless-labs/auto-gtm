@@ -5,9 +5,9 @@
   },
   "plugins": [
     {
-      "name": "post-topic-generation",
+      "name": "auto-gtm",
       "source": "./",
-      "description": "Distill X topics from a conversation session (includes the x-topic-distiller skill)",
+      "description": "Automate build-in-public GTM content from your AI-coding sessions: topic -> @ + voice -> draft",
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_USE"
