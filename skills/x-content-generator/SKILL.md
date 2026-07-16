@@ -24,7 +24,6 @@ Give the reader something worth their time, in a sincere voice, never engagement
 
 - Voice rules:
   - First person, conversational, short lines. "The best writing sounds like talking."
-  - Open with the concrete (a person, a scene, a number), then the point.
   - Credit sources with an @.
   - No em-dashes.
   - If the shared thing is already sharp, let it stand — don't add your own hot-take.
