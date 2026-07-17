@@ -31,6 +31,22 @@ Give the reader something worth their time, in a sincere voice, never engagement
 
 1-2 drafts, each with the source link for shares.
 
+**Present every draft inside a fenced code block** (```text), exactly as it would be pasted into X — line breaks included, no markdown formatting (no bold/headers/bullets) inside the draft. **Never format drafts as blockquotes (`>`)** — they render as uncopyable bars in chat UIs. The code block is what makes it one-click copyable; commentary about the draft goes outside the block.
+
+Example shape:
+
+````
+### Draft 1
+
+```text
+We removed the trend-fetching step from our topic skill.
+
+Your own coding sessions are the content pipeline. Chasing hotspots is the opposite of building in public.
+
+https://github.com/example/repo
+```
+````
+
 ## Boundary
 
 Starts from a confirmed topic (distillation is `x-topic-distiller`). Drafts only; does not publish.
