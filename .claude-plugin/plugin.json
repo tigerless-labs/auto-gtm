@@ -1,8 +1,8 @@
 {
   "name": "auto-gtm",
   "displayName": "Auto GTM",
-  "version": "0.2.4",
-  "description": "Automate the build-in-public slice of go-to-market: distill X/Twitter angles from recent AI-coding-agent conversations (Claude Code / Codex) plus current hotspots, then draft the post (@ + voice) for the topic you confirm. Drafts only, never publishes.",
+  "version": "0.2.5",
+  "description": "Automate the build-in-public slice of go-to-market: distill X/Twitter angles from recent AI-coding-agent conversations (Claude Code / Codex), then draft the post in your voice for the topic you confirm. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
   },

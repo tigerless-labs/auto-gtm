@@ -30,7 +30,7 @@ Few-shot voice anchor for step 2. Mimic the cadence and shape, **not the opinion
 >
 > — ~5.8k likes
 > Mimic: not "I made X" but "X reveals something most people haven't realized
-> yet." The share carries a claim about the world. Always @ the author.
+> yet." The share carries a claim about the world.
 
 ### reframe one-liner
 

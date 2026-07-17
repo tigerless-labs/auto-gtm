@@ -1,7 +1,7 @@
 ---
 name: x-topic-distiller
 description: >
-  Distill X/Twitter post topics from a window of recent AI coding-agent conversation (Claude Code or Codex), combined with current hotspots.
+  Distill X/Twitter post topics from a window of recent AI coding-agent conversation (Claude Code or Codex).
   **Manually triggered** — use when the user says things like "help me come up with X topics from our recent chat /
   distill a tweet idea / pull one X-worthy takeaway from this conversation".
   Only does "conversation → topic" distillation; does not write the body/title or publish.
@@ -9,11 +9,11 @@ description: >
 
 # x-topic-distiller — distill X topics from a conversation session
 
-Turn a window of recent AI conversation, together with current hotspots, into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation) and **reflection-type** (an original reflection/insight). Resolving the @ account, learning the tone, and drafting the post all belong to the downstream `x-content-generator` skill.
+Turn a window of recent AI conversation into topics worth posting on X. Topics come in two kinds: **share-type** (share a tool/person/product that surfaced in the conversation) and **reflection-type** (an original reflection/insight). Learning the tone and drafting the post belong to the downstream `x-content-generator` skill.
 
 ## Stance: sincere altruism
 
-Every topic must be posted **for the reader's benefit** — sharing high-signal cognition with genuine felt reflection, never self-promotion or engagement bait. The test for every candidate topic: **what does the reader walk away with?** It must be at least one of:
+Every topic must be posted **for the reader's benefit** — sharing high-signal cognition with genuine felt reflection, never engagement bait. Posting about your own repo (a version update, a milestone) is legitimate build-in-public sharing, **as long as it passes the same reader-benefit test** — the line is not "whose thing is it" but "what does the reader get". The test for every candidate topic: **what does the reader walk away with?** It must be at least one of:
 
 1. **A resource/tool** they can use (with attribution to its author);
 2. **A framework** — a takeaway packaged as a portable structure ("2 types of…", "3 tiers of…");
@@ -26,21 +26,9 @@ If a candidate gives the reader none of the four, it fails the value gate below.
 
 **Manual only.** Run only when the user explicitly asks to "distill X topics from the recent conversation / think up a tweet / pull a takeaway to post on X". Never automatic, never in the background.
 
-## Two independent sources
-
-Hotspots and the session are **independent sources**. A topic can come from: hotspot only / session only / the overlap of both (overlap is strongest). Don't assume any ordering between them — weigh them together at the end.
-
 ## Flow
 
-### 1. Fetch hotspots (soft-enhance)
-
-Call an external tool for recent trends, one of:
-- `last30days` (if installed as a skill) — recent-opinion aggregation, best fit.
-- `agent-reach` (if installed) — multi-platform retrieval.
-
-**Soft-enhance:** if neither is installed, **skip this step and continue as normal**, and at the end **prompt the user**: "Install last30days or agent-reach to ground topics in current hotspots." Don't withhold topics just because there are no hotspots.
-
-### 2. Read the conversation (via script, filtering out tool results)
+### 1. Read the conversation (via script, filtering out tool results)
 
 **Before reading, ask the user to choose the scope** (e.g. via AskUserQuestion): **current project only** or **all projects**? Don't assume — the user decides per run. If they already stated the scope in their request (e.g. "from all my recent conversations"), skip the question and use what they said.
 
@@ -68,27 +56,28 @@ Reads `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl` (global, date-partitioned; 
 
 > ⚠️ Both agents' JSONL formats are internal and may change between versions. If a script's output is clearly wrong (errors / missing fields / tool results leaking in), **just edit that script to fit the new format** — each is short and documents its parsing strategy in the header: Claude Code = take `text` of user/assistant messages by `role`, skip `tool_use`/`tool_result` blocks; Codex = prefer `event_msg` lines of type `user_message`/`agent_message`, fall back to `response_item` messages minus injected context. Filter by `timestamp` within the window, then rerun.
 
-### 3. Distill (merge the three sources)
+### 2. Distill
 
-Distill from hotspots + session:
-- **Entity extraction:** tools/products/people mentioned in the conversation → candidate @-targets.
+Distill from the session:
+- **Entity extraction:** tools/products/people mentioned in the conversation → candidate share subjects.
 - **Insight/reflection extraction:** one takeaway that stands on its own, or one reflection worth sharing.
-- Weigh all three source combinations (hotspot only / session only / overlap).
+- **Repo milestone extraction:** a major version-level change to the current repo that happened in the session (new capability, big refactor, repositioning, version release). Two valid framings: a **version update** (what changed, what it enables for the user), or — stronger — the change paired with **the reasoning behind it** and **the cognition it projects** ("we removed X, because we realized Y — which means Z").
 
-### 4. Value gate
+### 3. Value gate
 
 **Not every conversation yields a postable topic.** Apply the reader-takeaway test from the Stance section: each candidate must give the reader a resource, a framework, a reframe, or a lived observation elevated to insight. If no candidate passes, **say plainly "this conversation has no topic worth posting" and stop** — don't force one.
 
-### 5. Generate X topics
+### 4. Generate X topics
 
 For each topic, label the kind:
-- **Share-type** → attach the in-session entity (tool/person/product, raw name) as the candidate @ target — don't resolve the handle here. The strongest share-type angle is **tool + cognition claim** — not "I used X" but "X reveals something most people haven't realized yet".
-- **Reflection-type** → no @ target yet; searching one is downstream work. The strongest reflection-type angle is **first-hand scene → broader insight** — anchor the reflection in something that actually happened in the session, then elevate.
+- **Share-type** → attach the in-session entity (tool/person/product, raw name). The strongest share-type angle is **tool + cognition claim** — not "I used X" but "X reveals something most people haven't realized yet".
+- **Reflection-type** → anchor in something that actually happened in the session, then elevate (Stance #4).
+- **Repo milestone** → either kind: share-type when framed as a version update (the entity is the repo itself), reflection-type when framed as decision → why → what it reveals.
 
 ## Output
 
-Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + candidate entity to @ (share-type only, unresolved) + the reader takeaway (which of the four: resource / framework / reframe / observation→insight) + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
+Output format is not enforced. By default, give per topic: **a one-line topic angle + kind (share/reflection) + the entity being shared (share-type only) + the reader takeaway (which of the four: resource / framework / reframe / observation→insight) + why it's worth posting (1 line)**. Follow the user's format if they ask for another.
 
 ## Boundary
 
-Only produces **topics**. Once the user confirms one, resolving the @, learning the tone, and drafting the post go to the **`x-content-generator`** skill; publishing goes to other tools/people.
+Only produces **topics**. Once the user confirms one, learning the tone and drafting the post go to the **`x-content-generator`** skill; publishing goes to other tools/people.

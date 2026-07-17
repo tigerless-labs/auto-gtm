@@ -1,7 +1,7 @@
 {
   "name": "auto-gtm",
-  "version": "0.2.3",
-  "description": "Automate build-in-public GTM content: distill X/Twitter angles from recent AI-coding-agent sessions (Claude Code / Codex) plus current hotspots, then draft the post for the confirmed topic.",
+  "version": "0.2.4",
+  "description": "Automate build-in-public GTM content: distill X/Twitter angles from recent AI-coding-agent sessions (Claude Code / Codex), then draft the post for the confirmed topic.",
   "author": {
     "name": "tigerless-labs"
   },

@@ -1,13 +1,11 @@
 # auto-gtm
 
-A Claude Code / Codex plugin that **automates the build-in-public slice of go-to-market**: it turns your recent AI-coding sessions, combined with current hotspots, into X/Twitter posts.
+A Claude Code / Codex plugin that **automates the build-in-public slice of go-to-market**: it turns your recent AI-coding sessions into X/Twitter posts.
 
-From your recent AI chats it distills the valuable takeaways, tools you discovered, and reflections into topics worth posting on X, then drafts the post (@ + voice) for the one you confirm. It stops at drafts — it never publishes. Topics come in two kinds:
+From your recent AI chats it distills the valuable takeaways, tools you discovered, and reflections into topics worth posting on X, then drafts the post in your voice for the one you confirm. It stops at drafts — it never publishes. Topics come in two kinds:
 
-- **Share-type**: share a tool/person/product that surfaced in the conversation, @-mention its author.
-- **Reflection-type**: an original reflection/insight; @-mention a relevant account when one exists.
-
-Hotspots and the conversation are two independent sources — a topic can come from hotspots only, the conversation only, or the overlap of both (overlap is strongest).
+- **Share-type**: share a tool/person/product that surfaced in the conversation.
+- **Reflection-type**: an original reflection/insight.
 
 ## Quickstart
 
@@ -69,9 +67,3 @@ Change the time range:
 Come up with X topics from the last 3 days of conversation
 ```
 
-### Optional: hotspots / finding @-targets (soft-enhance)
-
-Install either tool below to ground topics in current hotspots and auto-find relevant accounts to @. **Topics still work without them** — you just don't get the hotspot grounding.
-
-- `last30days` — recent-opinion aggregation (hotspots)
-- [`agent-reach`](https://github.com/Panniantong/Agent-Reach) — multi-platform retrieval / X search (finding @-targets)
