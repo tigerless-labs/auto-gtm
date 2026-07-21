@@ -13,6 +13,12 @@ Reddit 社区运营的 GTM 工具族。**产品无关**：GTM 对象（要推广
 - 赛道虽挤（后继潮 PainOnSocial/KWatch/Replymer… 全闭源；开源仅 subscope 一个，且只做 validator），但**无人同时具备**：开源 + keyless 按用户自跑 + 三段全覆盖（找→验→起草）+ 只起草不代发 + 从你真实 build session 蒸馏「你有什么值得说」。这五条叠加即本族楔子。
 - 全行业止步于「在哪、要什么、何时」；job「起草/参与」被公认为封号高危而普遍绕开（GummySearch 也不碰）。本族用 **drafts-only + 有真东西可说** 安全吃下这段。
 
+## 能力边界（相对闭源产品）
+
+- **不做**（结构使然，非缺失）：持续监听/关键词告警（需常驻 + 写状态）、历史语料趋势与跨用户重叠分析（需中心索引）、自动发布（红线）。
+- **独占**：keyless 按用户实时取数、drafts-only 安全覆盖「起草/参与」、从真实 build session 蒸馏「说什么」。
+- 三 skill 均为**按需**（on-demand）一次一答：validator 是按需验证而非持续告警；finder 的契合度是**实时现算**（从 sub-info 现取 subs/活跃/删帖信号），非中心语料的共订阅重叠。
+
 ## 三 skill 管线
 
 ```mermaid
