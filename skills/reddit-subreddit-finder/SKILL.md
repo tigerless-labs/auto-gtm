@@ -19,15 +19,15 @@ Manual only. Run when the user asks where to post, or to find communities/audien
 ## Flow
 
 ### 1. Find candidates
-Derive query terms from the GTM object. `rdt search "<terms>" -s top -t year` and note which subreddits the on-topic, high-engagement posts live in. Collect the recurring subreddits as candidates.
+Derive query terms from the GTM object. `rdt search "<terms>" -s relevance -t year` — **relevance, not top** (top biases to mega-subs and off-topic viral posts). Keep only on-topic posts, and collect the subreddits they recur in as candidates.
 
 ### 2. Profile each candidate
-`rdt sub-info <sub>` for `subscribers`, `restrict_posting`, `submission_type`, `public_description`. For a removal-rate estimate, sample `rdt sub <sub> -s new` and count `removed`.
+`rdt sub-info <sub>` for `subscribers`, `restrict_posting`, `submission_type`, `public_description`. For a rough removal signal, sample `rdt sub <sub> -s new` and read each post's `removed` / `removed_by_category` field (per-post, not a single grep count).
 
 ### 3. Score — multi-axis, relative
 Judge three axes per candidate from the data, and rank **relatively** across candidates (no fixed numbers):
 - **audience match** — how on-topic its content/description is to the GTM object;
-- **self-promo tolerance** — from `restrict_posting` / `submission_type` / the removal sample;
+- **self-promo tolerance** — from `submission_type` + the removal signal + the rules summary (`restrict_posting` is near-universally `true`, so weak on its own);
 - **activity** — subscribers plus recent post cadence.
 
 ### 4. Safety + rules
