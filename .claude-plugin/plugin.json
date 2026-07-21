@@ -1,13 +1,13 @@
 {
   "name": "auto-gtm",
   "displayName": "Auto GTM",
-  "version": "0.2.5",
-  "description": "Automate the build-in-public slice of go-to-market: distill X/Twitter angles from recent AI-coding-agent conversations (Claude Code / Codex), then draft the post in your voice for the topic you confirm. Drafts only, never publishes.",
+  "version": "0.2.6",
+  "description": "Automate go-to-market — one skill per scenario × platform. X/Twitter: distill angles from your AI-coding sessions (Claude Code / Codex) and draft posts. Reddit: find subreddits, validate demand, draft replies. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
   },
   "homepage": "https://github.com/tigerless-labs/auto-gtm",
   "repository": "https://github.com/tigerless-labs/auto-gtm",
-  "keywords": ["x", "twitter", "content", "topic", "distill", "claude-code"],
+  "keywords": ["x", "twitter", "reddit", "subreddit", "community", "gtm", "content", "topic", "distill", "claude-code"],
   "skills": "./skills/"
 }

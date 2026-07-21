@@ -1,6 +1,8 @@
 # auto-gtm
 
-A Claude Code / Codex plugin that **automates the build-in-public slice of go-to-market**: it turns your recent AI-coding sessions into X/Twitter posts.
+A Claude Code / Codex plugin that **automates go-to-market** — one skill per scenario × platform. Today it covers **X/Twitter** (turn your AI-coding sessions into posts) and **Reddit community GTM** (find subreddits, validate demand, draft replies). Every skill stops at drafts/analysis — it never publishes, comments, or performs any platform write.
+
+## X/Twitter
 
 From your recent AI chats it distills the valuable takeaways, tools you discovered, and reflections into topics worth posting on X, then drafts the post in your voice for the one you confirm. It stops at drafts — it never publishes. Topics come in two kinds:
 
@@ -65,5 +67,31 @@ Change the time range:
 
 ```
 Come up with X topics from the last 3 days of conversation
+```
+
+## Reddit community GTM
+
+Three manually-triggered Reddit skills — all read-only and drafts-only. They never post, comment, or upvote; you publish.
+
+- **reddit-subreddit-finder** — "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
+- **reddit-demand-validator** — "is there real demand for X on Reddit?" → matching posts graded by signal strength (Money Talk highest), each with an evidence permalink.
+- **reddit-comment-drafter** — give it a thread → reply drafts (escalation ladder, de-AI'd, new-account posture) plus the permalink.
+
+### Reddit data setup (one-time)
+
+These skills read Reddit through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
+
+```
+pipx install 'git+https://github.com/public-clis/rdt-cli.git'   # or install rdt-cli into a venv
+rdt login       # extracts your browser's reddit.com cookie
+rdt status      # should print authenticated
+```
+
+Then trigger a skill:
+
+```
+Find the best subreddits to share my Claude Code plugin in
+Validate demand on Reddit for an AI GTM tool aimed at indie developers
+Draft a reply to this Reddit thread: <thread url>
 ```
 
