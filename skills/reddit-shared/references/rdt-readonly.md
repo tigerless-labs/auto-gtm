@@ -1,6 +1,6 @@
 # rdt — read-only data contract (Reddit)
 
-All Reddit data comes from `rdt` (the agent-reach login-state backend), reusing the user's logged-in reddit.com cookie. No OAuth, no anonymous scraping — both are 403-blocked.
+All Reddit data comes from `rdt` (`rdt-cli`, the plugin's own login-state backend — see [`../../gtm-shared/references/data-layer.md`](../../gtm-shared/references/data-layer.md)), reusing the user's logged-in reddit.com cookie. Set up once (`rdt login`), remembered. No OAuth, no anonymous scraping — both are 403-blocked.
 
 ## Read-only whitelist — the ONLY commands a Reddit skill may call
 
