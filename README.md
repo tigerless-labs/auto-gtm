@@ -1,6 +1,6 @@
 # auto-gtm
 
-A Claude Code / Codex plugin that **automates go-to-market** — one skill per scenario × platform. Today it covers **X/Twitter** (turn your AI-coding sessions into posts) and **Reddit community GTM** (find subreddits, validate demand, draft replies). Every skill stops at drafts/analysis — it never publishes, comments, or performs any platform write.
+A Claude Code / Codex plugin that **automates go-to-market** — one skill per scenario × platform. Today it covers **X/Twitter** (turn your AI-coding sessions into posts) and **Reddit community GTM** (find subreddits, validate demand, draft replies), plus a **no-ai-slop** content pass that strips AI-slop patterns from any draft (bundled, MIT © Peter Yang — see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)). Every skill stops at drafts/analysis — it never publishes, comments, or performs any platform write.
 
 ## X/Twitter
 
