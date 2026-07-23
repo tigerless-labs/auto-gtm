@@ -9,7 +9,7 @@
 
 **auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
 
-The wedge: GTM material is **grounded in what you actually shipped and what's being discussed today**, drafted in a voice you chose — **not generated from thin air**. Any marketing request enters through the **`auto-gtm-router`** skill — or type **`/gtm`** — which routes it to the right step and keeps each human checkpoint. On trigger it first asks three things — the **product / repo**, its **highlights**, and **write posts** or **warm up the account** — then routes; all post/comment/topic gathering is limited to the **last 24 hours**.
+From your repo's recent PRs and the day's hot threads it proposes topics; from a topic you pick it drafts posts shaped for X and Reddit; and it finds relevant same-day threads and drafts comments on them. Tone is copied from bloggers you choose or your own account, and for comments, from each thread's top replies. Enter through `/gtm` or the `auto-gtm-router` skill.
 
 | | |
 |---|---|
