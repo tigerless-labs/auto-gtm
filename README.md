@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
 </p>
 
-**auto-gtm is a Claude Code / Codex plugin that automates go-to-market for builders who'd rather keep coding** — one skill per scenario × platform. It **scouts** topics from your PRs + today's hotspots, **drafts** X posts and replies and does Reddit community GTM (find subreddits, draft replies and posts), and **polishes** every draft through a no-ai-slop pass. Every skill **stops at drafts** — it never publishes, comments, or performs any platform write.
+**auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
 
 The wedge: GTM material is **grounded in what you actually shipped and what's being discussed today**, drafted in a voice you chose — **not generated from thin air**. Any marketing request enters through the **`auto-gtm-router`** skill — or type **`/gtm`** — which routes it to the right step and keeps each human checkpoint. On trigger it first asks three things — the **product / repo**, its **highlights**, and **write posts** or **warm up the account** — then routes; all post/comment/topic gathering is limited to the **last 24 hours**.
 
