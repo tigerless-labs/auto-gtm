@@ -23,7 +23,7 @@ Manual only. Run when the user asks to validate demand, or whether people want X
 ## Flow
 
 ### 1. Gather
-Derive query terms from the hypothesis. `rdt search "<terms>" [-r <sub>] -s top -t year` (or `-t month` for freshness). Pull the high-engagement threads with `rdt read <id>` for context and comments.
+Derive query terms from the hypothesis. Search **within the target subreddits** (use finder's candidates if none were given): `rdt search "<terms>" -r <sub> -s relevance -t year` (`-t month` for freshness). Cross-subreddit `-s top` floods off-topic viral posts — restrict with `-r` and sort by relevance. Keep on-topic matches; pull the strongest threads with `rdt read <id>` for context and comments.
 
 ### 2. Grade — four buckets, highest first
 Classify each matching post/comment:

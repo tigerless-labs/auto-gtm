@@ -1,6 +1,6 @@
 {
   "name": "auto-gtm",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Automate go-to-market — one skill per scenario × platform. X/Twitter: distill angles from your AI-coding sessions and draft posts. Reddit: find subreddits, validate demand, draft replies. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
