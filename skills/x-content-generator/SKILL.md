@@ -24,6 +24,7 @@ Give the reader something worth their time, in a sincere voice, never engagement
   - If the shared thing is already sharp, let it stand — don't add your own hot-take.
   - Every sentence must carry real information — cut any line that doesn't.
 - Read the full [`references/tone-examples.md`](references/tone-examples.md) for verbatim exemplars. **Mimic cadence/structure, not opinions.**
+- Run every draft through the bundled **no-ai-slop** skill before finalizing — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md) and verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md).
 - Write **1-2 drafts**; include the source link for shares.
 
 ## Output
