@@ -8,7 +8,7 @@
     {
       "name": "auto-gtm",
       "source": "./",
-      "description": "Automate build-in-public GTM content from your AI-coding sessions: topic -> @ + voice -> draft"
+      "description": "Automate go-to-market: topic scouting from your PRs + today's hotspots, X post & reply drafts, Reddit subreddit-finding + reply & post drafts. Drafts only, never publishes."
     }
   ]
 }
