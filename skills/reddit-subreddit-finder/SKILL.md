@@ -47,4 +47,4 @@ Candidate count (default ~8), search window (default `-t year`), removal-sample 
 
 ## Boundary
 
-Read-only via `rdt` (whitelist in rdt-readonly). Ranks only — never joins, subscribes, or posts. Validating demand is `reddit-demand-validator`; drafting a reply is `reddit-comment-drafter`.
+Read-only via `rdt` (whitelist in rdt-readonly). Ranks only — never joins, subscribes, or posts. Drafting a reply is `reddit-auto-comment-draft`; writing a post is `reddit-post-drafter`.
