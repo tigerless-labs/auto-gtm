@@ -20,7 +20,7 @@
 - **a. 产品更新**：是更新 → 读 GitHub PR，总结**重大更新 + 意义**；是新品 → 用存档亮点整理。最少字数。
 - **b. 热点 / 话题**：走插件自带**数据层**抓当日热帖，并用一个小脚本直接拉 follow-builders 当日 X feed（keyless、无需安装）取这些 builder 的 24h 帖。每个 topic 一小段 + 来源链接。
 
-> **数据层是插件自建的独立模块**（`skills/gtm-shared/`，无 `SKILL.md`、不可被触发，供各 scenario skill 引用），不依赖 agent-reach / last30days 这两个 skill 存在。X 分层取数：`twitter-cli`（登录态，抄 agent-reach 命令）优先，keyless WebSearch 兜底（仿 last30days）；Reddit 走 `rdt` 登录态。凭据留在各 CLI 自己的本地存储，**永不进仓库**；「已配置」只在 `.auto-gtm/connections.md` 记一个标记，**只问一次**。归属写进 `THIRD_PARTY_LICENSES.md`。
+> **数据层是插件自建的独立模块**（`skills/gtm-shared/`，无 `SKILL.md`、不可被触发，供各 scenario skill 引用），不依赖 agent-reach / last30days 这两个 skill 存在。X 分层取数：`twitter-cli`（登录态，抄 agent-reach 命令）优先，keyless WebSearch 兜底（仿 last30days）；Reddit 走 `rdt` 登录态。凭据留在各 CLI 自己的本地存储，**永不进仓库**；登录状态由 CLI 自己记住（`rdt status` / cookie 在否即答案），我们**自己不记任何标记**——每次查 CLI status，已登录就不再问。归属写进 `THIRD_PARTY_LICENSES.md`。
 
 ### 2. X
 - **draft**：选题 → 正文，按 tone；**过一遍 `no-ai-slop`**。→ 草稿 md
@@ -41,13 +41,10 @@
 3. 用户的要求
 4. 评论再叠加相关热帖的高赞口吻
 
-## 存储（仓库根 `.auto-gtm/`）
-- 要推广的**产品 / repo + 亮点**
-- 喜欢的**博主**
-- **subreddit** 记录
-- **connections** 标记：数据层登录（X `twitter-cli` / Reddit `rdt`）是否已配置——只为**问一次、不再问**
+## 存储（仅 repo 本地 `.auto-gtm/`，极简）
+- 要推广的**产品 / repo + 亮点**、喜欢的**博主**、**subreddit** 记录。
 
-其余不存（凭据、抓取内容一律不落盘），结果停在 md。
+登录状态**不由我们存**——`rdt` / `twitter-cli` 各自把登录记在机器全局（`~/.config/rdt-cli/` 等），查 CLI status 即知是否已配置，故「只问一次」无需我们落任何标记。凭据、抓取内容一律不落盘，结果停在 md。
 
 ## 硬约束
 - **时效**：找帖 / 找评论只取**当日（24h 内）**高热帖。
