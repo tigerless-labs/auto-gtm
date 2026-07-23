@@ -10,7 +10,7 @@ description: >
 
 Given a thread (id or permalink) plus the GTM object and what you've actually built, draft reply variants that fit the subreddit and a **new, zero-karma account**. Never posts — output is drafts + permalink + a rules summary for the human to publish.
 
-Shared contracts: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md).
+Shared contracts: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md).
 
 ## When to trigger
 
@@ -32,8 +32,8 @@ Three labeled variants, most restrained first:
 
 Default posture: value-first, **no links in a first-touch reply** (new-account gate). If the account isn't warmed up, keep to the restrained end.
 
-### 4. De-AI pass
-Re-read every variant and strip the anti-AI blocklist (reddit-voice). Anything that reads like an assistant gets rewritten as the subreddit would actually say it.
+### 4. De-AI pass — no-ai-slop (mandatory)
+Run the bundled **no-ai-slop** skill on every variant before output: apply the patterns in [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md) and verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md). Anything that reads like an assistant gets rewritten as the subreddit would actually say it. No draft ships without this step.
 
 ## Output
 
