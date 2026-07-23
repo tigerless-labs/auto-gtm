@@ -17,9 +17,11 @@ the content-polish pass for generated posts and drafts.
 ## skills/topic-scout/assets/builders.json
 
 - **Source:** https://github.com/zarazhangrui/follow-builders
-- **License:** MIT — Copyright (c) Zara Zhang
+- **License:** MIT (declared in the upstream README; the repo ships no standalone
+  `LICENSE` file, so there is no verbatim license text to vendor) — Copyright (c) Zara Zhang
 - **Included:** a trimmed snapshot (handle + name only) of the curated AI-builder
-  X list from follow-builders' `feed-x.json`.
+  X list from follow-builders' `feed-x.json`. Attribution is also embedded in the
+  snapshot's own `_source` header.
 
 Used by `topic-scout` to bias hotspot topics toward the builders the user follows.
 The posts themselves are fetched through the user's own data layer (`rdt` /

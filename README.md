@@ -89,3 +89,7 @@ Find the best subreddits to share my Claude Code plugin in
 Find Reddit threads about AI GTM tools I can reply to
 Write a Reddit post for r/SaaS from this topic
 ```
+
+## License
+
+MIT — see [LICENSE](LICENSE). Bundled third-party components and their licenses are listed in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).

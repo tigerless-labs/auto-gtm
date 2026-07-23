@@ -1,6 +1,6 @@
 {
   "name": "auto-gtm",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Automate go-to-market — one skill per scenario × platform. Topic scouting from your PRs + today's hotspots, X post & reply drafts, Reddit subreddit-finding + reply & post drafts. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
@@ -12,7 +12,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Auto GTM",
-    "shortDescription": "Build-in-public GTM content from your agent sessions",
+    "shortDescription": "Draft X & Reddit GTM content from your PRs + today's hotspots",
     "category": "Productivity"
   }
 }
