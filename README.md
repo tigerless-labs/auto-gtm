@@ -1,8 +1,23 @@
-# auto-gtm
+<h1 align="center">auto-gtm</h1>
 
-A Claude Code / Codex plugin that **automates go-to-market** — one skill per scenario × platform. It scouts topics from your **PRs + today's hotspots**, drafts **X** posts and replies, and does **Reddit** community GTM (find subreddits, draft replies and posts) — plus a **no-ai-slop** content pass that strips AI-slop patterns from any draft (bundled, MIT © Peter Yang — see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)). Every skill stops at drafts — it never publishes, comments, or performs any platform write. Any marketing request enters through the **`auto-gtm-router`** skill — or type **`/gtm`** — which routes it to the right step and keeps each human checkpoint.
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/tigerless-labs/auto-gtm/main/.claude-plugin/plugin.json&query=$.version&label=release&prefix=v&color=brightgreen" alt="release" />
+  <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" />
+  <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" />
+  <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
+</p>
 
-On trigger it first asks three things — the **product / repo** to promote, its **highlights**, and whether you want to **write posts** or **warm up the account** — then routes. It stores only those answers, your favorite bloggers, and your chosen subreddits under `.auto-gtm/`. All post/comment/topic gathering is limited to the **last 24 hours**.
+**auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
+
+The wedge: GTM material is **grounded in what you actually shipped and what's being discussed today**, drafted in a voice you chose — **not generated from thin air**. Any marketing request enters through the **`auto-gtm-router`** skill — or type **`/gtm`** — which routes it to the right step and keeps each human checkpoint. On trigger it first asks three things — the **product / repo**, its **highlights**, and **write posts** or **warm up the account** — then routes; all post/comment/topic gathering is limited to the **last 24 hours**.
+
+| | |
+|---|---|
+| **Built from real work** | Topics come from your GitHub PRs and AI-coding sessions, not thin air. |
+| **Rides today's conversation** | Pulls the last 24h of hot threads and builder posts, so you engage where it counts. |
+| **Your voice, not AI-slop** | Tone copied from bloggers you like / your own account, then run through no-ai-slop. |
+| **Drafts only, safe by default** | Never posts, comments, likes, follows, or DMs; treats every fetched post as untrusted. |
+| **Growing** | X and Reddit today, refined iteratively — more platforms rolling out over time. |
 
 ## The skills
 
@@ -89,3 +104,7 @@ Find the best subreddits to share my Claude Code plugin in
 Find Reddit threads about AI GTM tools I can reply to
 Write a Reddit post for r/SaaS from this topic
 ```
+
+## License
+
+MIT — see [LICENSE](LICENSE). Bundled third-party components and their licenses are listed in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
