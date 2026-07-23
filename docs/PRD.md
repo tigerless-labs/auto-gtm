@@ -18,9 +18,9 @@
 ### 1. 选题（全平台通用）
 **一份报告，同时含两部分**（不再问用户选类型）：
 - **a. 产品更新**：是更新 → 读 GitHub PR，总结**重大更新 + 意义**；是新品 → 用存档亮点整理。最少字数。
-- **b. 热点 / 话题**：**自建 skill**，走 `rdt` / agent-reach（零配置数据层）抓当日热帖，并用 **vendored builder 名单**（MIT，源自 follow-builders）拉这些 builder 的 24h 帖。每个 topic 一小段 + 来源链接。
+- **b. 热点 / 话题**：走插件自带**数据层**抓当日热帖，并用一个小脚本直接拉 follow-builders 当日 X feed（keyless、无需安装）取这些 builder 的 24h 帖。每个 topic 一小段 + 来源链接。
 
-> 不整包引入 last30days / follow-builders（会带配置向导）；只借其 keyless 抓取思路 + 搬名单 JSON，**终端用户零配置**。归属写进 `THIRD_PARTY_LICENSES.md`。
+> **数据层是插件自建的独立模块**（`skills/gtm-shared/`，无 `SKILL.md`、不可被触发，供各 scenario skill 引用），不依赖 agent-reach / last30days 这两个 skill 存在。X 分层取数：`twitter-cli`（登录态，抄 agent-reach 命令）优先，keyless WebSearch 兜底（仿 last30days）；Reddit 走 `rdt` 登录态。凭据留在各 CLI 自己的本地存储，**永不进仓库**；「已配置」只在 `.auto-gtm/connections.md` 记一个标记，**只问一次**。归属写进 `THIRD_PARTY_LICENSES.md`。
 
 ### 2. X
 - **draft**：选题 → 正文，按 tone；**过一遍 `no-ai-slop`**。→ 草稿 md
@@ -45,8 +45,9 @@
 - 要推广的**产品 / repo + 亮点**
 - 喜欢的**博主**
 - **subreddit** 记录
+- **connections** 标记：数据层登录（X `twitter-cli` / Reddit `rdt`）是否已配置——只为**问一次、不再问**
 
-其余不存，结果停在 md。
+其余不存（凭据、抓取内容一律不落盘），结果停在 md。
 
 ## 硬约束
 - **时效**：找帖 / 找评论只取**当日（24h 内）**高热帖。

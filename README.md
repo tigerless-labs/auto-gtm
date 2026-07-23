@@ -87,9 +87,11 @@ Turn that topic into an X post
 Find X posts about AI dev tools I can reply to
 ```
 
-### Reddit data setup (one-time)
+### Data setup (one-time, asked once)
 
-The Reddit skills read Reddit through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
+auto-gtm ships its own self-contained [data layer](skills/gtm-shared/references/data-layer.md) — it does **not** require the agent-reach or last30days skills. Logins live in each CLI's own local store, never in the repo; auto-gtm records a "configured" marker in `.auto-gtm/` so it asks **once**.
+
+**Reddit** reads through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
 
 ```
 pipx install 'git+https://github.com/public-clis/rdt-cli.git'   # or install rdt-cli into a venv
@@ -97,12 +99,23 @@ rdt login       # extracts your browser's reddit.com cookie
 rdt status      # should print authenticated
 ```
 
-Then trigger a Reddit skill:
+**X / Twitter** works **keyless out of the box** (host WebSearch floor). For higher-fidelity results, optionally install `twitter-cli` and set your cookie once:
+
+```
+pipx install twitter-cli            # v0.8.5+
+export TWITTER_AUTH_TOKEN=...        # from a Cookie-Editor export of x.com
+export TWITTER_CT0=...
+```
+
+The builder pulse (top-builder daily posts) needs no setup — it pulls a public feed keyless.
+
+Then trigger any skill:
 
 ```
 Find the best subreddits to share my Claude Code plugin in
 Find Reddit threads about AI GTM tools I can reply to
 Write a Reddit post for r/SaaS from this topic
+Find X posts about AI dev tools I can reply to
 ```
 
 ## License

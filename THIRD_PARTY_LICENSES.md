@@ -14,23 +14,30 @@ A general-purpose content skill that edits drafts into sharper, more human
 writing (or detects AI-slop patterns without rewriting). Used in auto-gtm as
 the content-polish pass for generated posts and drafts.
 
-## skills/topic-scout/assets/builders.json
+## follow-builders (runtime data source, nothing vendored)
 
 - **Source:** https://github.com/zarazhangrui/follow-builders
 - **License:** MIT (declared in the upstream README; the repo ships no standalone
   `LICENSE` file, so there is no verbatim license text to vendor) — Copyright (c) Zara Zhang
-- **Included:** a trimmed snapshot (handle + name only) of the curated AI-builder
-  X list from follow-builders' `feed-x.json`. Attribution is also embedded in the
-  snapshot's own `_source` header.
 
-Used by `topic-scout` to bias hotspot topics toward the builders the user follows.
-The posts themselves are fetched through the user's own data layer (`rdt` /
-agent-reach), not from follow-builders' feed — only the curated handle list is vendored.
+The data layer's builder pulse (`skills/gtm-shared/scripts/fetch_builder_report.py`)
+fetches follow-builders' public daily feed (`feed-x.json`) at runtime and prints a
+filtered 24h digest. No file from follow-builders is vendored into this repo — the
+feed is read live, keyless, over HTTPS.
+
+## agent-reach (method reference, not vendored)
+
+- **Source:** https://github.com/Panniantong/Agent-Reach
+- **License:** see upstream
+
+The data layer's X access ([`skills/gtm-shared/references/data-layer.md`](skills/gtm-shared/references/data-layer.md))
+copies agent-reach's concrete `twitter-cli` command set and search retry chain. No
+code is vendored; the plugin does not require the agent-reach skill to be installed.
 
 ## last30days (method reference, not vendored)
 
 - **Source:** https://github.com/mvanhorn/last30days-skill
 - **License:** MIT — Copyright (c) mvanhorn
 
-`topic-scout` borrows the *approach* — keyless, reasoning-model-planned
-multi-platform recency search — but vendors no code from it.
+The data layer's keyless X floor borrows last30days' *approach* — a keyless,
+reasoning-model-planned web-search fallback — but vendors no code from it.
