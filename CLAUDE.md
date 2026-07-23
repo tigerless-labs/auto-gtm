@@ -1,6 +1,6 @@
 # auto-gtm
 
-auto-gtm is a Claude Code / Codex plugin: a family of GTM automation tools, one skill per scenario × platform — X topic distillation and post drafts today; Reddit topic-group discovery, thread analysis and comment drafts, and more to come. Every tool stops at drafts and analysis — it never publishes, comments, or performs any platform write on its own. The wedge vs neighboring tools: GTM material is distilled from what you actually built (your AI-coding sessions and product artifacts), not generated from thin air.
+auto-gtm is a Claude Code / Codex plugin: a family of GTM automation tools, one skill per scenario × platform — topic scouting (your PRs + today's hotspots), X post and reply drafts, Reddit subreddit-finding and reply/post drafts. Every tool stops at drafts and analysis — it never publishes, comments, or performs any platform write on its own. The wedge vs neighboring tools: GTM material is grounded in what you actually shipped and what's being discussed today, drafted in a voice you chose — not generated from thin air.
 
 ## Layout
 

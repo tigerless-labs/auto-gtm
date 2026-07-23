@@ -2,8 +2,8 @@
 name: x-content-generator
 description: >
   Generate X/Twitter post content from a confirmed topic: learn the voice from reference exemplars, then draft.
-  **Manually triggered** — use after a topic is confirmed (typically from x-topic-distiller) and the user says things like "turn this topic into a post / write it up".
-  Takes "topic → content"; does not distill topics (that's x-topic-distiller) and does not publish.
+  **Manually triggered** — use after a topic is confirmed (typically from topic-scout) and the user says things like "turn this topic into a post / write it up".
+  Takes "topic → content"; does not select topics (that's topic-scout) and does not publish.
 ---
 
 # x-content-generator — generate X content from a confirmed topic
@@ -29,6 +29,11 @@ Give the reader something worth their time, in a sincere voice, never engagement
   - When the user's structural ask conflicts with the exemplars' shape (e.g.
     "make it two updates"), satisfy the content of the ask inside the voice —
     two first-person moves, not two headings. On form, the exemplars win.
+- **Tone source, in priority order** (see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md)):
+  1. the user's **favorite bloggers** (`.auto-gtm/bloggers.md`) — fetch a few of their recent posts via agent-reach and mimic their cadence;
+  2. the user's **own account**;
+  3. the user's **explicit ask** this run.
+  Fall back to the bundled exemplars below when none is available.
 - Read the full [`references/tone-examples.md`](references/tone-examples.md) for verbatim exemplars. **Mimic cadence/structure, not opinions.**
 - Run every draft through the bundled **no-ai-slop** skill before finalizing — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md) and verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md).
 - Write **1-2 drafts**; include the source link for shares.
@@ -55,4 +60,4 @@ https://github.com/example/repo
 
 ## Boundary
 
-Starts from a confirmed topic (distillation is `x-topic-distiller`). Drafts only; does not publish.
+Starts from a confirmed topic (selection is `topic-scout`). Drafts only; does not publish.
