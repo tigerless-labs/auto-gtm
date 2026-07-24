@@ -58,13 +58,12 @@ ln -s "$(pwd)/auto-gtm/skills/"* ~/.codex/skills/
 
 ### Update
 
-**Claude Code:**
+**Claude Code** — run in your terminal (then restart to apply):
 
 ```
+claude plugin marketplace update tigerless-labs
 claude plugin update auto-gtm@tigerless-labs
 ```
-
-Use the full `plugin@marketplace` id (a bare name fails), then **restart** to apply. Or enable auto-update once via `/plugin` → **Marketplaces** → `tigerless-labs` to skip this step in future.
 
 **Codex (CLI ≥ 0.144):**
 
