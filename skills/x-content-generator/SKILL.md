@@ -29,7 +29,7 @@ Give the reader something worth their time, in a sincere voice, never engagement
   - When the user's structural ask conflicts with the exemplars' shape (e.g.
     "make it two updates"), satisfy the content of the ask inside the voice —
     two first-person moves, not two headings. On form, the exemplars win.
-- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md): voice from the stored blogger / own-account samples in `bloggers.md` (first capture fetches ~10 each and stores them; later runs read them), your explicit ask governs content. This is an original post — no per-thread overlay. When no bloggers are set, use the bundled exemplars: read [`references/tone-examples.md`](references/tone-examples.md). **Mimic cadence/structure, not opinions.**
+- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md): voice from the stored blogger / own-account samples in `bloggers.md` (first capture fetches ~10 each and stores them; later runs read them), your explicit ask governs content. This is an original post — no per-thread overlay. When no bloggers are set, use the bundled exemplars: read [`../x-shared/references/tone-examples.md`](../x-shared/references/tone-examples.md). **Mimic cadence/structure, not opinions.**
 - Run every draft through the bundled **no-ai-slop** skill before finalizing — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md) and verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md).
 - Write **1-2 drafts**; include the source link for shares.
 

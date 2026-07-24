@@ -6,7 +6,7 @@ The single source of truth for tone. Every drafting skill (X/Reddit posts and re
 
 1. **Favorite bloggers** — the handles + their **~10 stored sample posts** in `~/Documents/auto-gtm/bloggers.md`.
 2. **The user's own account** — same file, ~10 of their own posts captured alongside.
-3. **Bundled fallback** — when no bloggers are set: X uses [`../../x-content-generator/references/tone-examples.md`](../../x-content-generator/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
+3. **Bundled fallback** — when no bloggers are set: X uses [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
 
 Mimic cadence and structure, **never opinions**.
 
