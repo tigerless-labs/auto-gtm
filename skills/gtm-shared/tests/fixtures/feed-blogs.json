@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-07-24T07:10:30.000Z",
+  "lookbackHours": 72,
+  "blogs": [
+    {
+      "source": "blog",
+      "name": "Claude Blog",
+      "title": "Claude Code now supports artifacts",
+      "url": "https://claude.com/blog/artifacts-in-claude-code",
+      "publishedAt": "Jul 22, 2026",
+      "author": "",
+      "description": "Capture work progress as an artifact.",
+      "content": "Starting today, Claude Code can capture work progress as an artifact, which turns a session into a shareable page."
+    }
+  ]
+}

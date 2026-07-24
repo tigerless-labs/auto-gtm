@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.2.18-brightgreen.svg" alt="release" />
+  <img src="https://img.shields.io/badge/release-v0.2.19-brightgreen.svg" alt="release" />
   <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" />
   <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" />
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
@@ -138,7 +138,7 @@ export TWITTER_CT0=...
 
 On the Codex desktop app, `export` doesn't reach the tools — set these in `config.toml` or use OpenCLI instead ([Codex desktop app](#codex-desktop-app)).
 
-The builder pulse (top-builder daily posts) needs no setup; it reads a public feed, keyless.
+The builder pulse (top-builder posts, blogs, and podcasts) needs no setup; it reads public feeds, keyless.
 
 Then trigger any skill:
 

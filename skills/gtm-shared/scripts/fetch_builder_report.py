@@ -1,92 +1,147 @@
 #!/usr/bin/env python3
-"""Pull the follow-builders daily X feed and print a compact, filterable digest.
+"""Pull the follow-builders daily feeds (X + blogs + podcasts) and print a compact digest.
 
-Fetches https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json
-(the central daily report from zarazhangrui/follow-builders, MIT) and prints each
-builder's recent tweets. Self-contained: Python 3 stdlib only, no API key, no
-external skill, no config. On any network error it exits non-zero with a message
-so the caller can fall back to WebSearch.
+Fetches three public JSON feeds from zarazhangrui/follow-builders (MIT-declared, keyless):
+feed-x.json, feed-blogs.json, feed-podcasts.json. Each is already recency-scoped upstream
+(X ~24h, blogs ~72h, podcasts ~14d), so this prints whatever the feeds carry — no extra
+time filter. Self-contained: Python 3 stdlib only, no API key, no external skill, no config.
+
+The caller (topic-scout) applies its own concise digest instruction to this output. On a
+total fetch failure (all three feeds unreachable) it exits non-zero so the caller can fall
+back to keyless search.
 
 Usage:
-  fetch_builder_report.py                 # all builders, last 24h
-  fetch_builder_report.py --hours 24 --query "agent eval rag" --min-likes 20
+  fetch_builder_report.py                       # all three feeds, everything recent
+  fetch_builder_report.py --query "agent eval"  # keep only items matching ANY term
+  fetch_builder_report.py --feed-dir ./fixtures # read local feed files (offline / tests)
 """
 import argparse
 import json
+import os
 import sys
 import urllib.request
-from datetime import datetime, timezone, timedelta
 
-FEED_URL = "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json"
-
-
-def fetch(url, timeout=20):
-    req = urllib.request.Request(url, headers={"User-Agent": "auto-gtm-topic-scout"})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return json.load(resp)
+FEEDS = {
+    "x": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json",
+    "blogs": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json",
+    "podcasts": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json",
+}
+SNIPPET_CHARS = 600
 
 
-def parse_dt(value):
+def load_feed(key, feed_dir):
+    if feed_dir:
+        path = os.path.join(feed_dir, f"feed-{key}.json")
+        try:
+            with open(path, encoding="utf-8") as handle:
+                return json.load(handle)
+        except (OSError, ValueError):
+            return None
+    req = urllib.request.Request(FEEDS[key], headers={"User-Agent": "auto-gtm-topic-scout"})
     try:
-        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
-    except ValueError:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            return json.load(resp)
+    except Exception:
         return None
 
 
-def as_int(value, default=0):
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return default
+def matches(text, terms):
+    if not terms:
+        return True
+    blob = text.lower()
+    return any(term in blob for term in terms)
+
+
+def snippet(text):
+    text = " ".join((text or "").split())
+    return text[:SNIPPET_CHARS]
+
+
+def render_x(feed, terms, out):
+    kept = 0
+    lines = ["## X / Twitter"]
+    for builder in feed.get("x", []):
+        rows = [tw for tw in builder.get("tweets", []) if matches(tw.get("text", ""), terms)]
+        if not rows:
+            continue
+        kept += len(rows)
+        lines.append(f"\n### {builder.get('name')} ({builder.get('handle')})")
+        for tw in rows:
+            lines.append(f"- [{tw.get('createdAt')} · {tw.get('likes', 0)}♥] {(tw.get('text') or '').strip()}")
+            lines.append(f"  {tw.get('url')}")
+    if kept == 0:
+        lines.append("(none)")
+    out.extend(lines)
+    return kept
+
+
+def render_blogs(feed, terms, out):
+    kept = 0
+    lines = ["\n## Official blogs"]
+    for post in feed.get("blogs", []):
+        haystack = " ".join(str(post.get(k, "")) for k in ("title", "description", "content"))
+        if not matches(haystack, terms):
+            continue
+        kept += 1
+        author = post.get("author")
+        head = f"\n### {post.get('name')} — {post.get('title')}"
+        lines.append(head)
+        lines.append(f"{post.get('publishedAt')}" + (f" · {author}" if author else ""))
+        body = post.get("description") or post.get("content") or ""
+        if body:
+            lines.append(snippet(body))
+        lines.append(f"{post.get('url')}")
+    if kept == 0:
+        lines.append("(none)")
+    out.extend(lines)
+    return kept
+
+
+def render_podcasts(feed, terms, out):
+    kept = 0
+    lines = ["\n## Podcasts"]
+    for ep in feed.get("podcasts", []):
+        haystack = " ".join(str(ep.get(k, "")) for k in ("title", "transcript"))
+        if not matches(haystack, terms):
+            continue
+        kept += 1
+        lines.append(f"\n### {ep.get('name')} — {ep.get('title')}")
+        lines.append(f"{ep.get('publishedAt')}")
+        if ep.get("transcript"):
+            lines.append(snippet(ep.get("transcript")))
+        lines.append(f"{ep.get('url')}")
+    if kept == 0:
+        lines.append("(none)")
+    out.extend(lines)
+    return kept
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--hours", type=int, default=24, help="keep tweets from the last N hours")
-    ap.add_argument("--query", default="", help="space-separated terms; keep tweets matching ANY (case-insensitive)")
-    ap.add_argument("--min-likes", type=int, default=0, help="drop tweets below this like count")
+    ap.add_argument("--query", default="", help="space-separated terms; keep items matching ANY (case-insensitive)")
+    ap.add_argument("--feed-dir", default="", help="read feed-*.json from this directory instead of the network")
     args = ap.parse_args()
 
-    try:
-        data = fetch(FEED_URL)
-    except Exception as exc:  # network, HTTP, JSON — all non-fatal to the skill
-        print(f"ERROR: could not fetch follow-builders feed ({exc}). Fall back to WebSearch.", file=sys.stderr)
+    feeds = {key: load_feed(key, args.feed_dir) for key in FEEDS}
+    if all(feed is None for feed in feeds.values()):
+        where = args.feed_dir or "network"
+        print(f"ERROR: could not load any follow-builders feed from {where}. Fall back to keyless search.", file=sys.stderr)
         return 1
 
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=args.hours)
     terms = [t.lower() for t in args.query.split()]
-
-    header = f"# follow-builders feed — generatedAt {data.get('generatedAt')} — filter: last {args.hours}h"
+    gens = " ".join(f"{k}:{(feeds[k] or {}).get('generatedAt')}" for k in FEEDS)
+    header = f"# Builder digest — recent — {gens}"
     if terms:
-        header += f", any of {terms}"
-    if args.min_likes:
-        header += f", >= {args.min_likes} likes"
-    print(header)
+        header += f" — filter: any of {terms}"
 
-    kept = 0
-    for builder in data.get("x", []):
-        rows = []
-        for tw in builder.get("tweets", []):
-            when = parse_dt(tw.get("createdAt"))
-            if when and when < cutoff:
-                continue
-            if as_int(tw.get("likes")) < args.min_likes:
-                continue
-            text = (tw.get("text") or "").strip()
-            if terms and not any(term in text.lower() for term in terms):
-                continue
-            rows.append(tw)
-        if not rows:
-            continue
-        kept += len(rows)
-        print(f"\n## {builder.get('name')} (@{builder.get('handle')})")
-        for tw in rows:
-            likes = as_int(tw.get("likes"))
-            print(f"- [{tw.get('createdAt')} · {likes}♥] {(tw.get('text') or '').strip()}")
-            print(f"  {tw.get('url')}")
-
-    if kept == 0:
-        print("\n(no tweets matched — widen --hours/--query or fall back to WebSearch)")
+    out = [header]
+    total = 0
+    total += render_x(feeds["x"] or {}, terms, out)
+    total += render_blogs(feeds["blogs"] or {}, terms, out)
+    total += render_podcasts(feeds["podcasts"] or {}, terms, out)
+    print("\n".join(out))
+    if total == 0:
+        print("\n(no items matched — drop --query or fall back to keyless search)")
     return 0
 
 
