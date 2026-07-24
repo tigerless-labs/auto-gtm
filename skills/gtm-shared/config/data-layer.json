@@ -3,6 +3,7 @@
     "x": {
       "domain": "x.com",
       "primary": "twscrape",
+      "jina_reader": true,
       "floor_query": "site:x.com",
       "recency": { "topic": "~1 week", "reply": "same-day" }
     },
@@ -10,6 +11,7 @@
       "domain": "reddit.com",
       "primary": "cookie-session",
       "upgrade": "praw",
+      "keyless_composite": false,
       "floor_query": "site:reddit.com",
       "recency": { "topic": "~1 week", "reply": "same-day" }
     }

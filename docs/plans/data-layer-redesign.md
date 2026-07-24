@@ -34,7 +34,8 @@
 - **3b 认证适配器（已落地）**：`reach/backends.py`。
   - **Reddit（rdt）**：只读白名单**在代码里强制**（写命令直接拒绝、不 shell）、`reddit_available` 读 `rdt status`、`authenticated_available` 兼看 rdt 登录态；本机端到端验证通过（`sub-info` 取回真实订阅数，plan 首选 authenticated）。
   - **X（twscrape）**：`x_fetch` 按 twscrape 真实 API 写（cookie-only 账号 + `async search`，只读只搜、不发帖），fake API 单测覆盖 cookie 接线/查询/归一化/limit。**端到端验证通过**：`session` 从 Chrome 取 `x.com` cookie（source=chromium）→ `x_fetch` 取回真实推文。选 twscrape 的原因：2026-07 实测 `twikit` 2.3.3（最新）挂在 X 反爬握手（`Couldn't get KEY_BYTE indices`），`twscrape` 用同一份 cookie 能出结果——正是「认证库随平台反爬每数周会断」的实例，也印证 keyless 兜底的必要。
-- **3b 剩余（待续）**：`PRAW` 升级路；vendor `twscrape`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）；给 X 账号 DB 一个稳定的 per-user 落点（现用 per-call 临时库，总用当前 cookie）。
+- **3c keyless 中间层 + 韧性（已落地）**：`reach/reddit_keyless.py` —— shreddit listing（真分数）+ 单 sub RSS + `svc/shreddit/comments` + arctic 回填，best-effort、过共享令牌桶（`ratelimit.py`，5 req/s burst 5），**默认关、config `keyless_composite` opt-in**（合规风险：未授权爬 `svc/shreddit`，Reddit 起诉的模式）。X 加 `x_read_jina`（`r.jina.ai` 读已知推文 URL，整推+对话，best-effort，内容外泄 jina）。`run.plan_fetch` 插入中间档；`reddit_fetch` 改 best-effort（运行失败返 None 不抛）；collect-then-pick（认证=库可导入且有 cookie）。**实测**：composite 取回真分数帖、jina 取回渲染内容。
+- **3b/3c 剩余（待续）**：`PRAW` 升级路；vendor `twscrape`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）；X 账号 DB 稳定 per-user 落点（现 per-call 临时库）；keyless 评论正文提取（现只取 author/score/permalink）。
 
 ### 单元 4 — 接线与端到端
 - **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。
