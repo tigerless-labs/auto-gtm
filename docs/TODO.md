@@ -11,7 +11,7 @@
 设计与契约方向见 [`design/data-layer.md`](design/data-layer.md) 与计划 [`plans/data-layer-redesign.md`](plans/data-layer-redesign.md)。单元 1（设计+契约）已随本次落地；以下为单元 2–4 的实现跟进：
 
 - ~~**单元 2 — 测试先行**~~（已落地）：`test_reach_session.py` + `test_reach_run.py`，断言 OS cookie 顺序、Firefox 明文读取、fallback 顺序、「兜底恒为近似」、status 不泄凭证。
-- **单元 3 — `reach/` 可执行层**：3a 编排 + OS cookie 核心（`session.py`/`run.py`/`config/data-layer.json`）**已落地**；3b 已接 `rdt` 为 Reddit 真实后端（`backends.py`，只读白名单代码强制，本机端到端验证过）。**3b 剩余**：`twikit`（X）取数调用体（需装 twikit 验证）+ `PRAW` 升级路 + vendor 三者纯 Python 源（先核 license）。
+- **单元 3 — `reach/` 可执行层**：3a 编排 + OS cookie 核心已落地；3b 认证适配器已落地——Reddit（`rdt`，只读白名单代码强制，端到端验证过）+ X（`twikit` v2.3.3 真实 API，fake 单测 + 真库驱动到网络边界；真实鉴权搜索需 X 登录态才能验）。**3b 剩余**：`PRAW` 升级路 + vendor `twikit`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）。
 - **单元 4 — 接线 + 端到端**：消费方 skill 取数改走 `reach`（行为不变）；本地装插件跑通全链；把 `data-layer.md` 契约从「方向」升级为「现状」，撤下重设计提示块。
 - **Reddit 版规只读能力**：把 `about/rules.json`（登录态可取、keyless 403）做成受白名单约束的只读 `rules` read-op，接入 subreddit-finder，替换现有近似。
 - **合规评估**：vendor X 账号爬库（`twikit`/`twscrape`）前，就 Reddit 起诉爬取方、X ToS/封号风险做一次姿态评估并记入设计文档。

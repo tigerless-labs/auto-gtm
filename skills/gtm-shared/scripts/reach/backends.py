@@ -69,3 +69,41 @@ def x_available(importer=None):
     """True when the twikit library is importable (X authenticated path)."""
     imp = importer or _import_twikit
     return imp() is not None
+
+
+X_SEARCH_PRODUCTS = ("Top", "Latest", "Media")
+
+
+def _default_x_client(language="en-US"):
+    import twikit
+    return twikit.Client(language)
+
+
+def _normalize_tweet(t):
+    user = getattr(t, "user", None)
+    return {
+        "id": getattr(t, "id", None),
+        "text": getattr(t, "text", None) or getattr(t, "full_text", None),
+        "author": getattr(user, "screen_name", None),
+        "likes": getattr(t, "favorite_count", None),
+        "retweets": getattr(t, "retweet_count", None),
+        "replies": getattr(t, "reply_count", None),
+        "created_at": getattr(t, "created_at", None),
+    }
+
+
+def x_fetch(query, cookies, product="Latest", count=20, client_factory=None):
+    """Authenticated X search via twikit — read-only (search only).
+
+    `cookies` is a {name: value} dict from session sourcing (auth_token + ct0).
+    `client_factory` is injectable for tests; the default builds a real twikit
+    client. Returns a list of normalized tweet dicts. Never posts or mutates.
+    """
+    if product not in X_SEARCH_PRODUCTS:
+        raise ValueError(f"invalid search product: {product!r}")
+    import asyncio
+
+    client = (client_factory or _default_x_client)()
+    client.set_cookies(cookies)
+    result = asyncio.run(client.search_tweet(query, product, count))
+    return [_normalize_tweet(t) for t in result][:count]

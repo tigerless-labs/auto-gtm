@@ -31,8 +31,10 @@
 
 ### 单元 3 — 可执行数据层 `reach/`
 - **3a 编排 + OS cookie 核心（已落地）**：`reach/session.py`（OS-aware cookie：Firefox 全平台明文读取 / Chromium mac+Linux 委托 / Win-Chrome 认栽）+ `reach/run.py`（三步 fallback 契约即代码、degrade 信号、status 不泄凭证）+ `config/data-layer.json`（stdlib 零依赖，故用 JSON 而非 YAML）收纳旋钮。单元 2 测试转绿。
-- **3b 认证适配器（部分落地）**：`reach/backends.py` 已接 `rdt` 为 Reddit 真实后端——只读白名单**在代码里强制**（写命令直接拒绝、不 shell）、`reddit_available` 读 `rdt status`、`authenticated_available` 已兼看 rdt 登录态；本机端到端验证通过（`sub-info` 取回真实订阅数，plan 首选 authenticated）。X 侧仅做 `twikit` 可用性探测。
-- **3b 剩余（待续）**：`twikit`（X）实际取数调用体（需装 twikit 才能验证）；`PRAW` 升级路；vendor `twikit`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）。
+- **3b 认证适配器（已落地）**：`reach/backends.py`。
+  - **Reddit（rdt）**：只读白名单**在代码里强制**（写命令直接拒绝、不 shell）、`reddit_available` 读 `rdt status`、`authenticated_available` 兼看 rdt 登录态；本机端到端验证通过（`sub-info` 取回真实订阅数，plan 首选 authenticated）。
+  - **X（twikit）**：`x_fetch` 按 twikit v2.3.3 真实 API 写（`set_cookies` + `async search_tweet`，只读只搜、不发帖），fake client 单测覆盖 cookie 接线/查询/归一化/count；真 twikit 已验证驱动到网络/鉴权边界（非 Import/Attribute 错）。**真实鉴权搜索本机无法验证**（无 X 登录态）。
+- **3b 剩余（待续）**：`PRAW` 升级路；vendor `twikit`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）。
 
 ### 单元 4 — 接线与端到端
 - **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。

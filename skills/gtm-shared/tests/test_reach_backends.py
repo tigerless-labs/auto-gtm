@@ -79,5 +79,57 @@ class XAvailability(unittest.TestCase):
         self.assertFalse(backends.x_available(importer=lambda: None))
 
 
+class _FakeUser:
+    screen_name = "swyx"
+
+
+class _FakeTweet:
+    def __init__(self, i):
+        self.id = f"t{i}"
+        self.text = f"tweet {i}"
+        self.user = _FakeUser()
+        self.favorite_count = i
+        self.retweet_count = 0
+        self.reply_count = 0
+        self.created_at = "now"
+
+
+class _FakeXClient:
+    def __init__(self, n=3):
+        self._n = n
+        self.cookies = None
+        self.searched = None
+
+    def set_cookies(self, cookies, clear_cookies=False):
+        self.cookies = cookies
+
+    async def search_tweet(self, query, product, count=20):
+        self.searched = (query, product, count)
+        return [_FakeTweet(i) for i in range(self._n)]
+
+
+class XFetch(unittest.TestCase):
+    def test_search_wires_cookies_query_and_normalizes(self):
+        fake = _FakeXClient(n=3)
+        out = backends.x_fetch(
+            "agent eval", {"auth_token": "AT", "ct0": "C"},
+            product="Latest", count=10, client_factory=lambda: fake,
+        )
+        self.assertEqual(fake.cookies, {"auth_token": "AT", "ct0": "C"})
+        self.assertEqual(fake.searched, ("agent eval", "Latest", 10))
+        self.assertEqual(out[0]["author"], "swyx")
+        self.assertEqual(out[0]["text"], "tweet 0")
+        self.assertIn("likes", out[0])
+
+    def test_count_limits_results(self):
+        fake = _FakeXClient(n=50)
+        out = backends.x_fetch("q", {}, count=5, client_factory=lambda: fake)
+        self.assertEqual(len(out), 5)
+
+    def test_invalid_product_refused(self):
+        with self.assertRaises(ValueError):
+            backends.x_fetch("q", {}, product="Newest", client_factory=lambda: _FakeXClient())
+
+
 if __name__ == "__main__":
     unittest.main()
