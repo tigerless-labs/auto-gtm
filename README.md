@@ -64,13 +64,7 @@ ln -s "$(pwd)/auto-gtm/skills/"* ~/.codex/skills/
 claude plugin update auto-gtm@tigerless-labs
 ```
 
-Use the full `plugin@marketplace` id — a bare name fails with "not found". Then **restart Claude Code** to apply: a version bump is a fresh cached copy, not a hot reload (`/reload-plugins` re-arms hooks in place, but a restart is the reliable way to land a new version). If it reports *already at the latest version* but a newer one shipped, your local catalog is stale — refresh it first:
-
-```
-claude plugin marketplace update tigerless-labs
-```
-
-Third-party marketplaces have auto-update **off** by default; enable it once via `/plugin` → **Marketplaces** → `tigerless-labs` → **Enable auto-update** to make future releases hands-off.
+Use the full `plugin@marketplace` id (a bare name fails), then **restart** to apply. Or enable auto-update once via `/plugin` → **Marketplaces** → `tigerless-labs` to skip this step in future.
 
 **Codex (CLI ≥ 0.144):**
 
