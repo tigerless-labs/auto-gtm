@@ -55,55 +55,85 @@ def reddit_fetch(command, args=None, runner=_run):
     return r.stdout
 
 
-# ------------------------------------------------------------------- X / twikit
+# ----------------------------------------------------------------- X / twscrape
+#
+# twscrape is the working X backend as of 2026-07: twikit 2.3.3 (latest) fails
+# X's anti-bot client-transaction-id handshake ("Couldn't get KEY_BYTE indices"),
+# while twscrape returns live results from the same auth_token+ct0 cookies. Both
+# are named in the design; empirically twscrape is the one that works now.
 
-def _import_twikit():
+def _import_twscrape():
     try:
-        import twikit  # optional dependency
-        return twikit
+        import twscrape  # optional dependency
+        return twscrape
     except ImportError:
         return None
 
 
 def x_available(importer=None):
-    """True when the twikit library is importable (X authenticated path)."""
-    imp = importer or _import_twikit
+    """True when the twscrape library is importable (X authenticated path)."""
+    imp = importer or _import_twscrape
     return imp() is not None
-
-
-X_SEARCH_PRODUCTS = ("Top", "Latest", "Media")
-
-
-def _default_x_client(language="en-US"):
-    import twikit
-    return twikit.Client(language)
 
 
 def _normalize_tweet(t):
     user = getattr(t, "user", None)
     return {
-        "id": getattr(t, "id", None),
-        "text": getattr(t, "text", None) or getattr(t, "full_text", None),
-        "author": getattr(user, "screen_name", None),
-        "likes": getattr(t, "favorite_count", None),
-        "retweets": getattr(t, "retweet_count", None),
-        "replies": getattr(t, "reply_count", None),
-        "created_at": getattr(t, "created_at", None),
+        "id": getattr(t, "id_str", None) or str(getattr(t, "id", "")),
+        "text": getattr(t, "rawContent", None),
+        "author": getattr(user, "username", None),
+        "likes": getattr(t, "likeCount", None),
+        "retweets": getattr(t, "retweetCount", None),
+        "replies": getattr(t, "replyCount", None),
+        "views": getattr(t, "viewCount", None),
+        "created_at": str(getattr(t, "date", "")) or None,
+        "url": getattr(t, "url", None),
     }
 
 
-def x_fetch(query, cookies, product="Latest", count=20, client_factory=None):
-    """Authenticated X search via twikit — read-only (search only).
+async def _x_search(api, cookie_str, query, limit):
+    # Cookie-only account (active immediately, no login); read-only search.
+    await api.pool.add_account("auto-gtm", "-", "auto-gtm@local", "-", cookies=cookie_str)
+    out = []
+    async for t in api.search(query, limit=limit):
+        out.append(_normalize_tweet(t))
+        if len(out) >= limit:
+            break
+    return out
 
-    `cookies` is a {name: value} dict from session sourcing (auth_token + ct0).
-    `client_factory` is injectable for tests; the default builds a real twikit
-    client. Returns a list of normalized tweet dicts. Never posts or mutates.
+
+def _default_x_api(db_path):
+    from twscrape import API
+    return API(db_path)
+
+
+def x_fetch(query, cookies, limit=20, api_factory=None):
+    """Authenticated X search via twscrape — read-only (search only, never posts).
+
+    `cookies` is a {name: value} dict from session sourcing; auth_token + ct0 are
+    required. `api_factory` (callable -> twscrape API) is injectable for tests;
+    the default uses a throwaway accounts DB so the current cookies are always
+    the ones used. Returns a list of normalized tweet dicts.
     """
-    if product not in X_SEARCH_PRODUCTS:
-        raise ValueError(f"invalid search product: {product!r}")
     import asyncio
+    import os
+    import tempfile
 
-    client = (client_factory or _default_x_client)()
-    client.set_cookies(cookies)
-    result = asyncio.run(client.search_tweet(query, product, count))
-    return [_normalize_tweet(t) for t in result][:count]
+    auth, ct0 = cookies.get("auth_token"), cookies.get("ct0")
+    if not (auth and ct0):
+        raise ValueError("missing X auth cookies (auth_token + ct0)")
+    cookie_str = f"auth_token={auth}; ct0={ct0}"
+
+    if api_factory is not None:
+        return asyncio.run(_x_search(api_factory(), cookie_str, query, limit))
+
+    fd, db = tempfile.mkstemp(suffix=".db")
+    os.close(fd)
+    try:
+        return asyncio.run(_x_search(_default_x_api(db), cookie_str, query, limit))
+    finally:
+        for path in (db, db + "-wal", db + "-shm"):
+            try:
+                os.remove(path)
+            except OSError:
+                pass

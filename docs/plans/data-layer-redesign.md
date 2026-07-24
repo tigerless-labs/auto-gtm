@@ -33,8 +33,8 @@
 - **3a 编排 + OS cookie 核心（已落地）**：`reach/session.py`（OS-aware cookie：Firefox 全平台明文读取 / Chromium mac+Linux 委托 / Win-Chrome 认栽）+ `reach/run.py`（三步 fallback 契约即代码、degrade 信号、status 不泄凭证）+ `config/data-layer.json`（stdlib 零依赖，故用 JSON 而非 YAML）收纳旋钮。单元 2 测试转绿。
 - **3b 认证适配器（已落地）**：`reach/backends.py`。
   - **Reddit（rdt）**：只读白名单**在代码里强制**（写命令直接拒绝、不 shell）、`reddit_available` 读 `rdt status`、`authenticated_available` 兼看 rdt 登录态；本机端到端验证通过（`sub-info` 取回真实订阅数，plan 首选 authenticated）。
-  - **X（twikit）**：`x_fetch` 按 twikit v2.3.3 真实 API 写（`set_cookies` + `async search_tweet`，只读只搜、不发帖），fake client 单测覆盖 cookie 接线/查询/归一化/count；真 twikit 已验证驱动到网络/鉴权边界（非 Import/Attribute 错）。**真实鉴权搜索本机无法验证**（无 X 登录态）。
-- **3b 剩余（待续）**：`PRAW` 升级路；vendor `twikit`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）。
+  - **X（twscrape）**：`x_fetch` 按 twscrape 真实 API 写（cookie-only 账号 + `async search`，只读只搜、不发帖），fake API 单测覆盖 cookie 接线/查询/归一化/limit。**端到端验证通过**：`session` 从 Chrome 取 `x.com` cookie（source=chromium）→ `x_fetch` 取回真实推文。选 twscrape 的原因：2026-07 实测 `twikit` 2.3.3（最新）挂在 X 反爬握手（`Couldn't get KEY_BYTE indices`），`twscrape` 用同一份 cookie 能出结果——正是「认证库随平台反爬每数周会断」的实例，也印证 keyless 兜底的必要。
+- **3b 剩余（待续）**：`PRAW` 升级路；vendor `twscrape`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）；给 X 账号 DB 一个稳定的 per-user 落点（现用 per-call 临时库，总用当前 cookie）。
 
 ### 单元 4 — 接线与端到端
 - **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。

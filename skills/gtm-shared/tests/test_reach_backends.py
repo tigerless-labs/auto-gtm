@@ -80,55 +80,65 @@ class XAvailability(unittest.TestCase):
 
 
 class _FakeUser:
-    screen_name = "swyx"
+    username = "swyx"
 
 
 class _FakeTweet:
     def __init__(self, i):
-        self.id = f"t{i}"
-        self.text = f"tweet {i}"
+        self.id = i
+        self.id_str = f"t{i}"
+        self.rawContent = f"tweet {i}"
         self.user = _FakeUser()
-        self.favorite_count = i
-        self.retweet_count = 0
-        self.reply_count = 0
-        self.created_at = "now"
+        self.likeCount = i
+        self.retweetCount = 0
+        self.replyCount = 0
+        self.viewCount = 10
+        self.date = "2026-07-24"
+        self.url = f"https://x.com/swyx/status/{i}"
 
 
-class _FakeXClient:
+class _FakePool:
+    def __init__(self):
+        self.added = None
+
+    async def add_account(self, username, password, email, email_password, cookies=None):
+        self.added = {"username": username, "cookies": cookies}
+
+
+class _FakeApi:
     def __init__(self, n=3):
         self._n = n
-        self.cookies = None
+        self.pool = _FakePool()
         self.searched = None
 
-    def set_cookies(self, cookies, clear_cookies=False):
-        self.cookies = cookies
-
-    async def search_tweet(self, query, product, count=20):
-        self.searched = (query, product, count)
-        return [_FakeTweet(i) for i in range(self._n)]
+    async def search(self, q, limit=-1, kv=None):
+        self.searched = (q, limit)
+        for i in range(self._n):
+            yield _FakeTweet(i)
 
 
 class XFetch(unittest.TestCase):
-    def test_search_wires_cookies_query_and_normalizes(self):
-        fake = _FakeXClient(n=3)
+    def test_requires_auth_cookies(self):
+        with self.assertRaises(ValueError):
+            backends.x_fetch("q", {"ct0": "C"}, api_factory=lambda: _FakeApi())  # no auth_token
+
+    def test_search_wires_cookies_and_normalizes(self):
+        fake = _FakeApi(n=3)
         out = backends.x_fetch(
             "agent eval", {"auth_token": "AT", "ct0": "C"},
-            product="Latest", count=10, client_factory=lambda: fake,
+            limit=10, api_factory=lambda: fake,
         )
-        self.assertEqual(fake.cookies, {"auth_token": "AT", "ct0": "C"})
-        self.assertEqual(fake.searched, ("agent eval", "Latest", 10))
+        self.assertEqual(fake.pool.added["cookies"], "auth_token=AT; ct0=C")
+        self.assertEqual(fake.searched, ("agent eval", 10))
         self.assertEqual(out[0]["author"], "swyx")
         self.assertEqual(out[0]["text"], "tweet 0")
         self.assertIn("likes", out[0])
+        self.assertTrue(out[0]["url"].startswith("https://x.com/"))
 
-    def test_count_limits_results(self):
-        fake = _FakeXClient(n=50)
-        out = backends.x_fetch("q", {}, count=5, client_factory=lambda: fake)
+    def test_limit_caps_results(self):
+        fake = _FakeApi(n=50)
+        out = backends.x_fetch("q", {"auth_token": "A", "ct0": "C"}, limit=5, api_factory=lambda: fake)
         self.assertEqual(len(out), 5)
-
-    def test_invalid_product_refused(self):
-        with self.assertRaises(ValueError):
-            backends.x_fetch("q", {}, product="Newest", client_factory=lambda: _FakeXClient())
 
 
 if __name__ == "__main__":

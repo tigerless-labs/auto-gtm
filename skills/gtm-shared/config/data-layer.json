@@ -2,7 +2,7 @@
   "platforms": {
     "x": {
       "domain": "x.com",
-      "primary": "twikit",
+      "primary": "twscrape",
       "floor_query": "site:x.com",
       "recency": { "topic": "~1 week", "reply": "same-day" }
     },

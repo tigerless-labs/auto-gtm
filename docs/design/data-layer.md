@@ -15,7 +15,7 @@ auto-gtm 取 X / Reddit 数据的取数逻辑权威。契约与命令在 [`data-
 
 每个平台就两级，外加一个可选升级——不搞多层多后端。
 
-- **X**：`twikit`（主路，登录态）→ keyless 兜底（host WebSearch）。
+- **X**：`twscrape`（主路，登录态）→ keyless 兜底（host WebSearch）。`twscrape`/`twikit` 同为主流；2026-07 实测 `twikit` 挂在 X 反爬握手（`KEY_BYTE indices`），`twscrape` 用同一份 `auth_token`+`ct0` 能取回实时结果，故选 `twscrape`。
 - **Reddit**：cookie 会话（主路，登录态）→ keyless 兜底（host WebSearch）；有 OAuth 凭证时可升级到 `PRAW`（最稳）。
 
 Arctic Shift 不进链——它只有滞后一两月的历史数据，不满足选题回看约一周、回帖当日的时窗；需要历史时单独取。
@@ -38,7 +38,7 @@ Arctic Shift 不进链——它只有滞后一两月的历史数据，不满足�
 
 ## 塞进插件（零安装）
 
-`twikit`、`PRAW`、以及 cookie 提取（yt-dlp 的提取器 + 一段 Firefox 读取）都是纯 Python，随插件分发，装完即用。`OpenCLI` 是桌面 app + 浏览器扩展，塞不进——只当「用户碰巧装了就白捡」的可选增强。
+`twscrape`、`PRAW`、以及 cookie 提取（yt-dlp 的提取器 + 一段 Firefox 读取）都是纯 Python，随插件分发，装完即用。`OpenCLI` 是桌面 app + 浏览器扩展，塞不进——只当「用户碰巧装了就白捡」的可选增强。
 
 ## 与安全护栏的关系
 
