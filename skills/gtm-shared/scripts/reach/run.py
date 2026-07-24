@@ -22,6 +22,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import session  # noqa: E402
+import backends  # noqa: E402
 
 CONFIG_PATH = HERE.parent.parent / "config" / "data-layer.json"
 
@@ -97,12 +98,18 @@ def status(platform, available):
 def authenticated_available(platform, probe=None):
     """Whether an authenticated session can be built for this platform.
 
-    `probe` (a callable domain->bool) is injectable for tests; the default
-    checks the user's own browser cookies via session sourcing.
+    `probe` (a callable domain->bool) is injectable for tests. By default,
+    dispatch to the platform's backend: Reddit is authenticated when `rdt`
+    reports a session or the browser holds reddit cookies; X is authenticated
+    when twikit is importable and the browser holds x cookies.
     """
     p = platform_config(platform)
     if probe is not None:
         return bool(probe(p["domain"]))
+    if platform == "reddit":
+        return backends.reddit_available() or bool(session.get_cookies(p["domain"])[1])
+    if platform == "x":
+        return backends.x_available() and bool(session.get_cookies(p["domain"])[1])
     _src, cookies = session.get_cookies(p["domain"])
     return bool(cookies)
 

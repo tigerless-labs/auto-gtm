@@ -31,7 +31,8 @@
 
 ### 单元 3 — 可执行数据层 `reach/`
 - **3a 编排 + OS cookie 核心（已落地）**：`reach/session.py`（OS-aware cookie：Firefox 全平台明文读取 / Chromium mac+Linux 委托 / Win-Chrome 认栽）+ `reach/run.py`（三步 fallback 契约即代码、degrade 信号、status 不泄凭证）+ `config/data-layer.json`（stdlib 零依赖，故用 JSON 而非 YAML）收纳旋钮。单元 2 测试转绿。
-- **3b 认证适配器 + vendor（待续）**：`twikit`（X）/ `rdt`/`PRAW`（Reddit）的实际取数调用体；vendor 三者纯 Python 源（先核 license）；让 `authenticated_available` 兼看 `rdt` 已登录态而非仅浏览器 cookie。
+- **3b 认证适配器（部分落地）**：`reach/backends.py` 已接 `rdt` 为 Reddit 真实后端——只读白名单**在代码里强制**（写命令直接拒绝、不 shell）、`reddit_available` 读 `rdt status`、`authenticated_available` 已兼看 rdt 登录态；本机端到端验证通过（`sub-info` 取回真实订阅数，plan 首选 authenticated）。X 侧仅做 `twikit` 可用性探测。
+- **3b 剩余（待续）**：`twikit`（X）实际取数调用体（需装 twikit 才能验证）；`PRAW` 升级路；vendor `twikit`/`PRAW`/yt-dlp cookie 提取的纯 Python 源（先核 license）。
 
 ### 单元 4 — 接线与端到端
 - **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。
