@@ -10,10 +10,12 @@ You are the router for auto-gtm. **Do not do the work yourself.** Orient the req
 
 ## First: orient + store
 
-Before routing, make sure you know (ask if missing, then persist to `~/Documents/auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md)):
+**Read `~/Documents/auto-gtm/` first** — slugify the product/repo, load its `product.md` if present, and ask only for what's still missing. Persist new or confirmed values back. See [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md).
+
+Know before routing:
 1. the **product / repo** to promote,
 2. its **highlights**,
-3. the **need** — write posts, or warm up the account (comments).
+3. the **need** — write posts or warm up the account (comments), and the **platform** — X or Reddit.
 
 ## Routing map
 
