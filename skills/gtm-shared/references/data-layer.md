@@ -39,7 +39,7 @@ opencli twitter search "query" -f yaml                    # 3. OpenCLI (desktop,
 # 4. fall back to twitter feed / user-posts @handle to route around search
 ```
 
-Auth is **optional** (Tier 2 covers the no-login case), one-time, remembered: set `TWITTER_AUTH_TOKEN` + `TWITTER_CT0` from a Cookie-Editor export, or use OpenCLI's browser login state (no env vars). Automatic cookie extraction does not work in SSH/Docker/headless. Do not call frequently from a datacenter/VPS IP — account-risk.
+Auth is **optional** (Tier 2 covers the no-login case) and one-time. **Simplest — reuse your logged-in browser (desktop):** `twitter-cli` auto-extracts the x.com cookie, nothing to paste — the same browser-cookie path last30days uses (`setup --allow-browser-cookies`, cookies read live, never saved) and that `rdt login` uses for Reddit. **Headless / SSH / Docker** (auto-extraction can't reach a browser there): set `TWITTER_AUTH_TOKEN` + `TWITTER_CT0` from a Cookie-Editor export, or use OpenCLI's browser login state. Do not call frequently from a datacenter/VPS IP — account-risk.
 
 ### Tier 2 — keyless floor (no login, always works)
 
