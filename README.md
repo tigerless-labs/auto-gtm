@@ -48,7 +48,13 @@ codex plugin marketplace add tigerless-labs/auto-gtm
 codex plugin add auto-gtm@tigerless-labs
 ```
 
-> **On the Codex desktop app**, the sandbox needs one extra setup step before the Reddit/X tools work. Easiest: tell Codex `read docs/codex-desktop-setup.md and set it up`. The manual steps live in [docs/codex-desktop-setup.md](docs/codex-desktop-setup.md).
+> **On the Codex desktop app**, its sandbox needs one setup step before the Reddit/X tools work. Simplest — paste this to Codex and it installs and configures itself:
+>
+> ```
+> Install auto-gtm and set it up: https://github.com/tigerless-labs/auto-gtm/blob/main/docs/codex-desktop-setup.md
+> ```
+>
+> The manual steps are in [docs/codex-desktop-setup.md](docs/codex-desktop-setup.md).
 
 Older Codex versions without the `plugin add` subcommand can install the skills directly (current Codex scans `$HOME/.agents/skills`; older builds used `~/.codex/skills`):
 
