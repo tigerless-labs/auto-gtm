@@ -9,12 +9,12 @@ description: >
 
 Turn a repo + today's internet into a short topic report. **Always emit both parts** in one md — do not ask the user which type. Drafting the post/comment is downstream (`x-content-generator`, `reddit-post-drafter`, the comment skills).
 
-Storage: read/refresh `.auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md). The promoted product/repo + highlights come from there (or the trigger).
+Storage: read/refresh `~/Documents/auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md). The promoted product/repo + highlights come from there (or the trigger).
 
 ## Part a — product update (what *you* shipped)
 
 - **Is it an update?** Read the repo's recent **GitHub PRs** (merged, last day): summarize the **major change + why it matters**. `gh pr list --state merged --search "merged:>=<yesterday>"`, then `gh pr view <n>` for the meaningful ones. Skip trivia (deps, typos).
-- **Is it a new product?** Use the stored **highlights** (`.auto-gtm/product.md`); don't re-ask if already captured.
+- **Is it a new product?** Use the stored **highlights** (`~/Documents/auto-gtm/<product-slug>/product.md`); don't re-ask if already captured.
 - Output the **fewest words** that carry the change and its significance. No release-note padding.
 
 ## Part b — hotspot / topic (what the world is saying, today)

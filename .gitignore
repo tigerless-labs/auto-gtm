@@ -1,9 +1,6 @@
 # Local settings & session-internal artifacts
 .claude/
 
-# Per-user GTM state written by the skills at runtime
-.auto-gtm/
-
 # Python
 __pycache__/
 *.pyc

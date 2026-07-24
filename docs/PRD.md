@@ -11,7 +11,7 @@
 2. 相关 **亮点 / highlight**
 3. 需求：**写帖子** 还是 **养号（评论）**
 
-答案写入 `.auto-gtm/`（见存储），按需求路由；每个 skill 执行后各产出一个 md。
+答案写入全局 `~/Documents/auto-gtm/`（见存储），按需求路由；每个 skill 执行后各产出一个 md。
 
 ## Skills
 
@@ -41,10 +41,13 @@
 3. 用户的要求
 4. 评论再叠加相关热帖的高赞口吻
 
-## 存储（仅 repo 本地 `.auto-gtm/`，极简）
-- 要推广的**产品 / repo + 亮点**、喜欢的**博主**、**subreddit** 记录。
+## 存储（用户全局 `~/Documents/auto-gtm/`，极简）
+模仿 last30days 的 `~/Documents/Last30Days/`：全局、跨 session、不依赖 cwd。**按产品分目录**（多产品不互相覆盖），博主 per-user 放根部共享：
+- `bloggers.md`（根，per-user）：喜欢的**博主**。
+- `<product-slug>/product.md`：该**产品 / repo + 亮点**。
+- `<product-slug>/subreddits.md`：该产品选定的 **subreddit**。
 
-登录状态**不由我们存**——`rdt` / `twitter-cli` 各自把登录记在机器全局（`~/.config/rdt-cli/` 等），查 CLI status 即知是否已配置，故「只问一次」无需我们落任何标记。凭据、抓取内容一律不落盘，结果停在 md。
+登录状态**不由我们存**——`rdt` / `twitter-cli` 各自把登录记在机器全局（`~/.config/rdt-cli/` 等），查 CLI status 即知；凭据、抓取内容一律不落盘，结果停在 md。
 
 ## 硬约束
 - **时效**：找帖 / 找评论只取**当日（24h 内）**高热帖。

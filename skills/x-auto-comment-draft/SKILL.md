@@ -9,7 +9,7 @@ description: >
 
 Find same-day X posts your repo can credibly speak to, and draft a reply for each. Never posts — output is reply drafts + the post links for the human to publish.
 
-Storage / tone / product come from `.auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md).
+Storage / tone / product come from `~/Documents/auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md).
 
 ## Find the posts (in this order)
 
