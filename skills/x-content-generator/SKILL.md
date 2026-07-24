@@ -29,12 +29,7 @@ Give the reader something worth their time, in a sincere voice, never engagement
   - When the user's structural ask conflicts with the exemplars' shape (e.g.
     "make it two updates"), satisfy the content of the ask inside the voice —
     two first-person moves, not two headings. On form, the exemplars win.
-- **Tone source, in priority order** (see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md)):
-  1. the user's **favorite bloggers** — from `~/Documents/auto-gtm/bloggers.md`. **First capture:** ask for the handles, fetch ~10 posts each with `twitter user-posts @handle` ([data layer](../gtm-shared/references/data-layer.md)), and store handles + samples. **Later runs:** read the stored samples — no re-fetch. Mimic their cadence.
-  2. the user's **own account** (same file — ~10 own posts captured the first time alongside the bloggers);
-  3. the user's **explicit ask** this run.
-  Fall back to the bundled exemplars below when none is available.
-- Read the full [`references/tone-examples.md`](references/tone-examples.md) for verbatim exemplars. **Mimic cadence/structure, not opinions.**
+- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md): voice from the stored blogger / own-account samples in `bloggers.md` (first capture fetches ~10 each and stores them; later runs read them), your explicit ask governs content. This is an original post — no per-thread overlay. When no bloggers are set, use the bundled exemplars: read [`references/tone-examples.md`](references/tone-examples.md). **Mimic cadence/structure, not opinions.**
 - Run every draft through the bundled **no-ai-slop** skill before finalizing — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md) and verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md).
 - Write **1-2 drafts**; include the source link for shares.
 

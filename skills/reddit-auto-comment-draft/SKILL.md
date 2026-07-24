@@ -20,7 +20,7 @@ Use the **user-specified** sub, else the stored choice (`~/Documents/auto-gtm/<p
 Derive terms from the product/highlights. `rdt search "<terms>" -r <sub> -s relevance -t day` — **relevance, last 24h**. Keep on-topic threads with a real reply opening; skip anything already well-answered. Pull each with `rdt read <post_id> -s top` for the post + top comments.
 
 ### 3. Learn the voice
-Mimic the subreddit's high-upvote comments' cadence and structure (`rdt sub <sub> -s top` or the thread's top replies), **not their opinions**. See reddit-voice. (Tone priority, see storage: favorite bloggers → own account → user's ask → top-upvoted replies.)
+Follow the tone contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md) and [`reddit-voice`](../reddit-shared/references/reddit-voice.md): voice from the stored blogger / own-account samples in `bloggers.md`, your ask governs content, plus the **per-thread overlay** — mimic **this thread's top-upvoted comments** (`rdt read <post_id> -s top`). Cadence and structure, **not opinions**.
 
 ### 4. Draft the escalation ladder
 Per thread, three labeled variants, most restrained first:
