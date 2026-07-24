@@ -4,6 +4,8 @@ auto-gtm 按「场景 × 平台 = 一个 skill」拆分。每个 skill 止于草
 
 ## 工具族
 
+- **跨平台**
+  - `topic-scout` — repo + 近期热点 → 合并选题报告(可选集成 last30days)。见 [topic-scout.md](topic-scout.md)
 - **X / Twitter**
   - `x-topic-distiller` — 会话 → 选题
   - `x-content-generator` — 选题 → 正文
