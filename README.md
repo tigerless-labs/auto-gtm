@@ -58,19 +58,12 @@ ln -s "$(pwd)/auto-gtm/skills/"* ~/.codex/skills/
 
 ### Update
 
-**Claude Code:**
-
-```
-claude plugin update auto-gtm@tigerless-labs
-```
-
-Use the full `plugin@marketplace` id — a bare name fails with "not found". Then **restart Claude Code** to apply: a version bump is a fresh cached copy, not a hot reload (`/reload-plugins` re-arms hooks in place, but a restart is the reliable way to land a new version). If it reports *already at the latest version* but a newer one shipped, your local catalog is stale — refresh it first:
+**Claude Code** — run in your terminal (then restart to apply):
 
 ```
 claude plugin marketplace update tigerless-labs
+claude plugin update auto-gtm@tigerless-labs
 ```
-
-Third-party marketplaces have auto-update **off** by default; enable it once via `/plugin` → **Marketplaces** → `tigerless-labs` → **Enable auto-update** to make future releases hands-off.
 
 **Codex (CLI ≥ 0.144):**
 
@@ -92,9 +85,9 @@ Turn that topic into an X post
 Find X posts about AI dev tools I can reply to
 ```
 
-### Data setup (one-time, asked once)
+### Data setup (one-time)
 
-auto-gtm ships its own self-contained [data layer](skills/gtm-shared/references/data-layer.md) — it does **not** require the agent-reach or last30days skills. Logins live in each CLI's own local store, never in the repo; each CLI remembers its own login (`rdt status` / the X cookie), so auto-gtm keeps **no marker of its own** and only asks you to set a backend up when it isn't already.
+Set a backend up once and auto-gtm reuses it — you're only prompted when one isn't ready. Credentials stay in each tool's own local store, never in this repo.
 
 **Reddit** reads through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
 
