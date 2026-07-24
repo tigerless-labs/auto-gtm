@@ -48,6 +48,10 @@ When Tier 1 is unavailable or returns nothing, use the host's native **WebSearch
 
 For "what are top builders posting today", pull the follow-builders daily X feed directly (keyless, no install): [`../scripts/fetch_builder_report.py`](../scripts/fetch_builder_report.py). It fetches one public JSON from `zarazhangrui/follow-builders` and prints a filtered 24h digest; on network error it exits non-zero so the caller falls back to Tier 1/Tier 2 search.
 
+## Host sandbox (Codex desktop app)
+
+The data layer is host-agnostic — no code changes per host. Under Codex desktop's default `workspace-write` sandbox, three facts govern it: outbound **network is off** until opted in; **writes outside the workspace are blocked** (so `rdt login` and cookie setup run once in a system terminal, not inside the app); **reads outside the workspace are allowed** (the app reads each CLI's machine-global store at run time). The user-side `config.toml` settings live in the README's [Codex desktop app](../../../README.md#codex-desktop-app) runbook; skills assume the tools are reachable and degrade to the keyless floor when they aren't.
+
 ## Guarantees
 
 - **Least privilege:** each read uses the user's own login; no central harvesting, no write commands, no credentials in the repo/drafts/logs.
