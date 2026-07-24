@@ -23,7 +23,7 @@ Storage: read/refresh `~/Documents/auto-gtm/` — see [`../gtm-shared/references
 
 Runs on the plugin's own [data layer](../gtm-shared/references/data-layer.md) — self-contained, keyless-capable, no external skill required.
 
-1. **Builder pulse:** run [`../gtm-shared/scripts/fetch_builder_report.py`](../gtm-shared/scripts/fetch_builder_report.py) `--hours 168 --query "<repo terms>"` — it pulls the follow-builders X feed (keyless) and prints a filtered recent digest. Keep what's on-topic to the repo's domain. On non-zero exit, fall back to the X search tiers.
+1. **Builder pulse:** run [`../gtm-shared/scripts/fetch_builder_report.py`](../gtm-shared/scripts/fetch_builder_report.py) (optionally `--query "<repo terms>"`) — it pulls the follow-builders **X + blogs + podcasts** feeds (keyless; each already recency-scoped upstream, no hour cap here) and prints a three-section digest. Remix it into a short builder digest: group under **X / Blogs / Podcasts**, one line per item stating its point, keep each item's source link, drop anything with no link or off the repo's domain, and **never invent content that isn't in the feed**. On non-zero exit, fall back to the X search tiers.
 2. **Topic pulse:** derive query terms from the product/highlights; fetch **recent** high-engagement posts on X (tiered — `twitter-cli` then keyless floor) and `rdt search "<terms>" -s relevance -t week` (Reddit), per [data-layer.md](../gtm-shared/references/data-layer.md). You are the planner — rank by recency × engagement × topical fit.
 3. Keep only **recent** items that a builder promoting this repo could credibly speak to.
 
