@@ -21,7 +21,7 @@ Keep only posts from the **last 24h** where a builder behind this repo has somet
 
 ## Draft the replies
 
-- **Tone** (priority, see storage): favorite bloggers → own account → user's ask → **the post's own top-liked replies** (mimic their cadence/structure for *this* thread, not their opinions). Fetch the thread's top replies with `twitter tweet URL_OR_ID` ([data layer](../gtm-shared/references/data-layer.md)) for the last one.
+- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md): voice from the stored blogger / own-account samples in `bloggers.md`, your ask governs content, plus the **per-thread overlay** for replies — mimic **this post's own top-liked replies** (fetch with `twitter tweet URL_OR_ID`, [data layer](../gtm-shared/references/data-layer.md)). Cadence, not opinions.
 - **Posture:** value-first. Answer the post on its own terms; mention the product only where it's the natural answer, and **no links in a first-touch reply** from a cold account.
 - **De-AI pass (mandatory):** run every draft through the bundled **no-ai-slop** skill — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md), verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md). No draft ships without it.
 

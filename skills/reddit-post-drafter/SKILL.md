@@ -17,7 +17,7 @@ Shared contracts: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) 
 Use the user-specified sub, else the stored choice (`~/Documents/auto-gtm/<product-slug>/subreddits.md`), else run `reddit-subreddit-finder`. From `rdt sub-info <sub>` summarize `submission_type`, `restrict_posting`, self-promo rules, flair (guardrails). If the sub bans self-promo and the topic is promotional, **say so and stop** — suggest the comment skill instead.
 
 ### 2. Learn the voice
-Read the sub's high-upvote **posts** (`rdt sub <sub> -s top`) and mimic how titles and bodies actually read there — length, formatting, how much story vs. ask. Tone priority (see storage): favorite bloggers → own account → user's ask.
+Read the sub's high-upvote **posts** (`rdt sub <sub> -s top`) and mimic how titles and bodies actually read there — length, formatting, how much story vs. ask. Over that, follow the tone contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md): voice from the stored blogger / own-account samples in `bloggers.md`, your ask governs content. This is an original post — no per-thread overlay.
 
 ### 3. Draft
 - Frame as **value / story**, not an ad: what you built, what it's for, what you learned — the product is the subject, not a pitch.
