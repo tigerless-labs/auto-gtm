@@ -6,19 +6,19 @@ GTM state is kept **once per user**, not per repo — so it survives across sess
 
 ```
 ~/Documents/auto-gtm/
-  bloggers.md              # tone identities — favorite bloggers' handles + the user's own account handle (tone #1-2)
+  bloggers.md              # tone voice — handles (favorite bloggers + own account) + ~10 verbatim posts each (tone #1-2)
   <product-slug>/
     product.md             # the promoted product / repo + its highlights
     subreddits.md          # the subreddits the human chose for THIS product
 ```
 
 - **`<product-slug>`** — a short kebab-case slug of the product / repo (e.g. a repo named `auto-gtm` → `auto-gtm`). Derived from the trigger's product/repo answer; reused on later runs so a returning product loads its own state instead of clobbering another's.
-- **`bloggers.md`** is per-user (one file at the root): just the **handles** whose voice to draw on — the favorite bloggers and the user's own account. Captured the **first time** they're named, remembered after, never re-asked. **Only the identities are stored — never their fetched posts / voice samples.** At draft time a skill fetches a few of those handles' posts live for cadence (voice is slow-changing; nothing to persist).
+- **`bloggers.md`** is per-user (one file at the root) — the user's own version of the bundled `tone-examples.md`. **On first capture**, store both the **handles** (favorite bloggers + the user's own account) and **~10 verbatim posts each** (prefer top-performing, keep a few recent), fetched once via the [data layer](data-layer.md). Later runs **read these stored samples** for cadence — no re-fetch. Refresh only when the user asks. Falls back to the bundled `tone-examples.md` when no bloggers are set.
 - **`product.md`** and **`subreddits.md`** are per-product (under the slug folder).
 
 ## What's stored — nothing else
 
-The promoted **product / repo + highlights**, the tone **handles** (favorite bloggers + own account), and the chosen **subreddits**. No voice samples, no login/setup markers, no fetched post bodies, no user profiles, no analytics, no drafts, no credentials.
+The promoted **product / repo + highlights**; the tone **voice** (favorite-blogger + own-account handles, each with ~10 sample posts captured once); and the chosen **subreddits**. No login/setup markers, no per-run fetched bodies, no user profiles, no analytics, no drafts, no credentials.
 
 ## Login state is NOT stored — the CLIs already remember it
 
