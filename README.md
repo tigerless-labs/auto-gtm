@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/tigerless-labs/auto-gtm/main/.claude-plugin/plugin.json&query=$.version&label=release&prefix=v&color=brightgreen" alt="release" />
+  <img src="https://img.shields.io/badge/release-v0.2.12-brightgreen.svg" alt="release" />
   <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" />
   <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" />
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
@@ -58,14 +58,19 @@ ln -s "$(pwd)/auto-gtm/skills/"* ~/.codex/skills/
 
 ### Update
 
-Refresh the marketplace, then reinstall to pull the latest version.
-
 **Claude Code:**
 
 ```
-/plugin marketplace update tigerless-labs
-/plugin install auto-gtm@tigerless-labs
+claude plugin update auto-gtm@tigerless-labs
 ```
+
+Use the full `plugin@marketplace` id — a bare name fails with "not found". Then **restart Claude Code** to apply: a version bump is a fresh cached copy, not a hot reload (`/reload-plugins` re-arms hooks in place, but a restart is the reliable way to land a new version). If it reports *already at the latest version* but a newer one shipped, your local catalog is stale — refresh it first:
+
+```
+claude plugin marketplace update tigerless-labs
+```
+
+Third-party marketplaces have auto-update **off** by default; enable it once via `/plugin` → **Marketplaces** → `tigerless-labs` → **Enable auto-update** to make future releases hands-off.
 
 **Codex (CLI ≥ 0.144):**
 
