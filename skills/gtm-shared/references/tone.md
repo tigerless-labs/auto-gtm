@@ -6,7 +6,7 @@ The single source of truth for tone. Every drafting skill (X/Reddit posts and re
 
 1. **Favorite bloggers** — the handles + their **~10 stored sample posts** in `~/Documents/auto-gtm/bloggers.md`.
 2. **The user's own account** — same file, ~10 of their own posts captured alongside.
-3. **Bundled fallback** — when no bloggers are set: X uses [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
+3. **Bundled fallback** — a **disclosed downgrade**, used only when the user chooses to skip capture: X uses [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
 
 Mimic cadence and structure, **never opinions**.
 
@@ -22,6 +22,14 @@ When drafting a **reply**, also mimic that specific thread's top-voted replies' 
 
 Original posts (X post / Reddit post) have no per-thread overlay.
 
-## First capture & storage — once
+## Resolve the voice source — before any draft
 
-The **first time** the user names favorite bloggers (and their own account), fetch **~10 posts each** via the [data layer](data-layer.md) (`twitter user-posts @handle`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.** If `bloggers.md` is missing/empty and the user hasn't named anyone, use the bundled fallback and offer to capture bloggers.
+Every drafting skill must land on this gate before writing a single draft. Capturing the user's voice is the **default path**; the bundled fallback is a **disclosed downgrade**, never an equal option chosen for lower friction.
+
+- **Stored samples exist** (`bloggers.md` non-empty) → read and use them. Do not re-ask, do not re-fetch.
+- **No samples, and the user has never named anyone** → **offer to capture first**: ask for their favorite blogger handles and their own account. Do **not** silently fall back to bundled exemplars.
+- **User explicitly skips or asks for defaults** → use the bundled fallback (the chain above). The draft that round **must state it used the default voice and can be re-drafted once bloggers are captured**.
+
+### First capture & storage — once
+
+On the first capture, fetch **~10 posts each** via the [data layer](data-layer.md) (`twitter user-posts @handle`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.**
