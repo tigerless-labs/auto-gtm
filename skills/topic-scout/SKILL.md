@@ -1,23 +1,23 @@
 ---
 name: topic-scout
 description: >
-  Produce GTM topics for X and Reddit as ONE combined report — part (a) what changed in your product (from GitHub PRs / stored highlights), part (b) recent builder + web hotspots, in full (from your data layer — not filtered to your product). Cross-platform; feeds the draft and comment skills.
+  Produce GTM topics for X and Reddit as ONE combined report — part (a) every product topic you have (launch-worthy highlights AND shipped updates from GitHub PRs), part (b) recent builder + web hotspots, in full (from your data layer — not filtered to your product). Asks nothing; emits every topic it finds. Cross-platform; feeds the draft and comment skills.
   **Manually triggered** — use when the user says "what should I post about / find me topics / any angles for my repo today". Only produces the report; does not draft or publish.
 ---
 
 # topic-scout — one topic report, two parts
 
-Turn a repo + today's internet into a short topic report. **Always emit both parts** in one md — part a first asks whether this is an initial launch or an update, part b always runs. Drafting the post/comment is downstream (`x-content-generator`, `reddit-post-drafter`, the comment skills).
+Turn a repo + today's internet into a short topic report. **Ask the user nothing — emit every topic you find**: launch-worthy highlights, shipped updates, and recent hotspots, all in one md. Both parts always run. Drafting the post/comment is downstream (`x-content-generator`, `reddit-post-drafter`, the comment skills).
 
 Storage: read/refresh `~/Documents/auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md). The promoted product/repo + highlights come from there (or the trigger).
 
-## Part a — product update (what *you* shipped)
+## Part a — product topics (what *you* have to say)
 
-**First ask the user: is this an initial launch or an update?** Then:
+**Ask nothing — run both sources every time** and emit every topic either one yields, each tagged `launch` or `update`. The user picks; you don't pre-select.
 
-- **Initial launch** → use the stored **highlights** (`~/Documents/auto-gtm/<product-slug>/product.md`); do not read PRs. **If none are stored yet:** summarize candidate highlights from what's available (the repo's README, metadata, the trigger context) and run the whole report with them — do **not** stop to confirm mid-flow. Present those candidates for confirmation at the **end** (see Output); save to `product.md` (per [storage.md](../gtm-shared/references/storage.md)) only after the user confirms, or revise per their correction. Never invent highlights ungrounded in the available info, and never write storage before confirmation.
-- **Update** → read the repo's recent **merged GitHub PRs** and summarize the **major change + why it matters**. `gh pr list --state merged`, then `gh pr view <n>` for the meaningful ones. Skip trivia (deps, typos).
-- Output the **fewest words** that carry the change and its significance. No release-note padding.
+- **Launch topics** → the stored **highlights** (`~/Documents/auto-gtm/<product-slug>/product.md`). Every highlight that stands on its own is a topic, whether or not the product has launched before. **If none are stored yet:** summarize candidate highlights from what's available (the repo's README, metadata, the trigger context) and run the whole report with them — do **not** stop to confirm mid-flow. Present those candidates for confirmation at the **end** (see Output); save to `product.md` (per [storage.md](../gtm-shared/references/storage.md)) only after the user confirms, or revise per their correction. Never invent highlights ungrounded in the available info, and never write storage before confirmation.
+- **Update topics** → read the repo's recent **merged GitHub PRs** and summarize each meaningful **change + why it matters**. `gh pr list --state merged`, then `gh pr view <n>` for the ones worth it. Skip trivia (deps, typos).
+- Output the **fewest words** that carry each topic and its significance. No release-note padding.
 
 ## Part b — hotspot / topic (what the world is saying, recently)
 
@@ -37,8 +37,10 @@ One md report:
 ```
 # Topic report — <date>
 
-## a. Product update
-<fewest-words summary of the shipped change + why it matters, or "nothing post-worthy to report">
+## a. Product topics
+- [launch] <highlight — why it matters>
+- [update] <shipped change — why it matters>
+- ...  (or "nothing post-worthy to report")
 
 ## b. Hotspots (recent)
 - <topic angle> — <one paragraph on the conversation (and the repo's angle if there is one)> — <source link>
