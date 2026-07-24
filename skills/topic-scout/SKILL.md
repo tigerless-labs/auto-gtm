@@ -1,7 +1,7 @@
 ---
 name: topic-scout
 description: >
-  Produce GTM topics for X and Reddit as ONE combined report — part (a) what changed in your product (from GitHub PRs / stored highlights), part (b) recent relevant hotspots (from your data layer + a curated builder list). Cross-platform; feeds the draft and comment skills.
+  Produce GTM topics for X and Reddit as ONE combined report — part (a) what changed in your product (from GitHub PRs / stored highlights), part (b) recent builder + web hotspots, in full (from your data layer — not filtered to your product). Cross-platform; feeds the draft and comment skills.
   **Manually triggered** — use when the user says "what should I post about / find me topics / any angles for my repo today". Only produces the report; does not draft or publish.
 ---
 
@@ -23,9 +23,9 @@ Storage: read/refresh `~/Documents/auto-gtm/` — see [`../gtm-shared/references
 
 Runs on the plugin's own [data layer](../gtm-shared/references/data-layer.md) — self-contained, keyless-capable, no external skill required.
 
-1. **Builder pulse:** run [`../gtm-shared/scripts/fetch_builder_report.py`](../gtm-shared/scripts/fetch_builder_report.py) (optionally `--query "<repo terms>"`) — it pulls the follow-builders **X + blogs + podcasts** feeds (keyless; each already recency-scoped upstream, no hour cap here) and prints a three-section digest. Remix it into a short builder digest: group under **X / Blogs / Podcasts**, one line per item stating its point, keep each item's source link, drop anything with no link or off the repo's domain, and **never invent content that isn't in the feed**. On non-zero exit, fall back to the X search tiers.
-2. **Topic pulse:** derive query terms from the product/highlights; fetch **recent** high-engagement posts on X (tiered — `twitter-cli` then keyless floor) and `rdt search "<terms>" -s relevance -t week` (Reddit), per [data-layer.md](../gtm-shared/references/data-layer.md). You are the planner — rank by recency × engagement × topical fit.
-3. Keep only **recent** items that a builder promoting this repo could credibly speak to.
+1. **Builder pulse:** run [`../gtm-shared/scripts/fetch_builder_report.py`](../gtm-shared/scripts/fetch_builder_report.py) — it pulls the follow-builders **X + blogs + podcasts** feeds (keyless; each already recency-scoped upstream, no hour cap here) and prints a three-section digest. Take it **in full — do NOT filter to the repo's domain**; these are recent builder hotspots, relevance to your product is not required. Remix into a short digest: group under **X / Blogs / Podcasts**, one line per item stating its point, keep each item's source link, drop only items with no link, and **never invent content that isn't in the feed**. On non-zero exit, fall back to the X search tiers.
+2. **Topic pulse:** fetch other **recent** high-engagement posts on X (tiered — `twitter-cli` then keyless floor) and Reddit (`rdt search "<terms>" -s relevance -t week`), per [data-layer.md](../gtm-shared/references/data-layer.md). You are the planner — rank by recency × engagement.
+3. Keep the **recent** hotspots as-is. Note the repo's credible angle **where one exists**, but relevance is not a filter — a builder wants to see what's hot, related or not.
 
 Per topic, write **one short paragraph + the source link**.
 
@@ -40,7 +40,7 @@ One md report:
 <fewest-words summary of the shipped change + why it matters, or "nothing post-worthy to report">
 
 ## b. Hotspots (recent)
-- <topic angle> — <one paragraph on the conversation and the repo's credible angle> — <source link>
+- <topic angle> — <one paragraph on the conversation (and the repo's angle if there is one)> — <source link>
 - ...
 ```
 
