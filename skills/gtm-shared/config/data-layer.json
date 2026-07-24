@@ -1,0 +1,18 @@
+{
+  "platforms": {
+    "x": {
+      "domain": "x.com",
+      "primary": "twscrape",
+      "floor_query": "site:x.com",
+      "recency": { "topic": "~1 week", "reply": "same-day" }
+    },
+    "reddit": {
+      "domain": "reddit.com",
+      "primary": "cookie-session",
+      "upgrade": "praw",
+      "floor_query": "site:reddit.com",
+      "recency": { "topic": "~1 week", "reply": "same-day" }
+    }
+  },
+  "keyless_floor_enabled": true
+}
