@@ -30,7 +30,8 @@
 - **验收**：`reach/` 的取数入口与 OS-aware cookie 取用有 fixture 测试——断言 fallback 顺序（认证→兜底）、OS 分支选择、以及「兜底时标注近似」这一不变量；红队用例覆盖注入与私据泄漏。用 fixtures，不打真实平台。
 
 ### 单元 3 — 可执行数据层 `reach/`
-- **验收**：`reach/run.py`（三步 fallback 只读收口）+ `reach/session.py`（OS-aware cookie：Firefox 全平台 / Chromium mac+Linux / Win-Chrome 手动）+ 每平台薄适配器；vendor `twikit`、`PRAW`、yt-dlp 的 cookie 提取，纯 Python 零安装；`config/data-layer.yml` 收纳旋钮。单元 2 的测试转绿。
+- **3a 编排 + OS cookie 核心（已落地）**：`reach/session.py`（OS-aware cookie：Firefox 全平台明文读取 / Chromium mac+Linux 委托 / Win-Chrome 认栽）+ `reach/run.py`（三步 fallback 契约即代码、degrade 信号、status 不泄凭证）+ `config/data-layer.json`（stdlib 零依赖，故用 JSON 而非 YAML）收纳旋钮。单元 2 测试转绿。
+- **3b 认证适配器 + vendor（待续）**：`twikit`（X）/ `rdt`/`PRAW`（Reddit）的实际取数调用体；vendor 三者纯 Python 源（先核 license）；让 `authenticated_available` 兼看 `rdt` 已登录态而非仅浏览器 cookie。
 
 ### 单元 4 — 接线与端到端
 - **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。
