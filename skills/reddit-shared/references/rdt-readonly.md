@@ -4,7 +4,9 @@ All Reddit data comes from `rdt` (`rdt-cli`, the plugin's own login-state backen
 
 ## Read-only whitelist — the ONLY commands a Reddit skill may call
 
-`search` · `read` · `sub` · `sub-info` · `popular` · `all` · `user` · `user-posts` · `user-comments` · `export`
+`status` · `search` · `read` · `sub` · `sub-info` · `popular` · `all` · `user` · `user-posts` · `user-comments` · `export`
+
+(`status` is the read-only auth check — `authenticated: true|false` — used before fetching; see [`../../gtm-shared/references/data-layer.md`](../../gtm-shared/references/data-layer.md).)
 
 NEVER call a write command: `comment`, `upvote`, `save`, `subscribe`, `logout`. The session cookie has write capability; skills must not exercise it.
 
