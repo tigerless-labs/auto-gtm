@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.2.21-brightgreen.svg" alt="release" />
+  <img src="https://img.shields.io/badge/release-v0.2.22-brightgreen.svg" alt="release" />
   <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" />
   <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" />
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
@@ -9,7 +9,7 @@
 
 **auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
 
-From your repo's recent PRs and the day's hot threads it proposes topics; from a topic you pick it drafts posts shaped for X and Reddit; and it finds relevant same-day threads and drafts comments on them. Tone is copied from bloggers you choose or your own account, and for comments, from each thread's top replies. Enter through `/gtm` or the `auto-gtm-router` skill.
+From your repo's recent PRs and the day's hot threads it proposes topics; from a topic you pick it drafts posts shaped for X and Reddit; and it finds relevant same-day threads and drafts comments on them. Tone is copied from bloggers you choose or your own account, and for comments, from each thread's top replies. Enter through `/auto-gtm:start` or the `auto-gtm-router` skill.
 
 | | |
 |---|---|
@@ -84,10 +84,10 @@ Direct-clone / symlink installs just need a `git pull` in the cloned repo.
 
 ### Use
 
-Trigger it manually (it never runs on its own). Start with `/gtm`, or say what you want:
+Trigger it manually (it never runs on its own). Start with `/auto-gtm:start`, or say what you want:
 
 ```
-/gtm my Claude Code plugin
+/auto-gtm:start my Claude Code plugin
 Find me topics for my repo — what I shipped this week plus what's hot today
 Turn that topic into an X post
 Find X posts about AI dev tools I can reply to
