@@ -24,6 +24,30 @@ class FallbackOrder(unittest.TestCase):
         self.assertFalse(t["approximate"])
 
 
+class KeylessTiers(unittest.TestCase):
+    def test_x_has_jina_reader_between_auth_and_floor(self):
+        tiers = run.plan_fetch("x", {"authenticated": True})
+        names = [t["tier"] for t in tiers]
+        self.assertEqual(names, ["authenticated", "jina-reader", "keyless-floor"])
+
+    def test_reddit_composite_absent_by_default(self):
+        # opt-in flag is off in config -> no composite tier
+        tiers = run.plan_fetch("reddit", {"authenticated": True})
+        self.assertNotIn("keyless-composite", [t["tier"] for t in tiers])
+
+    def test_reddit_composite_present_when_opted_in(self):
+        cfg = run._load_config()
+        cfg["platforms"]["reddit"]["keyless_composite"] = True
+        orig = run._load_config
+        run._load_config = lambda: cfg
+        try:
+            tiers = run.plan_fetch("reddit", {"authenticated": True})
+            names = [t["tier"] for t in tiers]
+            self.assertEqual(names, ["authenticated", "keyless-composite", "keyless-floor"])
+        finally:
+            run._load_config = orig
+
+
 class FloorInvariants(unittest.TestCase):
     def test_floor_is_always_approximate(self):
         # The floor must never be silently passed off as full coverage.

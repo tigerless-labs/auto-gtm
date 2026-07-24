@@ -68,12 +68,20 @@ def platform_config(platform):
 
 
 def plan_fetch(platform, available):
-    """Ordered tiers to attempt. The keyless floor is always last and marked
-    approximate so it can never be mistaken for full coverage."""
+    """Ordered tiers to attempt. Authenticated first; then a platform-specific
+    keyless tier (Reddit composite when opted in, X jina reader); the WebSearch
+    floor is always last and marked approximate so it can never be mistaken for
+    full coverage."""
     p = platform_config(platform)
     tiers = []
     if available.get("authenticated"):
         tiers.append({"tier": "authenticated", "backend": p["primary"], "approximate": False})
+    if platform == "reddit" and p.get("keyless_composite"):
+        # OPT-IN: unauthenticated shreddit/RSS/arctic scraping (higher compliance risk).
+        tiers.append({"tier": "keyless-composite", "backend": "shreddit", "approximate": True})
+    if platform == "x" and p.get("jina_reader", True):
+        # Floor for a KNOWN tweet URL (X has no keyless search); content egress to jina.ai.
+        tiers.append({"tier": "jina-reader", "backend": "r.jina.ai", "approximate": True, "url_only": True})
     tiers.append({"tier": "keyless-floor", "query": p["floor_query"], "approximate": True})
     return tiers
 

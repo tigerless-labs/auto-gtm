@@ -49,10 +49,14 @@ class ReadOnlyWhitelist(unittest.TestCase):
             pass
         self.assertEqual(runner.calls, [])  # nothing shelled out
 
-    def test_nonzero_exit_raises(self):
+    def test_nonzero_exit_is_best_effort_none(self):
         runner = runner_returning(FakeProc(returncode=1, stderr="boom"))
-        with self.assertRaises(RuntimeError):
-            backends.reddit_fetch("search", ["q"], runner=runner)
+        self.assertIsNone(backends.reddit_fetch("search", ["q"], runner=runner))
+
+    def test_missing_binary_is_best_effort_none(self):
+        def boom(cmd):
+            raise FileNotFoundError("rdt")
+        self.assertIsNone(backends.reddit_fetch("search", ["q"], runner=boom))
 
 
 class RedditAvailability(unittest.TestCase):
@@ -115,6 +119,22 @@ class _FakeApi:
         self.searched = (q, limit)
         for i in range(self._n):
             yield _FakeTweet(i)
+
+
+class XJinaReader(unittest.TestCase):
+    def test_builds_jina_url_and_returns_text(self):
+        captured = {}
+
+        def getter(url, timeout=25):
+            captured["url"] = url
+            return "TWEET TEXT + conversation"
+
+        out = backends.x_read_jina("https://x.com/swyx/status/1", getter=getter)
+        self.assertEqual(captured["url"], "https://r.jina.ai/https://x.com/swyx/status/1")
+        self.assertIn("TWEET TEXT", out)
+
+    def test_best_effort_empty_on_failure(self):
+        self.assertEqual(backends.x_read_jina("https://x.com/x/status/1", getter=lambda u, timeout=25: ""), "")
 
 
 class XFetch(unittest.TestCase):
