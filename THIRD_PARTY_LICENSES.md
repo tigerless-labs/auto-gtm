@@ -21,9 +21,10 @@ the content-polish pass for generated posts and drafts.
   `LICENSE` file, so there is no verbatim license text to vendor) — Copyright (c) Zara Zhang
 
 The data layer's builder pulse (`skills/gtm-shared/scripts/fetch_builder_report.py`)
-fetches follow-builders' public daily feed (`feed-x.json`) at runtime and prints a
-filtered 24h digest. No file from follow-builders is vendored into this repo — the
-feed is read live, keyless, over HTTPS.
+fetches follow-builders' three public daily feeds (`feed-x.json`, `feed-blogs.json`,
+`feed-podcasts.json`) at runtime and prints a three-section digest. No file from
+follow-builders is vendored into this repo — the feeds are read live, keyless, over
+HTTPS; auto-gtm applies its own digest instruction to the output.
 
 ## agent-reach (method reference, not vendored)
 

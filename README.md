@@ -115,7 +115,7 @@ export TWITTER_CT0=...
 
 On the Codex desktop app, `export` doesn't reach the tools — see [docs/codex-desktop-setup.md](docs/codex-desktop-setup.md).
 
-The builder pulse (top-builder daily posts) needs no setup; it reads a public feed, keyless.
+The builder pulse (top-builder posts, blogs, and podcasts) needs no setup; it reads public feeds, keyless.
 
 Then trigger any skill:
 

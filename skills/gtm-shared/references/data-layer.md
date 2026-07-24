@@ -45,9 +45,9 @@ Auth is **optional** (Tier 2 covers the no-login case) and one-time. **Simplest 
 
 When Tier 1 is unavailable or returns nothing, use the host's native **WebSearch / WebFetch** — no API key, no cookie. Query `site:x.com <terms>` and read the surfaced posts. This mirrors last30days' keyless web floor: lower fidelity (engagement counts may be missing), but it never blocks a run. State that engagement is approximate when you use this tier.
 
-## Builder pulse — keyless daily feed
+## Builder pulse — keyless daily feeds
 
-For "what are top builders posting today", pull the follow-builders daily X feed directly (keyless, no install): [`../scripts/fetch_builder_report.py`](../scripts/fetch_builder_report.py). It fetches one public JSON from `zarazhangrui/follow-builders` and prints a filtered 24h digest; on network error it exits non-zero so the caller falls back to Tier 1/Tier 2 search.
+For "what are top builders saying lately", pull the follow-builders daily feeds directly (keyless, no install): [`../scripts/fetch_builder_report.py`](../scripts/fetch_builder_report.py). It fetches three public JSON feeds from `zarazhangrui/follow-builders` — **X posts, official blogs, and podcasts** — each already recency-scoped upstream (so no hour cap here), and prints a three-section digest; `--query` optionally keeps only topically-matching items. Stdlib only, no config. When all three feeds are unreachable it exits non-zero so the caller falls back to Tier 1/Tier 2 search. The caller applies its own concise digest instruction to the output.
 
 ## Host sandbox (Codex desktop app)
 
