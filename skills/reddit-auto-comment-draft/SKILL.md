@@ -14,7 +14,7 @@ Shared contracts: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) 
 ## Flow
 
 ### 1. Pick the subreddit
-Use the **user-specified** sub, else the stored choice (`.auto-gtm/subreddits.md`), else run `reddit-subreddit-finder` and take the top safe fit. Summarize its self-promo rules from `sub-info` (guardrails) before drafting.
+Use the **user-specified** sub, else the stored choice (`~/Documents/auto-gtm/<product-slug>/subreddits.md`), else run `reddit-subreddit-finder` and take the top safe fit. Summarize its self-promo rules from `sub-info` (guardrails) before drafting.
 
 ### 2. Find relevant threads (no validation)
 Derive terms from the product/highlights. `rdt search "<terms>" -r <sub> -s relevance -t day` — **relevance, last 24h**. Keep on-topic threads with a real reply opening; skip anything already well-answered. Pull each with `rdt read <post_id> -s top` for the post + top comments.
