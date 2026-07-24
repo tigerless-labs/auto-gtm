@@ -85,9 +85,9 @@ Turn that topic into an X post
 Find X posts about AI dev tools I can reply to
 ```
 
-### Data setup (one-time, asked once)
+### Data setup (one-time)
 
-auto-gtm ships its own self-contained [data layer](skills/gtm-shared/references/data-layer.md) — it does **not** require the agent-reach or last30days skills. Logins live in each CLI's own local store, never in the repo; each CLI remembers its own login (`rdt status` / the X cookie), so auto-gtm keeps **no marker of its own** and only asks you to set a backend up when it isn't already.
+Set a backend up once and auto-gtm reuses it — you're only prompted when one isn't ready. Credentials stay in each tool's own local store, never in this repo.
 
 **Reddit** reads through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
 
