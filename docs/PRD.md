@@ -43,7 +43,7 @@
 
 ## 存储（用户全局 `~/Documents/auto-gtm/`，极简）
 模仿 last30days 的 `~/Documents/Last30Days/`：全局、跨 session、不依赖 cwd。**按产品分目录**（多产品不互相覆盖），博主 per-user 放根部共享：
-- `bloggers.md`（根，per-user）：tone 身份 —— 喜欢的**博主** handle + 用户**自己账号** handle。**第一次问到就存、之后不再问**；只存 handle，不存其帖子/voice 样本（起草时按 handle 现抓 cadence）。
+- `bloggers.md`（根，per-user）：tone 声音 —— 喜欢的**博主** + 用户**自己账号**的 handle，**第一次各抓约 10 条帖存下**（用户版 tone-examples）。之后起草直接读样本、不再现抓；用户要求才刷新。
 - `<product-slug>/product.md`：该**产品 / repo + 亮点**。
 - `<product-slug>/subreddits.md`：该产品选定的 **subreddit**。
 
