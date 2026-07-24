@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.2.17-brightgreen.svg" alt="release" />
+  <img src="https://img.shields.io/badge/release-v0.2.18-brightgreen.svg" alt="release" />
   <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" />
   <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" />
   <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
@@ -123,11 +123,16 @@ rdt login       # extracts your browser's reddit.com cookie
 rdt status      # should print authenticated
 ```
 
-**X / Twitter** works keyless out of the box (host WebSearch floor). For higher-fidelity results, optionally install `twitter-cli` and set your cookie once:
+**X / Twitter** works keyless out of the box (host WebSearch floor). For higher-fidelity results, optionally install `twitter-cli`:
 
 ```
 pipx install twitter-cli            # v0.8.5+
-export TWITTER_AUTH_TOKEN=...        # from a Cookie-Editor export of x.com
+```
+
+On a desktop it reuses your logged-in x.com browser session automatically — no token to paste, the same as `rdt` for Reddit. Only on a headless / SSH box set the cookie manually:
+
+```
+export TWITTER_AUTH_TOKEN=...        # x.com → F12 → Application → Cookies
 export TWITTER_CT0=...
 ```
 
