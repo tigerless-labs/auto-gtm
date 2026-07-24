@@ -16,9 +16,10 @@ auto-gtm 按「场景 × 平台 = 一个 skill」拆分。每个 skill 止于草
 
 ## 共享契约
 
+- **数据层** — [data-layer.md](data-layer.md):X / Reddit 取数逻辑权威(认证优先、keyless 兜底、OS cookie 匹配)。取数是所有工具族的共同底座。
 - **声音** — [tone-voice.md](tone-voice.md):两轴 + voice-source gate
-- 数据层 / 存储 / 去 AI 味的机制契约随其 skill(`gtm-shared`、`no-ai-slop`)就地维护
+- 存储 / 去 AI 味的机制契约随其 skill(`gtm-shared`、`no-ai-slop`)就地维护
 
 ## 阅读顺序
 
-先读所属工具族的 `index.md`(公共上下文）与共享契约，再读单个 skill 文档。
+先读 [data-layer.md](data-layer.md)(取数底座)与所属工具族的 `index.md`(公共上下文)、共享契约，再读单个 skill 文档。
