@@ -34,21 +34,21 @@ All read-only and drafts-only. They never post, comment, or upvote; you publish.
 
 ### Install
 
-**Claude Code:**
+**Claude Code**, typed in the Claude Code prompt (the `/` slash commands):
 
 ```
 /plugin marketplace add tigerless-labs/auto-gtm
 /plugin install auto-gtm@tigerless-labs
 ```
 
-**Codex (CLI ≥ 0.144):**
+**Codex (CLI ≥ 0.144)**, run in your terminal:
 
 ```
 codex plugin marketplace add tigerless-labs/auto-gtm
 codex plugin add auto-gtm@tigerless-labs
 ```
 
-Older Codex versions without the `plugin add` subcommand can install the skills directly (Codex scans `~/.codex/skills`; newer versions also scan `~/.agents/skills`):
+Older Codex versions without the `plugin add` subcommand can install the skills directly in your terminal (Codex scans `~/.codex/skills`; newer versions also scan `~/.agents/skills`):
 
 ```
 git clone https://github.com/tigerless-labs/auto-gtm
