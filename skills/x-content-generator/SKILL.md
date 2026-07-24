@@ -30,8 +30,8 @@ Give the reader something worth their time, in a sincere voice, never engagement
     "make it two updates"), satisfy the content of the ask inside the voice —
     two first-person moves, not two headings. On form, the exemplars win.
 - **Tone source, in priority order** (see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md)):
-  1. the user's **favorite bloggers** (`~/Documents/auto-gtm/bloggers.md`) — fetch a few of their recent posts with `twitter user-posts @handle` ([data layer](../gtm-shared/references/data-layer.md)) and mimic their cadence;
-  2. the user's **own account**;
+  1. the user's **favorite bloggers** — read the stored handles from `~/Documents/auto-gtm/bloggers.md` (captured the first time, never re-asked); fetch a few of their posts live with `twitter user-posts @handle` ([data layer](../gtm-shared/references/data-layer.md)) and mimic their cadence. Only the handles are stored, not their posts.
+  2. the user's **own account** (also a stored handle in `bloggers.md`);
   3. the user's **explicit ask** this run.
   Fall back to the bundled exemplars below when none is available.
 - Read the full [`references/tone-examples.md`](references/tone-examples.md) for verbatim exemplars. **Mimic cadence/structure, not opinions.**
