@@ -45,13 +45,19 @@ def reddit_fetch(command, args=None, runner=_run):
     """Run a whitelisted read-only `rdt` command and return its stdout.
 
     Refuses any command outside RDT_READ_WHITELIST — the drafts-only guardrail
-    is enforced here, so a write command can never be issued through reach.
+    is enforced here, so a write command can never be issued through reach (this
+    raises, since it is a programming error). A runtime failure (rdt absent or
+    non-zero exit) is best-effort: returns None so the caller degrades to the
+    next tier instead of crashing the run.
     """
     if command not in RDT_READ_WHITELIST:
         raise ValueError(f"refused non-whitelisted rdt command: {command!r}")
-    r = runner(["rdt", command, *(args or [])])
+    try:
+        r = runner(["rdt", command, *(args or [])])
+    except (FileNotFoundError, OSError):
+        return None
     if r.returncode != 0:
-        raise RuntimeError(f"rdt {command} failed: {(r.stderr or '').strip()[:200]}")
+        return None
     return r.stdout
 
 
@@ -137,3 +143,23 @@ def x_fetch(query, cookies, limit=20, api_factory=None):
                 os.remove(path)
             except OSError:
                 pass
+
+
+# ----------------------------------------------------------- X keyless floor / jina
+
+def _url_getter(url, timeout=25):
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "auto-gtm/reach"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8", "replace")
+    except Exception:
+        return ""
+
+
+def x_read_jina(tweet_url, getter=None):
+    """Keyless per-URL X read via r.jina.ai — full tweet + conversation text,
+    no login/key. This is a floor: X has no keyless SEARCH, so it reads one
+    KNOWN tweet/thread URL. Sends that URL to jina.ai (content egress). Returns
+    the rendered text, or "" on failure (best-effort)."""
+    return (getter or _url_getter)("https://r.jina.ai/" + tweet_url)
