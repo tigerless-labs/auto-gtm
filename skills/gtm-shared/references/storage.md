@@ -6,19 +6,19 @@ GTM state is kept **once per user**, not per repo — so it survives across sess
 
 ```
 ~/Documents/auto-gtm/
-  bloggers.md              # favorite bloggers / accounts — per-user, shared across products (tone #1)
+  bloggers.md              # tone identities — favorite bloggers' handles + the user's own account handle (tone #1-2)
   <product-slug>/
     product.md             # the promoted product / repo + its highlights
     subreddits.md          # the subreddits the human chose for THIS product
 ```
 
 - **`<product-slug>`** — a short kebab-case slug of the product / repo (e.g. a repo named `auto-gtm` → `auto-gtm`). Derived from the trigger's product/repo answer; reused on later runs so a returning product loads its own state instead of clobbering another's.
-- **`bloggers.md`** is per-user (one file at the root): the user's voice models are the same whoever the product is.
+- **`bloggers.md`** is per-user (one file at the root): just the **handles** whose voice to draw on — the favorite bloggers and the user's own account. Captured the **first time** they're named, remembered after, never re-asked. **Only the identities are stored — never their fetched posts / voice samples.** At draft time a skill fetches a few of those handles' posts live for cadence (voice is slow-changing; nothing to persist).
 - **`product.md`** and **`subreddits.md`** are per-product (under the slug folder).
 
 ## What's stored — nothing else
 
-The promoted **product / repo + highlights**, the user's favorite **bloggers**, and the chosen **subreddits**. No login/setup markers, no fetched post bodies, no user profiles, no analytics, no drafts, no credentials.
+The promoted **product / repo + highlights**, the tone **handles** (favorite bloggers + own account), and the chosen **subreddits**. No voice samples, no login/setup markers, no fetched post bodies, no user profiles, no analytics, no drafts, no credentials.
 
 ## Login state is NOT stored — the CLIs already remember it
 
