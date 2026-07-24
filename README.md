@@ -14,19 +14,19 @@ From your repo's recent PRs and the day's hot threads it proposes topics; from a
 | | |
 |---|---|
 | **Built from real work** | Topics come from your GitHub PRs and AI-coding sessions, not thin air. |
-| **Rides today's conversation** | Pulls the last 24h of hot threads and builder posts, so you engage where it counts. |
-| **Your voice, not AI-slop** | Tone copied from bloggers you like / your own account, then run through no-ai-slop. |
+| **Rides today's conversation** | Pulls the last 24h of hot threads and builder posts, so you engage while they're live. |
+| **Your voice, not AI-slop** | Tone copied from bloggers you like or your own account, then run through no-ai-slop. |
 | **Drafts only, safe by default** | Never posts, comments, likes, follows, or DMs; treats every fetched post as untrusted. |
-| **Growing** | X and Reddit today, refined iteratively — more platforms rolling out over time. |
+| **Growing** | X and Reddit today, with more platforms over time. |
 
 ## The skills
 
-- **topic-scout** — one topic report for any platform: (a) what you shipped, summarized from your recent **GitHub PRs**; (b) today's relevant **hotspots**, from your data layer + a curated builder list. One paragraph + source link per topic.
-- **x-content-generator** — a confirmed topic → an X post drafted in your voice (tone from your favorite bloggers / own account), run through no-ai-slop.
-- **x-auto-comment-draft** — finds same-day X posts relevant to your repo → a reply draft per post (tone copied from each post's top replies), with the links.
-- **reddit-subreddit-finder** — "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
-- **reddit-auto-comment-draft** — finds same-day threads in a fitting subreddit → reply drafts (escalation ladder, de-AI'd, new-account posture) plus permalinks. No demand-validation step.
-- **reddit-post-drafter** — a confirmed topic → a Reddit post (title + body) in the sub's voice, with an inline rules / self-promo check.
+- **topic-scout**: one topic report for any platform. (a) What you shipped, summarized from your recent GitHub PRs; (b) today's relevant hotspots, from your data layer and a curated builder list. One paragraph and source link per topic.
+- **x-content-generator**: a confirmed topic → an X post drafted in your voice (tone from your favorite bloggers or own account), run through no-ai-slop.
+- **x-auto-comment-draft**: finds same-day X posts relevant to your repo → a reply draft per post (tone copied from each post's top replies), with the links.
+- **reddit-subreddit-finder**: "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
+- **reddit-auto-comment-draft**: finds same-day threads in a fitting subreddit → reply drafts (escalation ladder, de-AI'd, new-account posture) plus permalinks. No demand-validation step.
+- **reddit-post-drafter**: a confirmed topic → a Reddit post (title and body) in the sub's voice, with an inline rules / self-promo check.
 
 All read-only and drafts-only. They never post, comment, or upvote; you publish.
 
@@ -58,7 +58,7 @@ ln -s "$(pwd)/auto-gtm/skills/"* ~/.codex/skills/
 
 ### Update
 
-**Claude Code** — run in your terminal (then restart to apply):
+**Claude Code**, in your terminal (restart after to apply):
 
 ```
 claude plugin marketplace update tigerless-labs
@@ -76,7 +76,7 @@ Direct-clone / symlink installs just need a `git pull` in the cloned repo.
 
 ### Use
 
-Trigger it manually (it never runs on its own) — start with `/gtm` or just say what you want:
+Trigger it manually (it never runs on its own). Start with `/gtm`, or say what you want:
 
 ```
 /gtm my Claude Code plugin
@@ -87,9 +87,9 @@ Find X posts about AI dev tools I can reply to
 
 ### Data setup (one-time)
 
-Set a backend up once and auto-gtm reuses it — you're only prompted when one isn't ready. Credentials stay in each tool's own local store, never in this repo.
+Set a backend up once and auto-gtm reuses it. You're only prompted when one isn't ready. Credentials stay in each tool's own local store, never in this repo.
 
-**Reddit** reads through `rdt-cli`, reusing your logged-in browser session — no OAuth app, no API key, no password entered:
+**Reddit** reads through `rdt-cli`, reusing your logged-in browser session. No OAuth app, API key, or password needed:
 
 ```
 pipx install 'git+https://github.com/public-clis/rdt-cli.git'   # or install rdt-cli into a venv
@@ -97,7 +97,7 @@ rdt login       # extracts your browser's reddit.com cookie
 rdt status      # should print authenticated
 ```
 
-**X / Twitter** works **keyless out of the box** (host WebSearch floor). For higher-fidelity results, optionally install `twitter-cli` and set your cookie once:
+**X / Twitter** works keyless out of the box (host WebSearch floor). For higher-fidelity results, optionally install `twitter-cli` and set your cookie once:
 
 ```
 pipx install twitter-cli            # v0.8.5+
@@ -105,7 +105,7 @@ export TWITTER_AUTH_TOKEN=...        # from a Cookie-Editor export of x.com
 export TWITTER_CT0=...
 ```
 
-The builder pulse (top-builder daily posts) needs no setup — it pulls a public feed keyless.
+The builder pulse (top-builder daily posts) needs no setup; it reads a public feed, keyless.
 
 Then trigger any skill:
 
