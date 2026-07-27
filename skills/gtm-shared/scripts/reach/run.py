@@ -169,7 +169,106 @@ def authenticated_available(platform, probe=None):
     return bool(cookies)
 
 
+def _degrade(tier_failed, next_tier, install=None, login=None, reason=""):
+    """A structured single-tier degrade signal. Carries what is missing, what to
+    install, and which tier the AGENT should try next — never any cookie value.
+    The agent (not this script) walks to `next`, since the floor is a host tool
+    and installs pass through the permission gate."""
+    return {
+        "degrade": True,
+        "tier_failed": tier_failed,
+        "next": next_tier,
+        "install": install or [],
+        "login": login,
+        "reason": reason,
+    }
+
+
+def fetch_x(query=None, tweet_url=None, limit=20,
+            x_available=None, get_cookies=None, x_fetch=None, x_read_jina=None):
+    """Execute ONE X tier and return {data,...} or a degrade signal.
+
+    `--query` runs the authenticated twscrape search; `--tweet-url` runs the
+    keyless jina reader on a known URL. Never loops tiers — on failure it hands
+    back a degrade signal for the agent to act on."""
+    x_available = x_available or backends.x_available
+    get_cookies = get_cookies or session.get_cookies
+    x_fetch = x_fetch or backends.x_fetch
+    x_read_jina = x_read_jina or backends.x_read_jina
+
+    if tweet_url:
+        text = x_read_jina(tweet_url)
+        if text:
+            return {"platform": "x", "tier": "jina-reader", "approximate": True, "data": text}
+        return _degrade("jina-reader", "keyless-floor", reason="jina returned nothing")
+
+    av = x_available()
+    if not av:
+        return _degrade("authenticated", "keyless-floor",
+                        install=install_hints([av.missing] if av.missing else []),
+                        reason="twscrape not importable")
+    _src, cookies = get_cookies("x.com")
+    if not cookies.get("auth_token") or not cookies.get("ct0"):
+        return _degrade("authenticated", "keyless-floor",
+                        reason="no x.com cookie (log into x.com in your browser)")
+    tweets = x_fetch(query, cookies, limit=limit)
+    if not tweets:
+        return _degrade("authenticated", "keyless-floor", reason="search returned nothing")
+    return {"platform": "x", "tier": "authenticated", "approximate": False, "data": tweets}
+
+
+def fetch_reddit(command, args=None, reddit_available=None, reddit_fetch=None):
+    """Execute ONE Reddit tier: a whitelisted `rdt` read, through the
+    code-enforced read-only whitelist. A write command raises regardless of
+    availability (guardrail first); a missing/unauthenticated backend returns a
+    degrade signal."""
+    reddit_available = reddit_available or backends.reddit_available
+    reddit_fetch = reddit_fetch or backends.reddit_fetch
+
+    if command not in backends.RDT_READ_WHITELIST:
+        raise ValueError(f"refused non-whitelisted rdt command: {command!r}")
+
+    av = reddit_available()
+    if not av:
+        return _degrade("authenticated", "keyless-floor",
+                        install=install_hints([av.missing] if av.missing else []),
+                        login=av.login,
+                        reason="rdt not installed" if av.missing else "rdt not authenticated")
+    out = reddit_fetch(command, args)
+    if out is None:
+        return _degrade("authenticated", "keyless-floor", reason="rdt returned nothing")
+    return {"platform": "reddit", "tier": "authenticated", "approximate": False, "data": out}
+
+
+def _main_fetch_x(argv):
+    ap = argparse.ArgumentParser(prog="run.py fetch-x", description="execute one X tier")
+    ap.add_argument("--query")
+    ap.add_argument("--tweet-url")
+    ap.add_argument("--limit", type=int, default=20)
+    a = ap.parse_args(argv)
+    r = fetch_x(query=a.query, tweet_url=a.tweet_url, limit=a.limit)
+    print(json.dumps(r))
+    return 1 if r.get("degrade") else 0
+
+
+def _main_fetch_reddit(argv):
+    ap = argparse.ArgumentParser(prog="run.py fetch-reddit",
+                                 description="execute one whitelisted rdt read")
+    ap.add_argument("rdt_command")
+    ap.add_argument("rdt_args", nargs=argparse.REMAINDER)
+    a = ap.parse_args(argv)
+    r = fetch_reddit(a.rdt_command, a.rdt_args)
+    print(json.dumps(r))
+    return 1 if r.get("degrade") else 0
+
+
 def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "fetch-x":
+        return _main_fetch_x(argv[1:])
+    if argv and argv[0] == "fetch-reddit":
+        return _main_fetch_reddit(argv[1:])
+
     ap = argparse.ArgumentParser(description="auth-first fetch planner")
     ap.add_argument("platform", choices=sorted(DEFAULTS["platforms"]))
     ap.add_argument("--json", action="store_true", help="machine-readable plan")

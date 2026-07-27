@@ -17,8 +17,8 @@ The user's ask governs content and format. It is a **different axis**, not a run
 ## Per-thread overlay — replies only
 
 When drafting a **reply**, also mimic that specific thread's top-voted replies' cadence — for this thread, not their opinions:
-- **X:** `twitter tweet URL_OR_ID` → the post's top replies.
-- **Reddit:** `rdt read <post_id> -s top` → the thread's top comments.
+- **X:** `reach fetch-x --tweet-url URL` → the post + its top replies.
+- **Reddit:** `reach fetch-reddit read <post_id> -s top` → the thread's top comments.
 
 Original posts (X post / Reddit post) have no per-thread overlay.
 
@@ -32,4 +32,4 @@ Every drafting skill must land on this gate before writing a single draft. Captu
 
 ### First capture & storage — once
 
-On the first capture, fetch **~10 posts each** via the [data layer](data-layer.md) (`twitter user-posts @handle`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.**
+On the first capture, fetch **~10 posts each** via the [data layer](data-layer.md) (`reach fetch-x --query "from:<handle>"`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.**

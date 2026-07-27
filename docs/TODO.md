@@ -12,6 +12,6 @@
 
 - ~~**单元 2 — 测试先行**~~（已落地）：`test_reach_session.py` + `test_reach_run.py`，断言 OS cookie 顺序、Firefox 明文读取、fallback 顺序、「兜底恒为近似」、status 不泄凭证。
 - **单元 3 — `reach/` 可执行层**：3a 编排 + OS cookie 核心已落地；3b 认证适配器 + 3c keyless 中间层已落地并**双平台端到端验证**：Reddit（`rdt` 登录态，只读白名单代码强制；+ opt-in keyless composite = shreddit/RSS/arctic，实测取回真分数）+ X（`twscrape` 登录态取回真实推文；+ `jina` reader 兜底）。keyless 过共享令牌桶（5 req/s）、best-effort、collect-then-pick。**composite 默认关，合规 opt-in**（未授权爬 shreddit）。**剩余**：`PRAW` 升级 + X 账号 DB 稳定落点 + keyless 评论正文提取。依赖分发已定为「缺了 agent 自装」（vendor 方向废弃，见设计文档「依赖姿态」）。
-- **单元 4 — 接线 + 端到端**：消费方 skill 取数改走 `reach`（行为不变）；本地装插件跑通全链；把 `data-layer.md` 契约从「方向」升级为「现状」，撤下重设计提示块。
+- **单元 4 — 接线 + 端到端**（进行中）：加 `reach fetch` 单档执行入口；消费方 skill 取数改走它（行为不变）；契约撤重设计块、X 主路切 twscrape。详见 plan 单元 4。
 - **Reddit 版规只读能力**：把 `about/rules.json`（登录态可取、keyless 403）做成受白名单约束的只读 `rules` read-op，接入 subreddit-finder，替换现有近似。
 - **合规评估**：X 账号爬库（`twscrape`）作为认证主路依赖，就 Reddit 起诉爬取方、X ToS/封号风险做一次姿态评估并记入设计文档。

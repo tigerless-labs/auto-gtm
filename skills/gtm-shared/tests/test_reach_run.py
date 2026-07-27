@@ -1,3 +1,4 @@
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -5,6 +6,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "scripts" / "reach"))
 import run  # noqa: E402
+import backends  # noqa: E402
 
 
 class FallbackOrder(unittest.TestCase):
@@ -147,6 +149,110 @@ class InstallHints(unittest.TestCase):
         tiers = run.plan_fetch("x", {"authenticated": False})
         self.assertEqual(tiers[-1]["tier"], "keyless-floor")
         self.assertTrue(all(t["approximate"] for t in tiers))
+
+
+class FetchXTier(unittest.TestCase):
+    def test_authenticated_search_returns_tweets(self):
+        r = run.fetch_x(
+            query="agent eval", limit=5,
+            x_available=lambda: backends.Availability(True),
+            get_cookies=lambda d: ("firefox", {"auth_token": "A", "ct0": "C"}),
+            x_fetch=lambda q, c, limit: [{"id": "t1", "text": "hi"}],
+        )
+        self.assertFalse(r.get("degrade"))
+        self.assertEqual(r["tier"], "authenticated")
+        self.assertFalse(r["approximate"])
+        self.assertEqual(len(r["data"]), 1)
+
+    def test_missing_twscrape_degrades_with_install_hint(self):
+        r = run.fetch_x(
+            query="q",
+            x_available=lambda: backends.Availability(False, missing="twscrape"),
+            get_cookies=lambda d: ("", {}),
+            x_fetch=lambda *a, **k: [],
+        )
+        self.assertTrue(r["degrade"])
+        self.assertIn("twscrape", [h["dependency"] for h in r["install"]])
+        self.assertEqual(r["next"], "keyless-floor")
+
+    def test_no_cookie_degrades_without_install(self):
+        r = run.fetch_x(
+            query="q",
+            x_available=lambda: backends.Availability(True),
+            get_cookies=lambda d: ("", {}),
+            x_fetch=lambda *a, **k: [],
+        )
+        self.assertTrue(r["degrade"])
+        self.assertEqual(r["install"], [])  # a browser login, not an install
+
+    def test_tweet_url_uses_jina_reader(self):
+        r = run.fetch_x(tweet_url="https://x.com/a/status/1", x_read_jina=lambda u: "TEXT")
+        self.assertEqual(r["tier"], "jina-reader")
+        self.assertTrue(r["approximate"])
+        self.assertEqual(r["data"], "TEXT")
+
+    def test_jina_empty_degrades_to_floor(self):
+        r = run.fetch_x(tweet_url="u", x_read_jina=lambda u: "")
+        self.assertTrue(r["degrade"])
+        self.assertEqual(r["next"], "keyless-floor")
+
+    def test_degrade_never_leaks_cookie_value(self):
+        r = run.fetch_x(
+            query="q",
+            x_available=lambda: backends.Availability(True),
+            get_cookies=lambda d: ("firefox", {"auth_token": "SECRET", "ct0": "C"}),
+            x_fetch=lambda *a, **k: [],  # empty -> degrade
+        )
+        self.assertNotIn("SECRET", json.dumps(r))
+
+
+class FetchRedditTier(unittest.TestCase):
+    def test_whitelisted_passthrough(self):
+        r = run.fetch_reddit(
+            "search", ["q", "-t", "week"],
+            reddit_available=lambda: backends.Availability(True),
+            reddit_fetch=lambda cmd, args: "YAML OUT",
+        )
+        self.assertFalse(r.get("degrade"))
+        self.assertEqual(r["tier"], "authenticated")
+        self.assertEqual(r["data"], "YAML OUT")
+
+    def test_write_command_refused_regardless_of_availability(self):
+        for cmd in ("comment", "upvote", "subscribe"):
+            with self.assertRaises(ValueError, msg=cmd):
+                run.fetch_reddit(
+                    cmd, ["x"],
+                    reddit_available=lambda: backends.Availability(False, missing="rdt"),
+                    reddit_fetch=lambda *a, **k: "should not run",
+                )
+
+    def test_missing_rdt_degrades_with_install(self):
+        r = run.fetch_reddit(
+            "search", ["q"],
+            reddit_available=lambda: backends.Availability(False, missing="rdt"),
+            reddit_fetch=lambda *a, **k: None,
+        )
+        self.assertTrue(r["degrade"])
+        self.assertIn("rdt", [h["dependency"] for h in r["install"]])
+
+    def test_unauthenticated_degrades_with_login(self):
+        r = run.fetch_reddit(
+            "search", ["q"],
+            reddit_available=lambda: backends.Availability(False, login="rdt login"),
+            reddit_fetch=lambda *a, **k: None,
+        )
+        self.assertTrue(r["degrade"])
+        self.assertEqual(r["install"], [])
+        self.assertEqual(r["login"], "rdt login")
+
+    def test_runtime_none_degrades_to_floor(self):
+        r = run.fetch_reddit(
+            "read", ["t3_x"],
+            reddit_available=lambda: backends.Availability(True),
+            reddit_fetch=lambda cmd, args: None,  # rdt ran, empty
+        )
+        self.assertTrue(r["degrade"])
+        self.assertEqual(r["next"], "keyless-floor")
 
 
 class ConfigKnobs(unittest.TestCase):

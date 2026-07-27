@@ -15,13 +15,13 @@ Storage / tone / product come from `~/Documents/auto-gtm/` — see [`../gtm-shar
 
 1. **Reuse today's report** — if `topic-scout` already produced a same-day hotspot report, pull the repo-relevant posts straight from its part (b) links.
 2. **Else generate one** — run `topic-scout` first, then use its report.
-3. **Else search directly** — if the report has no relevant posts, fetch **today's (24h) high-engagement** X posts on the repo's terms via the [data layer](../gtm-shared/references/data-layer.md) X tiers (`twitter-cli` → keyless floor), keep the on-topic ones.
+3. **Else search directly** — if the report has no relevant posts, fetch **today's (24h) high-engagement** X posts on the repo's terms via the [data layer](../gtm-shared/references/data-layer.md) (`reach fetch-x --query "<terms>"`; on degrade, keyless floor), keep the on-topic ones.
 
 Keep only posts from the **last 24h** where a builder behind this repo has something genuinely useful to add.
 
 ## Draft the replies
 
-- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md), and **land on its voice-source gate before drafting**: read stored samples if present; otherwise **offer to capture the user's bloggers + own account first**; drop to defaults only if the user skips, and say so. Your ask governs content. Plus the **per-thread overlay** for replies — mimic **this post's own top-liked replies** (fetch with `twitter tweet URL_OR_ID`, [data layer](../gtm-shared/references/data-layer.md)). Cadence, not opinions.
+- **Tone** — follow the shared contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md), and **land on its voice-source gate before drafting**: read stored samples if present; otherwise **offer to capture the user's bloggers + own account first**; drop to defaults only if the user skips, and say so. Your ask governs content. Plus the **per-thread overlay** for replies — mimic **this post's own top-liked replies** (fetch with `reach fetch-x --tweet-url URL`, [data layer](../gtm-shared/references/data-layer.md)). Cadence, not opinions.
 - **Posture:** value-first. Answer the post on its own terms; mention the product only where it's the natural answer, and **no links in a first-touch reply** from a cold account.
 - **De-AI pass (mandatory):** run every draft through the bundled **no-ai-slop** skill — apply [`../no-ai-slop/SKILL.md`](../no-ai-slop/SKILL.md), verify against [`../no-ai-slop/eval.md`](../no-ai-slop/eval.md). No draft ships without it.
 
