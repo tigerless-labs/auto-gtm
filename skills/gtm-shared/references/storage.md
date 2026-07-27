@@ -14,7 +14,7 @@ GTM state is kept **once per user**, not per repo — so it survives across sess
 
 - **`<product-slug>`** — a short kebab-case slug of the product / repo (e.g. a repo named `auto-gtm` → `auto-gtm`). Derived from the trigger's product/repo answer; reused on later runs so a returning product loads its own state instead of clobbering another's.
 - **`bloggers.md`** is per-user (one file at the root) — the user's own version of the bundled `tone-examples.md`: the **handles** (favorite bloggers + the user's own account), each with **~10 verbatim sample posts**. How it is captured and applied → [tone.md](tone.md).
-- **`product.md`** and **`subreddits.md`** are per-product (under the slug folder).
+- **`product.md`** and **`subreddits.md`** are per-product (under the slug folder). `subreddits.md` is **written by `reddit-subreddit-finder`** on the human's confirmed choice, and **read by `reddit-post-drafter`**.
 
 ## What's stored — nothing else
 
