@@ -75,6 +75,24 @@ class FetchBuilderReport(unittest.TestCase):
         self.assertIn(transcript_head, capped)
         self.assertIn(transcript_head, full)
 
+    def test_x_builder_bio_passed_through(self):
+        # The digest rules open each builder with role/company taken from the feed's bio,
+        # so the bio has to survive collection — dropping it silently degrades the summary.
+        out = run("--feed-dir", str(FIXTURES)).stdout
+        for bio in ("AI engineer", "writes about product"):
+            self.assertIn(bio, out)
+
+    def test_x_builder_without_bio_renders_cleanly(self):
+        r = run("--feed-dir", str(FIXTURES))
+        self.assertEqual(r.returncode, 0, r.stderr)
+        heading = next(
+            line for line in r.stdout.splitlines() if "nobiobuilder" in line
+        )
+        self.assertIn("No Bio Builder", heading)
+        # no dangling separator where the missing bio would have gone
+        self.assertFalse(heading.rstrip().endswith("—"))
+        self.assertNotIn("None", heading)
+
     def test_optional_query_keeps_only_matches(self):
         base = run("--feed-dir", str(FIXTURES)).stdout
         filtered = run("--feed-dir", str(FIXTURES), "--query", "eval").stdout

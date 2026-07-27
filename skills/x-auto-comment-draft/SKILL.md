@@ -13,7 +13,7 @@ Storage / tone / product come from `~/Documents/auto-gtm/` — see [`../gtm-shar
 
 ## Find the posts (in this order)
 
-1. **Reuse today's report** — if `topic-scout` already produced a same-day hotspot report, pull the repo-relevant posts straight from its part (b) links.
+1. **Reuse today's report** — if `topic-scout` already produced a same-day hotspot report, pull the repo-relevant posts straight from its part B links.
 2. **Else generate one** — run `topic-scout` first, then use its report.
 3. **Else search directly** — if the report has no relevant posts, fetch **today's (24h) high-engagement** X posts on the repo's terms via the [data layer](../gtm-shared/references/data-layer.md) (`reach fetch-x --query "<terms>"`; on degrade, keyless floor), keep the on-topic ones.
 

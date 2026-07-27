@@ -71,7 +71,9 @@ def render_x(feed, terms, out):
         if not rows:
             continue
         kept += len(rows)
-        lines.append(f"\n### {builder.get('name')} ({builder.get('handle')})")
+        byline = f"{builder.get('name')} ({builder.get('handle')})"
+        bio = (builder.get("bio") or "").strip()
+        lines.append(f"\n### {byline} — {bio}" if bio else f"\n### {byline}")
         for tw in rows:
             lines.append(f"- [{tw.get('createdAt')} · {tw.get('likes', 0)}♥] {(tw.get('text') or '').strip()}")
             lines.append(f"  {tw.get('url')}")
