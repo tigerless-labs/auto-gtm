@@ -38,8 +38,10 @@
 - **3d 缺依赖自装（本 PR）**：availability 从裸 bool 升级为「缺什么 + 精确安装命令」，plan/status 透传（绝不含 cookie 值）；安装命令收进 config；安装动作只在 prompt 层由 agent 执行（脚本不 subprocess 装软件）。
 - **3b/3c 剩余（待续）**：`PRAW` 升级路；X 账号 DB 稳定 per-user 落点（现 per-call 临时库）；keyless 评论正文提取（现只取 author/score/permalink）。
 
-### 单元 4 — 接线与端到端
-- **验收**：消费方 skill（`topic-scout` 等）取数从裸 CLI 改到 `reach.run`，行为/触发/停在草稿不变；本地装插件跑通全链；`data-layer.md` 契约从「方向」升级为「现状」。
+### 单元 4 — 接线与端到端（本 PR）
+- **4a 单档执行入口**：`reach.run` 加 `fetch` 子命令——X `--query`（twscrape 认证搜）/`--tweet-url`（jina 读已知 URL）；Reddit 白名单透传（`reddit_fetch`，写命令代码拒）。**只执行一档**、失败返结构化 degrade（缺什么/装什么/下一档），退非零；不做代码级循环 fallback（WebSearch 是 host 工具、自装在权限门后，档间跌落归 agent）。不泄 cookie。
+- **4b 接线**：消费方 skill（`topic-scout`、`x-auto-comment-draft`、三个 reddit skill）取数从裸 `twitter-cli`/`rdt` 改到 `reach fetch`，行为/触发/停在草稿不变。X 主路由 twitter-cli 切为 twscrape（reach）；twitter-cli 撤出 operative 链（设计链是 twscrape→jina→WebSearch，无 twitter-cli）。
+- **4c 契约升级**：`data-layer.md` 撤「重设计进行中/未接线」块，X tier 改 twscrape-via-reach；`rdt-readonly.md` 说明命令经 reach 白名单**代码强制**（非仅散文约定）。本地装插件跑通全链。
 
 ## 风险
 

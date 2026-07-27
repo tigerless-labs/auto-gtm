@@ -42,6 +42,8 @@ Arctic Shift 只作 keyless composite 内的分数回填，不单独进链——
 
 沿链逐级跌落：有可用认证会话就用；没有就按 OS 取一次 cookie 建会话；某档只因**缺依赖**不可用时先报安装命令、由 agent 装后重试一次（见「依赖姿态」）；仍不行落到中间 keyless（X 的 jina / Reddit 的 opt-in composite）；再不行走 WebSearch 兜底并声明近似。每档 best-effort——失败返回空、不抛，交给下一档。**collect-then-pick**：判「认证可用」要同时满足「库可导入 **且** 有 cookie」，避免装了但未登录的首选把可用后备遮蔽。不设大 doctor，只保留一行 status 报所经档位与浏览器来源（**绝不含 cookie 值**）。
 
+**取数在单一入口收口，但档间跌落仍由 agent 决定**：消费方 skill 不再各自散拼裸 CLI，而是经 reach 的单一 fetch 入口取数——每次调用只执行**一档**（认证档），返回数据或结构化降级信号（缺什么、装什么、下一档是谁）。故意不做「代码里自动循环整条链」：最后一档 WebSearch 是 host 工具、脚本调不了，且自装动作要留在权限门后，两者都必须回到 agent。所以 reach 收口的是「单档执行 + 只读白名单强制 + 降级信号」，agent 收口的是「读信号、走下一档、装缺失件」。
+
 ## 依赖姿态 — 默认什么都没装，缺了 agent 自装
 
 插件只随附自己的编排脚本（stdlib，永远能跑）；第三方件（认证库、cookie 提取辅助、`rdt`）**不 vendor、不预装**。冷启动假设用户什么都没装：某档缺依赖时，脚本在 plan/status 里报出**缺什么 + 精确安装命令**，由 agent 现场执行安装、装完重试一次；装不上或被拒，按既有 best-effort 跌落。借鉴 agent-reach 的自装模式，但收敛为一条：安装动作只在 **prompt 层**发生——脚本自身绝不 subprocess 装软件，安装命令走 host 的权限门，人对每次安装可见可拒（fail-safe）。vendor 方向（license 核查、版本更新、体积三重负担）废弃。`OpenCLI` 是桌面 app + 浏览器扩展，装不了——只当「用户碰巧装了就白捡」的可选增强。

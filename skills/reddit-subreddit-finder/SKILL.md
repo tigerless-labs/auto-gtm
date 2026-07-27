@@ -19,10 +19,10 @@ Manual only. Run when the user asks where to post, or to find communities/audien
 ## Flow
 
 ### 1. Find candidates
-Derive query terms from the GTM object. `rdt search "<terms>" -s relevance -t year` — **relevance, not top** (top biases to mega-subs and off-topic viral posts). Keep only on-topic posts, and collect the subreddits they recur in as candidates.
+Derive query terms from the GTM object. `reach fetch-reddit search "<terms>" -s relevance -t year` — **relevance, not top** (top biases to mega-subs and off-topic viral posts). Keep only on-topic posts, and collect the subreddits they recur in as candidates.
 
 ### 2. Profile each candidate
-`rdt sub-info <sub>` for `subscribers`, `restrict_posting`, `submission_type`, `public_description`. For a rough removal signal, sample `rdt sub <sub> -s new` and read each post's `removed` / `removed_by_category` field (per-post, not a single grep count).
+`reach fetch-reddit sub-info <sub>` for `subscribers`, `restrict_posting`, `submission_type`, `public_description`. For a rough removal signal, sample `reach fetch-reddit sub <sub> -s new` and read each post's `removed` / `removed_by_category` field (per-post, not a single grep count).
 
 ### 3. Score — multi-axis, relative
 Judge three axes per candidate from the data, and rank **relatively** across candidates (no fixed numbers):
