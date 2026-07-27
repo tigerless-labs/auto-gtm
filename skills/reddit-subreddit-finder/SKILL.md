@@ -41,10 +41,14 @@ A ranked table, best first:
 
 Stops here for the human to choose a community.
 
+### Persist the choice — confirm-then-save
+
+When the human picks a community (this run or in reply), save it to that product's `~/Documents/auto-gtm/<product-slug>/subreddits.md` per [storage.md](../gtm-shared/references/storage.md) — mirroring how topic-scout saves confirmed highlights. This is the **writer** for the store that `reddit-post-drafter` reads, so a returning product skips re-ranking. Rules: **only on an explicit human choice** (never auto-save the top row); store just the chosen subreddit name(s) — never any fetched post/rules body; slugify the product from the trigger to locate the folder, create it on first save. If the human doesn't choose, write nothing.
+
 ## Config
 
 Candidate count (default ~8), search window (default `-t year`), removal-sample size (default ~25). Override per request.
 
 ## Boundary
 
-Read-only via `rdt` (whitelist in rdt-readonly). Ranks only — never joins, subscribes, or posts. Drafting a reply is `reddit-auto-comment-draft`; writing a post is `reddit-post-drafter`.
+Read-only via `rdt` (whitelist in rdt-readonly). Ranks only — never joins, subscribes, or posts (persisting the human's chosen sub to the local `subreddits.md` is a convenience file, not a platform write). Drafting a reply is `reddit-auto-comment-draft`; writing a post is `reddit-post-drafter`.
