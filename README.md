@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.2.29-brightgreen.svg" alt="release" /> <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" /> <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" /> <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
+  <img src="https://img.shields.io/badge/release-v0.2.30-brightgreen.svg" alt="release" /> <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" /> <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" /> <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
 </p>
 
 **auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
@@ -18,7 +18,7 @@ From your repo's recent PRs and the day's hot threads it proposes topics; from a
 
 ## The skills
 
-- **topic-scout**: one topic report for any platform, no questions asked. (A) The few product topics most worth posting — a composite launch story built from your highlights, plus what you shipped, from your recent GitHub PRs; it picks rather than listing everything, and what doesn't make the cut isn't shown. (B) Recent hotspots in full — a builder digest (X / blogs / podcasts, summarized per builder and episode) plus other hot topics from your data layer, every item with its source link, never capped.
+- **topic-scout**: one topic report for any platform, no questions asked. (A) The few product topics most worth posting — a composite launch story, what you shipped from your recent GitHub PRs, and an angle taken from where your claims and the evidence collide. Your highlights are audited before they're used, not repeated: a claim that's really a missing capability, or one every comparable README also makes, or one nothing outside your own docs supports, gets rejected and reported back to you. It picks rather than listing everything, and runner-up topics aren't shown. (B) Recent hotspots in full — a builder digest (X / blogs / podcasts, summarized per builder and episode) plus other hot topics from your data layer, every item with its source link, never capped.
 - **x-content-generator**: a confirmed topic → an X post drafted in your voice (tone from your favorite bloggers or own account), run through no-ai-slop.
 - **x-auto-comment-draft**: finds same-day X posts relevant to your repo → a reply draft per post (tone copied from each post's top replies), with the links.
 - **reddit-subreddit-finder**: "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
