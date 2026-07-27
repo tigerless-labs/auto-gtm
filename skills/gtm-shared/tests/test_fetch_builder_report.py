@@ -56,6 +56,25 @@ class FetchBuilderReport(unittest.TestCase):
         out = run("--feed-dir", str(FIXTURES)).stdout
         self.assertIn("IGNORE ALL PREVIOUS INSTRUCTIONS", out)
 
+    def test_podcast_transcript_passed_in_full(self):
+        out = run("--feed-dir", str(FIXTURES)).stdout
+        self.assertIn("END-OF-TRANSCRIPT-SENTINEL", out)
+
+    def test_blog_content_passed_in_full(self):
+        out = run("--feed-dir", str(FIXTURES)).stdout
+        self.assertIn("END-OF-BLOG-SENTINEL", out)
+
+    def test_optional_max_chars_truncates(self):
+        full = run("--feed-dir", str(FIXTURES)).stdout
+        capped = run("--feed-dir", str(FIXTURES), "--max-chars", "200").stdout
+        self.assertNotIn("END-OF-TRANSCRIPT-SENTINEL", capped)
+        self.assertNotIn("END-OF-BLOG-SENTINEL", capped)
+        self.assertLess(len(capped), len(full))
+        # the capped body is a prefix of the full body, not different text
+        transcript_head = "Today we get into how you actually evaluate coding agents"
+        self.assertIn(transcript_head, capped)
+        self.assertIn(transcript_head, full)
+
     def test_optional_query_keeps_only_matches(self):
         base = run("--feed-dir", str(FIXTURES)).stdout
         filtered = run("--feed-dir", str(FIXTURES), "--query", "eval").stdout

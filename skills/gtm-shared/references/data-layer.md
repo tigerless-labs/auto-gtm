@@ -49,7 +49,7 @@ When Tier 1 is unavailable or returns nothing, use the host's native **WebSearch
 
 ## Builder pulse — keyless daily feeds
 
-For "what are top builders saying lately", pull the follow-builders daily feeds directly (keyless, no install): [`../scripts/fetch_builder_report.py`](../scripts/fetch_builder_report.py). It fetches three public JSON feeds from `zarazhangrui/follow-builders` — **X posts, official blogs, and podcasts** — each already recency-scoped upstream (so no hour cap here), and prints a three-section digest; `--query` optionally keeps only topically-matching items. Stdlib only, no config. When all three feeds are unreachable it exits non-zero so the caller falls back to Tier 1/Tier 2 search. The caller applies its own concise digest instruction to the output.
+For "what are top builders saying lately", pull the follow-builders daily feeds directly (keyless, no install): [`../scripts/fetch_builder_report.py`](../scripts/fetch_builder_report.py). It fetches three public JSON feeds from `zarazhangrui/follow-builders` — **X posts, official blogs, and podcasts** — each already recency-scoped upstream (so no hour cap here), and prints them three-section with **full bodies** (transcripts and articles untruncated — the remix needs the whole text; `--max-chars` caps them when a compact dump is wanted); `--query` optionally keeps only topically-matching items. Stdlib only, no config. When all three feeds are unreachable it exits non-zero so the caller falls back to Tier 1/Tier 2 search. The caller remixes the output per [`builder-digest.md`](builder-digest.md).
 
 ## Host sandbox (Codex desktop app)
 

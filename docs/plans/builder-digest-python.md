@@ -1,5 +1,7 @@
 # 计划：builder pulse 改用 follow-builders 的报告生成方式（Python 零依赖移植）
 
+> 2026-07-27 更新：「不搬 prompt、自写薄 prompt」一条已被 [builder-digest-full-report.md](builder-digest-full-report.md) 推翻——上游 prompt 规则以固定副本落成共享 reference,part b 改为全量三段报告。
+
 ## 背景与决策
 
 现状：`topic-scout` 的 builder pulse 仅调 `fetch_builder_report.py`，只读 `feed-x.json`（24h），

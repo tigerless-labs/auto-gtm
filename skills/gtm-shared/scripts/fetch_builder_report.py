@@ -10,9 +10,14 @@ The caller (topic-scout) applies its own concise digest instruction to this outp
 total fetch failure (all three feeds unreachable) it exits non-zero so the caller can fall
 back to keyless search.
 
+Long bodies (podcast transcripts, blog articles) are passed through in full by default —
+the caller's digest instruction needs the whole text to summarize from. --max-chars caps
+each body when a compact dump is wanted.
+
 Usage:
-  fetch_builder_report.py                       # all three feeds, everything recent
+  fetch_builder_report.py                       # all three feeds, everything recent, full bodies
   fetch_builder_report.py --query "agent eval"  # keep only items matching ANY term
+  fetch_builder_report.py --max-chars 600       # cap each long body at 600 chars
   fetch_builder_report.py --feed-dir ./fixtures # read local feed files (offline / tests)
 """
 import argparse
@@ -26,7 +31,6 @@ FEEDS = {
     "blogs": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json",
     "podcasts": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json",
 }
-SNIPPET_CHARS = 600
 
 
 def load_feed(key, feed_dir):
@@ -52,9 +56,11 @@ def matches(text, terms):
     return any(term in blob for term in terms)
 
 
-def snippet(text):
-    text = " ".join((text or "").split())
-    return text[:SNIPPET_CHARS]
+def body(text, max_chars):
+    text = (text or "").strip()
+    if not max_chars:
+        return text
+    return " ".join(text.split())[:max_chars]
 
 
 def render_x(feed, terms, out):
@@ -75,7 +81,7 @@ def render_x(feed, terms, out):
     return kept
 
 
-def render_blogs(feed, terms, out):
+def render_blogs(feed, terms, max_chars, out):
     kept = 0
     lines = ["\n## Official blogs"]
     for post in feed.get("blogs", []):
@@ -87,9 +93,9 @@ def render_blogs(feed, terms, out):
         head = f"\n### {post.get('name')} — {post.get('title')}"
         lines.append(head)
         lines.append(f"{post.get('publishedAt')}" + (f" · {author}" if author else ""))
-        body = post.get("description") or post.get("content") or ""
-        if body:
-            lines.append(snippet(body))
+        text = body(post.get("content") or post.get("description"), max_chars)
+        if text:
+            lines.append(text)
         lines.append(f"{post.get('url')}")
     if kept == 0:
         lines.append("(none)")
@@ -97,7 +103,7 @@ def render_blogs(feed, terms, out):
     return kept
 
 
-def render_podcasts(feed, terms, out):
+def render_podcasts(feed, terms, max_chars, out):
     kept = 0
     lines = ["\n## Podcasts"]
     for ep in feed.get("podcasts", []):
@@ -107,8 +113,9 @@ def render_podcasts(feed, terms, out):
         kept += 1
         lines.append(f"\n### {ep.get('name')} — {ep.get('title')}")
         lines.append(f"{ep.get('publishedAt')}")
-        if ep.get("transcript"):
-            lines.append(snippet(ep.get("transcript")))
+        text = body(ep.get("transcript"), max_chars)
+        if text:
+            lines.append(text)
         lines.append(f"{ep.get('url')}")
     if kept == 0:
         lines.append("(none)")
@@ -119,6 +126,7 @@ def render_podcasts(feed, terms, out):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--query", default="", help="space-separated terms; keep items matching ANY (case-insensitive)")
+    ap.add_argument("--max-chars", type=int, default=0, help="cap each long body (transcript, article) at N chars; 0 = full text")
     ap.add_argument("--feed-dir", default="", help="read feed-*.json from this directory instead of the network")
     args = ap.parse_args()
 
@@ -137,8 +145,8 @@ def main():
     out = [header]
     total = 0
     total += render_x(feeds["x"] or {}, terms, out)
-    total += render_blogs(feeds["blogs"] or {}, terms, out)
-    total += render_podcasts(feeds["podcasts"] or {}, terms, out)
+    total += render_blogs(feeds["blogs"] or {}, terms, args.max_chars, out)
+    total += render_podcasts(feeds["podcasts"] or {}, terms, args.max_chars, out)
     print("\n".join(out))
     if total == 0:
         print("\n(no items matched — drop --query or fall back to keyless search)")
