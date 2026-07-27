@@ -47,6 +47,23 @@
           "isQuote": false
         }
       ]
+    },
+    {
+      "source": "x",
+      "name": "No Bio Builder",
+      "handle": "nobiobuilder",
+      "tweets": [
+        {
+          "id": "104",
+          "text": "A builder whose feed entry carries no bio at all.",
+          "createdAt": "2026-07-24T04:00:00.000Z",
+          "url": "https://x.com/nobiobuilder/status/104",
+          "likes": 7,
+          "retweets": 0,
+          "replies": 0,
+          "isQuote": false
+        }
+      ]
     }
   ]
 }
