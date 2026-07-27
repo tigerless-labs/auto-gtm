@@ -86,5 +86,13 @@ class FirefoxReader(unittest.TestCase):
             live.close()
 
 
+class ChromiumExtractorAvailability(unittest.TestCase):
+    def test_missing_helper_reports_unavailable(self):
+        self.assertFalse(session.chromium_extractor_available(importer=lambda: None))
+
+    def test_present_helper_reports_available(self):
+        self.assertTrue(session.chromium_extractor_available(importer=lambda: object()))
+
+
 if __name__ == "__main__":
     unittest.main()

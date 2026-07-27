@@ -40,11 +40,13 @@ Arctic Shift 只作 keyless composite 内的分数回填，不单独进链——
 
 ## Fallback 顺序
 
-沿链逐级跌落：有可用认证会话就用；没有就按 OS 取一次 cookie 建会话；仍不行落到中间 keyless（X 的 jina / Reddit 的 opt-in composite）；再不行走 WebSearch 兜底并声明近似。每档 best-effort——失败返回空、不抛，交给下一档。**collect-then-pick**：判「认证可用」要同时满足「库可导入 **且** 有 cookie」，避免装了但未登录的首选把可用后备遮蔽。不设大 doctor，只保留一行 status 报所经档位与浏览器来源（**绝不含 cookie 值**）。
+沿链逐级跌落：有可用认证会话就用；没有就按 OS 取一次 cookie 建会话；某档只因**缺依赖**不可用时先报安装命令、由 agent 装后重试一次（见「依赖姿态」）；仍不行落到中间 keyless（X 的 jina / Reddit 的 opt-in composite）；再不行走 WebSearch 兜底并声明近似。每档 best-effort——失败返回空、不抛，交给下一档。**collect-then-pick**：判「认证可用」要同时满足「库可导入 **且** 有 cookie」，避免装了但未登录的首选把可用后备遮蔽。不设大 doctor，只保留一行 status 报所经档位与浏览器来源（**绝不含 cookie 值**）。
 
-## 塞进插件（零安装）
+## 依赖姿态 — 默认什么都没装，缺了 agent 自装
 
-`twscrape`、`PRAW`、以及 cookie 提取（yt-dlp 的提取器 + 一段 Firefox 读取）都是纯 Python，随插件分发，装完即用。`OpenCLI` 是桌面 app + 浏览器扩展，塞不进——只当「用户碰巧装了就白捡」的可选增强。
+插件只随附自己的编排脚本（stdlib，永远能跑）；第三方件（认证库、cookie 提取辅助、`rdt`）**不 vendor、不预装**。冷启动假设用户什么都没装：某档缺依赖时，脚本在 plan/status 里报出**缺什么 + 精确安装命令**，由 agent 现场执行安装、装完重试一次；装不上或被拒，按既有 best-effort 跌落。借鉴 agent-reach 的自装模式，但收敛为一条：安装动作只在 **prompt 层**发生——脚本自身绝不 subprocess 装软件，安装命令走 host 的权限门，人对每次安装可见可拒（fail-safe）。vendor 方向（license 核查、版本更新、体积三重负担）废弃。`OpenCLI` 是桌面 app + 浏览器扩展，装不了——只当「用户碰巧装了就白捡」的可选增强。
+
+用户侧唯一前置是浏览器里登录过目标平台；登录态由 OS cookie 提取复用，不需要用户手工配任何凭证。
 
 ## Builder pulse
 

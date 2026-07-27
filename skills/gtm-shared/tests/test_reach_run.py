@@ -85,6 +85,70 @@ class AuthProbe(unittest.TestCase):
         self.assertEqual(seen["d"], "reddit.com")
 
 
+class _Availability:
+    def __init__(self, ok, missing=None, login=None):
+        self._ok = ok
+        self.missing = missing
+        self.login = login
+
+    def __bool__(self):
+        return self._ok
+
+
+class InstallHints(unittest.TestCase):
+    def test_known_dependencies_map_to_nonempty_install_commands(self):
+        for dep in ("twscrape", "rdt", "browser_cookie3"):
+            hints = run.install_hints([dep])
+            self.assertEqual(len(hints), 1, dep)
+            self.assertEqual(hints[0]["dependency"], dep)
+            self.assertTrue(hints[0]["install"], dep)
+
+    def test_unknown_dependency_yields_no_hint(self):
+        self.assertEqual(run.install_hints(["left-pad"]), [])
+
+    def test_missing_backend_dependency_is_collected(self):
+        missing = run.missing_dependencies(
+            "x", availability=_Availability(False, missing="twscrape"),
+            chromium_available=True, sources=["firefox", "chromium"],
+        )
+        self.assertEqual(missing, ["twscrape"])
+
+    def test_missing_chromium_helper_is_collected_when_in_source_order(self):
+        missing = run.missing_dependencies(
+            "x", availability=_Availability(False),
+            chromium_available=False, sources=["firefox", "chromium"],
+        )
+        self.assertIn("browser_cookie3", missing)
+
+    def test_chromium_helper_not_collected_outside_source_order(self):
+        missing = run.missing_dependencies(
+            "reddit", availability=_Availability(False, missing="rdt"),
+            chromium_available=False, sources=["firefox"],
+        )
+        self.assertEqual(missing, ["rdt"])
+
+    def test_nothing_missing_when_authenticated(self):
+        missing = run.missing_dependencies(
+            "reddit", availability=_Availability(True),
+            chromium_available=False, sources=["firefox", "chromium"],
+        )
+        self.assertEqual(missing, [])
+
+    def test_status_carries_install_hint_but_never_secrets(self):
+        s = run.status(
+            "x",
+            {"authenticated": False, "_cookies": {"auth_token": "SECRET"}},
+            hints=[{"dependency": "twscrape", "install": "pip install twscrape"}],
+        )
+        self.assertIn("twscrape", s)
+        self.assertNotIn("SECRET", s)
+
+    def test_hints_do_not_change_fallback_order(self):
+        tiers = run.plan_fetch("x", {"authenticated": False})
+        self.assertEqual(tiers[-1]["tier"], "keyless-floor")
+        self.assertTrue(all(t["approximate"] for t in tiers))
+
+
 class ConfigKnobs(unittest.TestCase):
     def test_platforms_have_floor_query(self):
         for platform in ("x", "reddit"):
