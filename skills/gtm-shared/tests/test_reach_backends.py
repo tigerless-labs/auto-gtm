@@ -83,6 +83,40 @@ class XAvailability(unittest.TestCase):
         self.assertFalse(backends.x_available(importer=lambda: None))
 
 
+class MissingDependencyHints(unittest.TestCase):
+    def test_x_missing_names_twscrape(self):
+        a = backends.x_available(importer=lambda: None)
+        self.assertFalse(a)
+        self.assertEqual(a.missing, "twscrape")
+
+    def test_x_present_has_no_missing(self):
+        a = backends.x_available(importer=lambda: object())
+        self.assertTrue(a)
+        self.assertIsNone(a.missing)
+
+    def test_reddit_missing_binary_names_rdt(self):
+        def boom(cmd):
+            raise FileNotFoundError("rdt")
+
+        a = backends.reddit_available(runner=boom)
+        self.assertFalse(a)
+        self.assertEqual(a.missing, "rdt")
+
+    def test_reddit_present_but_unauthenticated_needs_login_not_install(self):
+        runner = runner_returning(FakeProc(stdout='  "authenticated": !!bool "false"'))
+        a = backends.reddit_available(runner=runner)
+        self.assertFalse(a)
+        self.assertIsNone(a.missing)
+        self.assertEqual(a.login, "rdt login")
+
+    def test_reddit_authenticated_has_no_hints(self):
+        runner = runner_returning(FakeProc(stdout='  "authenticated": !!bool "true"'))
+        a = backends.reddit_available(runner=runner)
+        self.assertTrue(a)
+        self.assertIsNone(a.missing)
+        self.assertIsNone(a.login)
+
+
 class _FakeUser:
     username = "swyx"
 

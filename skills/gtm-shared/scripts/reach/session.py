@@ -82,6 +82,20 @@ def firefox_cookies(domain, root=None):
     return {}
 
 
+def _import_browser_cookie3():
+    try:
+        import browser_cookie3  # optional dependency
+        return browser_cookie3
+    except ImportError:
+        return None
+
+
+def chromium_extractor_available(importer=None):
+    """Whether the optional Chromium cookie extractor (browser_cookie3) is
+    importable — when False the caller can surface an install hint."""
+    return ((importer or _import_browser_cookie3)()) is not None
+
+
 def chromium_cookies(domain):
     """Best-effort Chromium extraction, delegated to an optional helper.
 
@@ -90,9 +104,8 @@ def chromium_cookies(domain):
     """
     if current_os() == "windows":
         return {}
-    try:
-        import browser_cookie3  # optional dependency
-    except ImportError:
+    browser_cookie3 = _import_browser_cookie3()
+    if browser_cookie3 is None:
         return {}
     try:
         jar = browser_cookie3.chrome(domain_name=domain)

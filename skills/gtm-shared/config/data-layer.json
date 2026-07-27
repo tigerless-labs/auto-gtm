@@ -16,5 +16,10 @@
       "recency": { "topic": "~1 week", "reply": "same-day" }
     }
   },
-  "keyless_floor_enabled": true
+  "keyless_floor_enabled": true,
+  "install": {
+    "twscrape": "pip install twscrape",
+    "rdt": "pipx install 'git+https://github.com/public-clis/rdt-cli.git'",
+    "browser_cookie3": "pip install browser_cookie3"
+  }
 }

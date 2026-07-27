@@ -13,6 +13,20 @@ Read-only and drafts-only throughout. Stdlib only (twikit is an optional import)
 """
 import subprocess
 
+class Availability:
+    """Truthy/falsy like the bool it replaces; when falsy, `missing` names an
+    installable dependency (agent installs it and retries) and `login` names a
+    one-time login step (the user runs it). Both None when nothing is needed."""
+
+    def __init__(self, ok, missing=None, login=None):
+        self.ok = ok
+        self.missing = missing
+        self.login = login
+
+    def __bool__(self):
+        return self.ok
+
+
 RDT_READ_WHITELIST = {
     "status", "search", "read", "sub", "sub-info", "popular",
     "all", "user", "user-posts", "user-comments", "export",
@@ -27,18 +41,18 @@ def _run(cmd):
 # ---------------------------------------------------------------- Reddit / rdt
 
 def reddit_available(runner=_run):
-    """True when `rdt` reports an authenticated session."""
+    """Availability of the authenticated Reddit path (`rdt` session)."""
     try:
         r = runner(["rdt", "status", "--yaml"])
     except (FileNotFoundError, OSError):
-        return False
+        return Availability(False, missing="rdt")
     if r.returncode != 0:
-        return False
+        return Availability(False, login="rdt login")
     for line in (r.stdout or "").splitlines():
         low = line.lower()
         if "authenticated" in low and "true" in low:
-            return True
-    return False
+            return Availability(True)
+    return Availability(False, login="rdt login")
 
 
 def reddit_fetch(command, args=None, runner=_run):
@@ -77,9 +91,11 @@ def _import_twscrape():
 
 
 def x_available(importer=None):
-    """True when the twscrape library is importable (X authenticated path)."""
+    """Availability of the authenticated X path (twscrape importable)."""
     imp = importer or _import_twscrape
-    return imp() is not None
+    if imp() is None:
+        return Availability(False, missing="twscrape")
+    return Availability(True)
 
 
 def _normalize_tweet(t):

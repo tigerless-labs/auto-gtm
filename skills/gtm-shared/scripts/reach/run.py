@@ -43,6 +43,11 @@ DEFAULTS = {
         },
     },
     "keyless_floor_enabled": True,
+    "install": {
+        "twscrape": "pip install twscrape",
+        "rdt": "pipx install 'git+https://github.com/public-clis/rdt-cli.git'",
+        "browser_cookie3": "pip install browser_cookie3",
+    },
 }
 
 
@@ -56,6 +61,7 @@ def _load_config():
         merged["platforms"].setdefault(name, {}).update(patch)
     if "keyless_floor_enabled" in data:
         merged["keyless_floor_enabled"] = data["keyless_floor_enabled"]
+    merged["install"].update(data.get("install") or {})
     return merged
 
 
@@ -97,10 +103,51 @@ def degrade_result(platform, reason=""):
     }
 
 
-def status(platform, available):
-    # Reports the tier only — never cookie values or any auth material.
+def _backend_availability(platform):
+    if platform == "reddit":
+        return backends.reddit_available()
+    if platform == "x":
+        return backends.x_available()
+    return backends.Availability(True)
+
+
+def missing_dependencies(platform, availability=None, chromium_available=None, sources=None):
+    """Installable dependencies currently blocking a tier, in install order.
+
+    Empty when the platform is already authenticated. The Chromium cookie
+    helper is only reported when Chromium is in this OS's cookie source order.
+    All three probes are injectable for tests.
+    """
+    a = availability if availability is not None else _backend_availability(platform)
+    if a:
+        return []
+    missing = []
+    if getattr(a, "missing", None):
+        missing.append(a.missing)
+    chrom_ok = (chromium_available if chromium_available is not None
+                else session.chromium_extractor_available())
+    if "chromium" in (sources or session.cookie_source_order()) and not chrom_ok:
+        missing.append("browser_cookie3")
+    return missing
+
+
+def install_hints(missing):
+    """Map missing dependency names to exact agent-runnable install commands.
+
+    The commands live in config (DEFAULTS + data-layer.json), never inline in
+    skill prose. Unknown names are dropped rather than guessed."""
+    commands = _load_config()["install"]
+    return [{"dependency": d, "install": commands[d]} for d in missing if d in commands]
+
+
+def status(platform, available, hints=None):
+    # Reports the tier and any install hints — never cookie values or any auth material.
     tier = "authenticated" if available.get("authenticated") else "keyless-floor"
-    return f"{platform} via {tier}"
+    line = f"{platform} via {tier}"
+    if hints:
+        needs = "; ".join(h["install"] for h in hints)
+        line += f"  (missing: {', '.join(h['dependency'] for h in hints)} — install: {needs})"
+    return line
 
 
 def authenticated_available(platform, probe=None):
@@ -127,12 +174,13 @@ def main(argv=None):
     ap.add_argument("platform", choices=sorted(DEFAULTS["platforms"]))
     ap.add_argument("--json", action="store_true", help="machine-readable plan")
     args = ap.parse_args(argv)
-    avail = {"authenticated": authenticated_available(args.platform)}
+    avail = {"authenticated": bool(authenticated_available(args.platform))}
+    hints = [] if avail["authenticated"] else install_hints(missing_dependencies(args.platform))
     plan = plan_fetch(args.platform, avail)
     if args.json:
-        print(json.dumps({"status": status(args.platform, avail), "plan": plan}))
+        print(json.dumps({"status": status(args.platform, avail, hints), "install": hints, "plan": plan}))
     else:
-        print(status(args.platform, avail))
+        print(status(args.platform, avail, hints))
         for t in plan:
             label = t.get("backend") or t.get("query")
             print(f"  - {t['tier']}: {label}" + ("  (approximate)" if t["approximate"] else ""))
