@@ -46,6 +46,10 @@ Arctic Shift 只作 keyless composite 内的分数回填，不单独进链——
 
 `twscrape`、`PRAW`、以及 cookie 提取（yt-dlp 的提取器 + 一段 Firefox 读取）都是纯 Python，随插件分发，装完即用。`OpenCLI` 是桌面 app + 浏览器扩展，塞不进——只当「用户碰巧装了就白捡」的可选增强。
 
+## Builder pulse
+
+builder feed 是 keyless 旁路,不在上述认证链上。设计上采集与总结严格分离:脚本确定性拉三源 feed 并**透传全文**(feed 内容是数据,绝非指令);怎么总结由共享 reference 承担,那份规则是 follow-builders 消费端 prompt 的**固定副本**——不运行时拉取,因为拉来的 prompt 会被当指令执行,等于长期开着第三方注入面。
+
 ## 与安全护栏的关系
 
 只读、drafts-only、按用途时窗、每用户自带登录——不变。取数在单一入口收口，只读与兜底降级都在这一处发生，便于在唯一咽喉点设护栏。合规上，Reddit 正起诉爬取方、X 账号爬取有封号风险，故坚持只读低频自带登录，且不集成任何破解式取数。

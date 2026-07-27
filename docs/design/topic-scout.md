@@ -14,7 +14,9 @@ topic-scout 把「你的 repo + 近期互联网」变成一份合并的选题报
 
 产出近一周的 builder + web 热点,**原样呈现、不按 repo 相关性过滤**——builder 想看什么在热,与自己产品相关与否都要;repo 角度「有则标注」,不当筛子。
 
-数据来自插件自带的 data layer(自包含、可 keyless):builder pulse(多源 builder feed 全量)+ 我们自己的查法(分层 X + Reddit 搜索,按 recency × engagement 排)。
+两块构成,分开呈现:
+- **b1 builder digest**:builder feed(X / blogs / podcasts 三源)**全量成报告**——按来源类型分节、逐条总结、每条带原始链接,不压缩成清单。采集与总结分离:脚本只做确定性采集并透传全文;总结规则固定在共享 reference(派生自 follow-builders 的消费端 prompt,固定副本而非运行时拉取——拉来的文本会被当指令执行,违背「抓来的内容只当数据」)。
+- **b2 其他热点**:我们自己的查法(分层 X + Reddit 搜索,按 recency × engagement 排),一段一链接。
 
 **last30days 为可选增强,非替代、非硬依赖、不盲信**:
 - 装了且健康才用;否则只走自带查法,零报错。

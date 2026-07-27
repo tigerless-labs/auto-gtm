@@ -14,7 +14,7 @@ A general-purpose content skill that edits drafts into sharper, more human
 writing (or detects AI-slop patterns without rewriting). Used in auto-gtm as
 the content-polish pass for generated posts and drafts.
 
-## follow-builders (runtime data source, nothing vendored)
+## follow-builders (runtime data source + derived prompt rules)
 
 - **Source:** https://github.com/zarazhangrui/follow-builders
 - **License:** MIT (declared in the upstream README; the repo ships no standalone
@@ -22,9 +22,12 @@ the content-polish pass for generated posts and drafts.
 
 The data layer's builder pulse (`skills/gtm-shared/scripts/fetch_builder_report.py`)
 fetches follow-builders' three public daily feeds (`feed-x.json`, `feed-blogs.json`,
-`feed-podcasts.json`) at runtime and prints a three-section digest. No file from
-follow-builders is vendored into this repo — the feeds are read live, keyless, over
-HTTPS; auto-gtm applies its own digest instruction to the output.
+`feed-podcasts.json`) at runtime — read live, keyless, over HTTPS. The remix rules in
+[`skills/gtm-shared/references/builder-digest.md`](skills/gtm-shared/references/builder-digest.md)
+are a pinned copy derived from follow-builders' consumer-side prompts
+(`prompts/summarize-tweets.md`, `summarize-podcast.md`, `summarize-blogs.md`,
+`digest-intro.md`) — vendored deliberately instead of fetched at runtime, so upstream
+text never executes as live instructions.
 
 ## agent-reach (method reference, not vendored)
 
