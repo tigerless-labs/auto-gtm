@@ -6,7 +6,7 @@ Reddit data comes from `rdt` (`rdt-cli`), the plugin's **cookie-session** backen
 
 `status` · `search` · `read` · `sub` · `sub-info` · `popular` · `all` · `user` · `user-posts` · `user-comments` · `export`
 
-`reach fetch-reddit` **refuses any command outside this list in code** (a write command raises before anything shells out) — the drafts-only guardrail is a code chokepoint, not a prose convention. NEVER attempt a write command: `comment`, `upvote`, `save`, `subscribe`, `logout`. The session cookie has write capability; the whitelist is what prevents its use.
+`reach fetch-reddit` **refuses any command outside this list in code** (a write command raises before anything shells out) — this restriction is a code chokepoint, not a prose convention. NEVER attempt a write command: `comment`, `upvote`, `save`, `subscribe`, `logout`. The session cookie has write capability; the whitelist is what prevents its use.
 
 (`status` is the read-only auth check — `authenticated: true|false`; `reach fetch-reddit` also reports a degrade signal when `rdt` is missing or unauthenticated.)
 

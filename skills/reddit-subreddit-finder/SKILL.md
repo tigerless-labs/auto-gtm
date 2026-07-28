@@ -3,7 +3,7 @@ name: reddit-subreddit-finder
 description: >
   Rank candidate subreddits for a product/topic on Reddit — multi-axis fit + self-promo safety + a rules summary per candidate.
   **Manually triggered** — use when the user asks "which subreddit should I post this in / find communities for this / where's my audience on Reddit".
-  Takes "topic → ranked subreddits"; reads only, never joins or posts. Data via rdt (read-only).
+  Takes "topic → ranked subreddits". Data via rdt (read-only).
 ---
 
 # reddit-subreddit-finder — rank subreddits for a topic
@@ -51,4 +51,4 @@ Candidate count (default ~8), search window (default `-t year`), removal-sample 
 
 ## Boundary
 
-Read-only via `rdt` (whitelist in rdt-readonly). Ranks only — never joins, subscribes, or posts (persisting the human's chosen sub to the local `subreddits.md` is a convenience file, not a platform write). Drafting a reply is `reddit-auto-comment-draft`; writing a post is `reddit-post-drafter`.
+Read-only via `rdt` (whitelist in rdt-readonly). Ranks only; the human's chosen sub is persisted to the local `subreddits.md`. Drafting a reply is `reddit-auto-comment-draft`; writing a post is `reddit-post-drafter`.
