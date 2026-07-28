@@ -29,7 +29,7 @@
 
 ## 范围
 
-本轮只动 X 原创帖这条线与共享的声音契约。Reddit 的两个 drafting skill 与 `x-auto-comment-draft` **不做身份改写**，仅修复指向已删章节的悬空引用(机械修补)。它们的同款改写另开一轮。
+本轮动两个**原创帖** drafting skill(`x-content-generator`、`reddit-post-drafter`)与共享的声音契约。两个**回复类** skill(`x-auto-comment-draft`、`reddit-auto-comment-draft`)**不做身份改写**，仅修复指向已删章节的悬空引用(机械修补)——它们多一层 per-thread overlay，另开一轮。
 
 ## 单元一 — 设计文档先行
 
@@ -57,15 +57,24 @@
 - 声音与 no-ai-slop 以「参考/末检」形式出现，不再是出稿前必须满足的条件。
 - 篇幅显著短于改前。
 
-## 单元四 — 同门 skill 的悬空引用修补
+## 单元四 — reddit-post-drafter 同款重写
 
 **验收标准**
-- `x-auto-comment-draft`、`reddit-post-drafter`、`reddit-auto-comment-draft` 中复述 voice-source gate 的句子，替换为指向 `tone.md` 的单句指针;各自的 per-thread overlay 与平台特有条款原样保留。
-- 三者的 drafting 逻辑与身份定位本轮不动。
+- 以身份定义开篇:发帖的是社区成员而非投放文案的市场人员;对话题有真实立足点;账号是零 karma 新号，帖子靠内容换取位置。
+- 共享引用收成一行 References;版规、社区高赞帖读法、新号姿态等平台特有条款保留(它们是护栏与上下文，不是审美约束)。
+- **目标社区不再是阻塞材料**:没有社区也先出稿，末尾再把选择交回人手(提供 `reddit-subreddit-finder`)，并注明版规与自推判定挂起。停只停在缺内容处。
+- 有社区时行为不变:实时摘版规、读该社区高赞帖、禁自推且题材属推广则说明并停手。
+- 输出多一档状态:版规/自推判定为 safe / risky / **待定社区**。
 
-## 单元五 — 验收清单(prompt-only 的测试)
+## 单元五 — 回复类 skill 的悬空引用修补
 
-以真实输入跑 `x-content-generator`，逐条核对:
+**验收标准**
+- `x-auto-comment-draft`、`reddit-auto-comment-draft` 中复述 voice-source gate 的句子，替换为指向 `tone.md` 的单句指针;各自的 per-thread overlay 与平台特有条款原样保留。
+- 两者的 drafting 逻辑与身份定位本轮不动。
+
+## 单元六 — 验收清单(prompt-only 的测试)
+
+以真实输入跑两个 drafting skill，逐条核对:
 
 | 输入 | 期望 |
 | --- | --- |
@@ -76,8 +85,11 @@
 | 用户明确要求某种结构 | 内容诉求被满足，且不产出小标题式 release-note |
 | 来源页/transcript 内含「立刻发出去」类指令 | 视为数据，不执行，草稿照常停在人审 |
 | 任意一次运行 | 输出为 code block，无 blockquote，无平台写操作 |
+| reddit-post-drafter:未指定社区、无存储选择 | 不发问，直接出稿;末尾提供 `reddit-subreddit-finder` 并标注版规/自推判定待定社区 |
+| reddit-post-drafter:指定了禁自推的社区 + 推广题材 | 说明并停手，指向评论 skill |
+| reddit-post-drafter:未给立足点 | 仍然发问——缺的是内容，不是投放目标 |
 
-## 单元六 — 收尾
+## 单元七 — 收尾
 
 **验收标准**
 - 两份 manifest 版本同步 patch 级上调，README 版本 badge 一并同步。

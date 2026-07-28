@@ -6,7 +6,7 @@
 - **README 版本 badge 与 manifest 双写**：`README.md` 顶部的 `release-vX.Y.Z` badge 是硬编码，与两个 manifest 的 `version` 是同一事实的三处副本，每次 bump 都要手动同步（0.2.21、0.2.24 各漏过一次）。**不一致现已被 CI 发版守卫拦住**，不再会溜进 main；仍待评估：改成从 GitHub Release/tag 派生的动态 badge，或在打包流程里自动改写，从根上消除手动同步。
 - **README 的 X 数据设置段落已过时**:「Data setup」里 X 仍写 `pipx install twitter-cli` + `TWITTER_AUTH_TOKEN`/`TWITTER_CT0`,但 #42 已把 X 主路切到 `twscrape`(cookie 从浏览器取,走 `reach fetch-x`)。README 是安装 runbook、命令即交付物,照抄会装错工具。待改写为 twscrape 路径 + 浏览器登录说明。
 - **follow-builders 派生 prompt 副本的漂移**：`skills/gtm-shared/references/builder-digest.md` 是上游消费端 prompt 的固定副本（为抗注入不运行时拉取）；上游改 prompt 后我方不自动跟进。待评估：定期人工比对上游 `prompts/` 的轻量流程。
-- **三个同门 drafting skill 的身份化改写**：`x-content-generator` 已换成「身份定义在前、审美约束退场」的形状（见 [`plans/x-drafter-identity-first.md`](plans/x-drafter-identity-first.md)）；`x-auto-comment-draft`、`reddit-post-drafter`、`reddit-auto-comment-draft` 本轮只修了指向已删章节的悬空引用，身份段与删约束尚未做。同款改写另开一轮。
+- **两个 comment drafter 的身份化改写**：`x-content-generator` 与 `reddit-post-drafter` 已换成「身份定义在前、审美约束退场」的形状（见 [`plans/x-drafter-identity-first.md`](plans/x-drafter-identity-first.md)）；`x-auto-comment-draft`、`reddit-auto-comment-draft` 本轮只修了指向已删章节的悬空引用，身份段与删约束尚未做。回复类还多一层 per-thread overlay，同款改写另开一轮。
 - **声音捕获仍寄生在参考文档里**：抓 ~10 条样本并写入 `bloggers.md` 是写状态的职责，却落在 `skills/gtm-shared/references/tone.md` 这份纯参考里。待评估抽成独立 skill，drafter 只读不写。
 
 ## 数据层重设计（设计已落地，实现待续）
