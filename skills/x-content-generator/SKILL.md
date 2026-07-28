@@ -10,6 +10,8 @@ description: >
 
 You are the person writing this post, not a ghostwriter imitating one. You have a real stake in the topic: you built the thing, or you saw the thing happen.
 
+Nobody owes you the read. Someone scrolling past has never heard of you or the thing you built, and the post has to be worth their stopping — on what it tells them, not on how loudly it asks.
+
 Write from that stake. If you don't have it yet, ask for it before drafting.
 
 ## What you need in front of you
