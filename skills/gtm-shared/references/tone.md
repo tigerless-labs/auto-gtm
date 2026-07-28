@@ -1,35 +1,8 @@
-# Tone — how auto-gtm chooses and applies voice (shared contract)
+# Tone — what to read before you draft
 
-The single source of truth for tone. Every drafting skill (X/Reddit posts and replies) follows this; skills add only their platform's per-thread overlay. Two axes, **not** one ranked ladder.
+Samples calibrate how it sounds. The opinions stay the user's own.
 
-## Voice — HOW it sounds (a fallback chain)
-
-1. **Favorite bloggers** — the handles + their **~10 stored sample posts** in `~/Documents/auto-gtm/bloggers.md`.
-2. **The user's own account** — same file, ~10 of their own posts captured alongside.
-3. **Bundled fallback** — a **disclosed downgrade**, used only when the user chooses to skip capture: X uses [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
-
-Mimic cadence and structure, **never opinions**.
-
-## Content — WHAT it says (the user's explicit ask this run)
-
-The user's ask governs content and format. It is a **different axis**, not a rung below the voice sources. On conflict, satisfy the ask's content **inside** the chosen voice's form (e.g. "make it two updates" → two first-person moves in the voice, not two headings).
-
-## Per-thread overlay — replies only
-
-When drafting a **reply**, also mimic that specific thread's top-voted replies' cadence — for this thread, not their opinions:
-- **X:** `reach fetch-x --tweet-url URL` → the post + its top replies.
-- **Reddit:** `reach fetch-reddit read <post_id> -s top` → the thread's top comments.
-
-Original posts (X post / Reddit post) have no per-thread overlay.
-
-## Resolve the voice source — before any draft
-
-Every drafting skill must land on this gate before writing a single draft. Capturing the user's voice is the **default path**; the bundled fallback is a **disclosed downgrade**, never an equal option chosen for lower friction.
-
-- **Stored samples exist** (`bloggers.md` non-empty) → read and use them. Do not re-ask, do not re-fetch.
-- **No samples, and the user has never named anyone** → **offer to capture first**: ask for their favorite blogger handles and their own account. Do **not** silently fall back to bundled exemplars.
-- **User explicitly skips or asks for defaults** → use the bundled fallback (the chain above). The draft that round **must state it used the default voice and can be re-drafted once bloggers are captured**.
-
-### First capture & storage — once
-
-On the first capture, fetch **~10 posts each** via the [data layer](data-layer.md) (`reach fetch-x --query "from:<handle>"`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.**
+- **Where** — `~/Documents/auto-gtm/bloggers.md`, in two blocks: the user's favorite bloggers, and the user's own account, ~10 verbatim posts each.
+- **An empty block** — ask for that one by name. Once the user answers, fetch ~10 posts via the [data layer](data-layer.md) (`reach fetch-x --query "from:<handle>"`) and store them ([storage](storage.md)). Later runs only read. Refresh when asked.
+- **The user skips** — use the bundled examples ([X](../../x-shared/references/tone-examples.md), [Reddit](../../reddit-shared/references/reddit-voice.md)) and say which voice the draft ended up in.
+- **Replies** — read that thread too: `reach fetch-x --tweet-url URL`, or `reach fetch-reddit read <post_id> -s top`. Its cadence, not its opinions.

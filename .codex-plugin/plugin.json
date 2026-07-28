@@ -1,6 +1,6 @@
 {
   "name": "auto-gtm",
-  "version": "0.2.31",
+  "version": "0.2.32",
   "description": "Automate go-to-market — one skill per scenario × platform. Topic scouting from your PRs + today's hotspots, X post & reply drafts, Reddit subreddit-finding + reply & post drafts. Drafts only, never publishes.",
   "author": {
     "name": "tigerless-labs"
