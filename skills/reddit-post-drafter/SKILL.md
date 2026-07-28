@@ -17,7 +17,7 @@ Shared contracts: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) 
 Use the user-specified sub, else the stored choice (`~/Documents/auto-gtm/<product-slug>/subreddits.md`), else run `reddit-subreddit-finder`. From `reach fetch-reddit sub-info <sub>` summarize `submission_type`, `restrict_posting`, self-promo rules, flair (guardrails). If the sub bans self-promo and the topic is promotional, **say so and stop** — suggest the comment skill instead.
 
 ### 2. Learn the voice
-Read the sub's high-upvote **posts** (`reach fetch-reddit sub <sub> -s top`) and mimic how titles and bodies actually read there — length, formatting, how much story vs. ask. Over that, follow the tone contract [`../gtm-shared/references/tone.md`](../gtm-shared/references/tone.md), and **land on its voice-source gate before drafting**: read stored samples if present; otherwise **offer to capture the user's bloggers + own account first**; drop to the sub's own high-upvote voice only if the user skips, and say so. Your ask governs content. This is an original post — no per-thread overlay.
+Read the sub's high-upvote **posts** (`reach fetch-reddit sub <sub> -s top`) and mimic how titles and bodies actually read there — length, formatting, how much story vs. ask. Over that, read the voice samples per [`tone`](../gtm-shared/references/tone.md). This is an original post — no per-thread overlay.
 
 ### 3. Draft
 - Frame as **value / story**, not an ad: what you built, what it's for, what you learned — the product is the subject, not a pitch.

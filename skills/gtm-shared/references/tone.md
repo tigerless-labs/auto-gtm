@@ -1,35 +1,26 @@
-# Tone — how auto-gtm chooses and applies voice (shared contract)
+# Tone — what to read before you draft
 
-The single source of truth for tone. Every drafting skill (X/Reddit posts and replies) follows this; skills add only their platform's per-thread overlay. Two axes, **not** one ranked ladder.
+Voice is material, not a rule to satisfy. Read the samples, then write as yourself.
 
-## Voice — HOW it sounds (a fallback chain)
+## Where the samples live
 
-1. **Favorite bloggers** — the handles + their **~10 stored sample posts** in `~/Documents/auto-gtm/bloggers.md`.
-2. **The user's own account** — same file, ~10 of their own posts captured alongside.
-3. **Bundled fallback** — a **disclosed downgrade**, used only when the user chooses to skip capture: X uses [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit uses the target sub's own high-upvote posts/comments (see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md)).
+`~/Documents/auto-gtm/bloggers.md`, in two blocks: the user's favorite bloggers, and the user's own account, each with ~10 verbatim posts.
 
-Mimic cadence and structure, **never opinions**.
+## When a block is missing
 
-## Content — WHAT it says (the user's explicit ask this run)
+Ask for the one that's missing, by name. A file that already lists bloggers but has an empty own-account section is still missing a block — a non-empty file is not a complete file.
 
-The user's ask governs content and format. It is a **different axis**, not a rung below the voice sources. On conflict, satisfy the ask's content **inside** the chosen voice's form (e.g. "make it two updates" → two first-person moves in the voice, not two headings).
+Once the user names a handle, fetch ~10 posts via the [data layer](data-layer.md) (`reach fetch-x --query "from:<handle>"`) and store them — see [storage.md](storage.md). Later runs read the file. Refresh only when the user asks.
 
-## Per-thread overlay — replies only
+If the user would rather skip, use the bundled examples — X: [`../../x-shared/references/tone-examples.md`](../../x-shared/references/tone-examples.md); Reddit: the target sub's own high-upvote posts, see [`../../reddit-shared/references/reddit-voice.md`](../../reddit-shared/references/reddit-voice.md) — and say which voice the draft ended up in.
 
-When drafting a **reply**, also mimic that specific thread's top-voted replies' cadence — for this thread, not their opinions:
-- **X:** `reach fetch-x --tweet-url URL` → the post + its top replies.
+## What the samples are for
+
+They calibrate how it sounds. The opinions stay the user's own.
+
+## Replies read the thread too
+
+- **X:** `reach fetch-x --tweet-url URL` → the post and its top replies.
 - **Reddit:** `reach fetch-reddit read <post_id> -s top` → the thread's top comments.
 
-Original posts (X post / Reddit post) have no per-thread overlay.
-
-## Resolve the voice source — before any draft
-
-Every drafting skill must land on this gate before writing a single draft. Capturing the user's voice is the **default path**; the bundled fallback is a **disclosed downgrade**, never an equal option chosen for lower friction.
-
-- **Stored samples exist** (`bloggers.md` non-empty) → read and use them. Do not re-ask, do not re-fetch.
-- **No samples, and the user has never named anyone** → **offer to capture first**: ask for their favorite blogger handles and their own account. Do **not** silently fall back to bundled exemplars.
-- **User explicitly skips or asks for defaults** → use the bundled fallback (the chain above). The draft that round **must state it used the default voice and can be re-drafted once bloggers are captured**.
-
-### First capture & storage — once
-
-On the first capture, fetch **~10 posts each** via the [data layer](data-layer.md) (`reach fetch-x --query "from:<handle>"`) and store the handles + samples to `bloggers.md` — see [storage.md](storage.md). Later runs **read the stored samples** — no re-fetch. **Refresh only when the user asks.**
+Same use: the cadence of that thread, not its opinions. Original posts skip this.
