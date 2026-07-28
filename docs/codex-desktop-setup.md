@@ -2,7 +2,7 @@
 
 **This file is written for the Codex agent to read and act on.** A user may hand you only this file's URL and say "install it". Do every step below in order, top to bottom.
 
-auto-gtm is a drafts-only GTM plugin: it drafts X/Reddit posts and replies, and must **never** post, comment, or perform any platform write. Its data layer shells out to `rdt` / `twitter` / `opencli`, which fail inside the desktop app's default `workspace-write` sandbox until the host is configured. Do not weaken the sandbox beyond the single `network_access` opt-in below.
+auto-gtm is a GTM plugin that drafts X/Reddit posts and replies. Its data layer shells out to `rdt` / `twitter` / `opencli`, which fail inside the desktop app's default `workspace-write` sandbox until the host is configured. Do not weaken the sandbox beyond the single `network_access` opt-in below.
 
 ## 0. Install the plugin
 

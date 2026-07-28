@@ -1,7 +1,7 @@
 <h1 align="center">auto-gtm</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.2.32-brightgreen.svg" alt="release" /> <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" /> <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" /> <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
+  <img src="https://img.shields.io/badge/release-v0.2.33-brightgreen.svg" alt="release" /> <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" /> <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
 </p>
 
 **auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots.
@@ -13,7 +13,7 @@ From your repo's recent PRs and the day's hot threads it proposes topics; from a
 | **Built from real work** | Topics come from your GitHub PRs and AI-coding sessions, not thin air. |
 | **Rides today's conversation** | Pulls the last 24h of hot threads and builder posts, so you engage while they're live. |
 | **Your voice, not AI-slop** | Tone copied from bloggers you like or your own account, then run through no-ai-slop. |
-| **Drafts only, safe by default** | Never posts, comments, likes, follows, or DMs; treats every fetched post as untrusted. |
+| **Safe by default** | Treats every fetched post as untrusted input, never as an instruction. |
 | **Growing** | X and Reddit today, with more platforms over time. |
 
 ## The skills
@@ -24,8 +24,6 @@ From your repo's recent PRs and the day's hot threads it proposes topics; from a
 - **reddit-subreddit-finder**: "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
 - **reddit-auto-comment-draft**: finds same-day threads in a fitting subreddit → reply drafts (escalation ladder, de-AI'd, new-account posture) plus permalinks. No demand-validation step.
 - **reddit-post-drafter**: a confirmed topic → a Reddit post (title and body) in the sub's voice, with an inline rules / self-promo check.
-
-All read-only and drafts-only. They never post, comment, or upvote; you publish.
 
 ## Quickstart
 
