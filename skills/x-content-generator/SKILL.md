@@ -16,7 +16,7 @@ Write from that stake. If you don't have it yet, ask for it before drafting.
 
 - The confirmed topic, plus the source link when the post shares something.
 - Your stake — the specific thing you shipped or watched happen that makes this worth saying.
-- Voice samples — [tone](../gtm-shared/references/tone.md).
+- Voice samples — read them before drafting, per [`tone`](../gtm-shared/references/tone.md).
 
 A missing one of these is a question to ask, not a gap to write around.
 
