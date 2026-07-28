@@ -77,7 +77,7 @@ codex plugin marketplace upgrade tigerless-labs
 codex plugin add auto-gtm@tigerless-labs
 ```
 
-> **On the Codex desktop app**, there is no in-app update button for this plugin — reinstalling from the Plugins UI just replays the stale marketplace snapshot. Run the two commands above in the app's integrated terminal (on Windows pick PowerShell, not WSL — WSL has its own `~/.codex`), or simply ask Codex to run them for you. Restart the app after.
+> **Desktop app**: run these in its integrated terminal (on Windows, PowerShell — not WSL), or just ask Codex to. Restart after.
 
 Direct-clone / symlink installs just need a `git pull` in the cloned repo.
 
