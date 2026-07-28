@@ -11,6 +11,14 @@ Turn a repo + today's internet into a short topic report. **Ask the user nothing
 
 Storage: read/refresh `~/Documents/auto-gtm/` — see [`../gtm-shared/references/storage.md`](../gtm-shared/references/storage.md). The promoted product/repo + highlights come from there (or the trigger).
 
+## Say what's coming — first line, before any fetch
+
+The report takes a while because it reads several sources. Set the expectation instead of asking a question: emit this line **before the first fetch**, then run both parts without stopping.
+
+> Building your topic report — **A**: launch + update topics from your highlights and merged PRs; **B**: builder digest (X, blogs, podcasts) + recent hotspots. Reading several sources, so this takes a moment.
+
+Announce once. Never turn it into a question, a menu, or a chance to pick one part.
+
 ## Part a — product topics (what *you* have to say)
 
 **Ask nothing, run both sources every time, and know the quota before you start: `launch_topics_max` = 2, `update_topics_max` = 2** (each type capped on its own; neither borrows the other's slots). Read **all** the highlights and **all** the recent merged PRs first — judgment needs the whole field — then write only the ones that make the cut. Never draft the full list and trim it afterwards: that yields the first two of nine instead of a topic you actually composed. **What doesn't make the cut doesn't appear** — not as a list, not as a footnote. The user wants a decision, not a menu.
