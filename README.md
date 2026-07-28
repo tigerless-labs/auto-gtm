@@ -18,7 +18,7 @@ From your repo's recent PRs and the day's hot threads it proposes topics; from a
 
 ## The skills
 
-- **topic-scout**: one topic report for any platform, no questions asked. (A) The few product topics most worth posting — a composite launch story built from your highlights, plus what you shipped, from your recent GitHub PRs; it picks rather than listing everything, and what doesn't make the cut isn't shown. (B) Recent hotspots in full — a builder digest (X / blogs / podcasts, summarized per builder and episode) plus other hot topics from your data layer, every item with its source link, never capped.
+- **topic-scout**: one topic report for any platform, no questions asked. (A) The few product topics most worth posting — a composite launch story built from your highlights, plus what you shipped, from your recent GitHub PRs; it picks rather than listing everything, keeping only the highlights a skeptic outside your repo would still grant you, and what doesn't make the cut isn't shown. (B) Recent hotspots in full — a builder digest (X / blogs / podcasts, summarized per builder and episode) plus other hot topics from your data layer, every item with its source link, never capped.
 - **x-content-generator**: a confirmed topic → an X post drafted in your voice (tone from your favorite bloggers or own account), run through no-ai-slop.
 - **x-auto-comment-draft**: finds same-day X posts relevant to your repo → a reply draft per post (tone copied from each post's top replies), with the links.
 - **reddit-subreddit-finder**: "which subreddit should I post this in?" → ranked candidates with multi-axis fit, self-promo safety, and a rules summary.
