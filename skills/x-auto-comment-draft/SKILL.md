@@ -16,8 +16,7 @@ References: [`tone`](../gtm-shared/references/tone.md) · [`data layer`](../gtm-
 ## What you need in front of you
 
 - **The posts** — reuse today's `topic-scout` hotspot report and take the repo-relevant posts from its part B links; run `topic-scout` first if there is no same-day report; and if the report turns up nothing relevant, search directly for today's high-engagement posts on the repo's terms (`reach fetch-x --query "<terms>"`, keyless floor on degrade). Last 24h either way.
-- **Each thread itself** — `reach fetch-x --tweet-url URL` for the post and its top-liked replies. Read them before you draft: they are the cadence of that thread, not its opinions.
-- **Voice samples** — read them before drafting, per [`tone`](../gtm-shared/references/tone.md).
+- **Each thread itself** — `reach fetch-x --tweet-url URL` for the post and its top-liked replies. Those replies are the sample for that post's draft, so keep them in front of you while you write it, not read once for the batch. Take their length and shape: how long a reply runs under this post, whether it breaks into lines, where it starts. Take none of their opinions. When a post has no replies to learn from, say so and keep the draft short.
 - **Your stake** — the specific thing you shipped or watched happen that you'd be replying with. Ask for it if you don't have it.
 
 ## What you're making
