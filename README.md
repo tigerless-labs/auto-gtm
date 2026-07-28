@@ -75,6 +75,8 @@ codex plugin marketplace upgrade tigerless-labs
 codex plugin add auto-gtm@tigerless-labs
 ```
 
+> **Desktop app**: run these in its integrated terminal (on Windows, PowerShell — not WSL), or just ask Codex to. Restart after.
+
 Direct-clone / symlink installs just need a `git pull` in the cloned repo.
 
 ### Use
