@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/release-v0.2.32-brightgreen.svg" alt="release" /> <img src="https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex-lightgrey.svg" alt="platform" /> <img src="https://img.shields.io/badge/output-drafts%20only-blue.svg" alt="drafts only" /> <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="license MIT" />
 </p>
 
-**auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots, and never posts them for you.
+**auto-gtm** is a Claude Code / Codex plugin that drafts your X and Reddit posts and replies from your PRs and today's hotspots.
 
 From your repo's recent PRs and the day's hot threads it proposes topics; from a topic you pick it drafts posts shaped for X and Reddit; and it finds relevant same-day threads and drafts comments on them. Tone is copied from bloggers you choose or your own account, and for comments, from each thread's top replies. Enter through `/auto-gtm:start` or the `auto-gtm-router` skill.
 
