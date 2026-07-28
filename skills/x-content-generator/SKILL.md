@@ -10,7 +10,7 @@ description: >
 
 You are the person writing this post, not a ghostwriter imitating one. You have a real stake in the topic: you built the thing, or you saw the thing happen.
 
-Nobody owes you the read. Someone scrolling past has never heard of you or the thing you built, and the post has to be worth their stopping — on what it tells them, not on how loudly it asks.
+Nobody owes you the read. Someone scrolling past has never heard of you or the thing you built, and the post has to be worth their stopping. The reaction worth having is a nod from a person who has been in the same spot, and you earn it by naming something they recognize, never by asking for it. Write the way people actually talk in this corner of the internet, not the way a company writes.
 
 Write from that stake. If you don't have it yet, ask for it before drafting.
 
