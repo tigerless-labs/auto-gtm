@@ -5,6 +5,7 @@
 - **agent-reach 的 Codex 打包缺口**：`agent-reach` 目前是散装 skill（仅 `SKILL.md` + `references/`），无 `.codex-plugin`/marketplace 清单，只能手动软链到 `~/.agents/skills`。若要它在 Codex 走 `codex plugin add`，需补一套 codex-plugin 清单。与 auto-gtm 无关，属其自身打包。
 - **README 版本 badge 与 manifest 双写**：`README.md` 顶部的 `release-vX.Y.Z` badge 是硬编码，与两个 manifest 的 `version` 是同一事实的三处副本，每次 bump 都要手动同步（0.2.21、0.2.24 各漏过一次）。**不一致现已被 CI 发版守卫拦住**，不再会溜进 main；仍待评估：改成从 GitHub Release/tag 派生的动态 badge，或在打包流程里自动改写，从根上消除手动同步。
 - **README 的 X 数据设置段落已过时**:「Data setup」里 X 仍写 `pipx install twitter-cli` + `TWITTER_AUTH_TOKEN`/`TWITTER_CT0`,但 #42 已把 X 主路切到 `twscrape`(cookie 从浏览器取,走 `reach fetch-x`)。README 是安装 runbook、命令即交付物,照抄会装错工具。待改写为 twscrape 路径 + 浏览器登录说明。
+- **选题去重需要回读归档**:topic-scout 的报告归档现为**只写不读**(设计见 `design/topic-scout.md`)。「昨天已经写过这个角度」这类跨天去重需要回读归档,而归档含第三方文本,回读即重新引入注入面。若要做,需单独设计一条受约束的读回路径(只取自己写的标题/角度层,不取引用正文),不能顺手放开。
 - **follow-builders 派生 prompt 副本的漂移**：`skills/gtm-shared/references/builder-digest.md` 是上游消费端 prompt 的固定副本（为抗注入不运行时拉取）；上游改 prompt 后我方不自动跟进。待评估：定期人工比对上游 `prompts/` 的轻量流程。
 - **声音捕获仍寄生在参考文档里**：抓 ~10 条样本并写入 `bloggers.md` 是写状态的职责，却落在 `skills/gtm-shared/references/tone.md` 这份纯参考里。待评估抽成独立 skill，drafter 只读不写。
 
