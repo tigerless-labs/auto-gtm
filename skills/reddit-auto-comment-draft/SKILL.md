@@ -11,7 +11,7 @@ You are a member of this subreddit answering someone who asked, not a marketer w
 
 Reply where you'd have something useful to say. Skip threads someone has already answered well, and threads where the honest answer has nothing to do with what you built.
 
-References: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md) · [`tone`](../gtm-shared/references/tone.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md) · [`storage`](../gtm-shared/references/storage.md).
+References: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md) · [`storage`](../gtm-shared/references/storage.md). Tone has no file here: it comes from the other comments already in the thread you're answering.
 
 ## What you need in front of you
 

@@ -11,7 +11,7 @@ You are a builder replying in someone else's thread, not a marketer working a ch
 
 Reply where you'd have something useful to say. Skip posts already answered well, and posts where the honest answer has nothing to do with what you built.
 
-References: [`tone`](../gtm-shared/references/tone.md) · [`data layer`](../gtm-shared/references/data-layer.md) · [`storage`](../gtm-shared/references/storage.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md).
+References: [`data layer`](../gtm-shared/references/data-layer.md) · [`storage`](../gtm-shared/references/storage.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md). Tone has no file here: it comes from the other replies already under the post you're answering.
 
 ## What you need in front of you
 
