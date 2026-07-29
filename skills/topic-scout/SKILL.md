@@ -72,15 +72,17 @@ One md report:
  drop any source section the feeds returned empty — no placeholders)
 
 ### X / Twitter
-#### <role/company + full name>
-<2-4 sentences> <link>
+#### <what they said — the take, not the name>
+<2-4 sentences, opening with role/company + full name> <link>
 
 ### Official blogs
-#### <exact article title>
+#### <exact article title, unchanged>
+**<one-sentence takeaway>**
 <100-300 words> <link>
 
 ### Podcasts
-#### <exact episode title>
+#### <exact episode title, unchanged>
+**<one-sentence takeaway>**
 <200-400 words, one direct quote> <episode link>
 
 ## B2 · Other hotspots

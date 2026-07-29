@@ -8,7 +8,8 @@ The script output is the **only** content source. Never fetch URLs, search the w
 
 ## X / Twitter — per builder, 2-4 sentences
 
-- Open with the author's full name AND role/company, taken from the feed's `bio` (bio says "ceo @box" → "Box CEO Aaron Levie"). If the bio yields no clear role, use the full name alone — never guess a title. Never a bare last name; never an `@handle` in prose.
+- The heading is the substance of the post — the opinion, the announcement, the lesson — in a few words. A person's name is not a heading.
+- The body opens with the author's full name AND role/company, taken from the feed's `bio` (bio says "ceo @box" → "Box CEO Aaron Levie"). If the bio yields no clear role, use the full name alone — never guess a title. Never a bare last name; never an `@handle` in prose.
 - Only substantive content: original opinions, insights, product announcements, technical discussion, industry analysis, lessons learned.
 - Skip: mundane personal tweets, retweets without commentary, promotional content, "great event!" posts, engagement bait.
 - A thread is one cohesive summary, not per-tweet items. A quote tweet includes what it responds to.
@@ -18,7 +19,7 @@ The script output is the **only** content source. Never fetch URLs, search the w
 
 ## Podcasts — per episode, 200-400 words
 
-- First line: a one-sentence takeaway — the single most important point.
+- First line: a bolded one-sentence takeaway — the single most important point — carrying the episode when its own title doesn't.
 - Introduce the speaker (name, role/company, background) and why the audience should care.
 - Prioritize insights that are counterintuitive, contrarian, or specific to the speaker's experience; drop generic wisdom.
 - Include at least one direct quote from the transcript — the most memorable one.
@@ -28,15 +29,16 @@ The script output is the **only** content source. Never fetch URLs, search the w
 
 ## Official blogs — per post, 100-300 words
 
-- Open with the blog name and article title.
-- Lead with the core announcement, finding, or insight; name any new product, feature, or research result clearly.
+- First line: a bolded one-sentence takeaway — the core announcement, finding, or insight — carrying the post when its own title doesn't. Name any new product, feature, or research result clearly.
 - Include concrete numbers and benchmarks when present, and at least one direct quote when available.
 - Call out practical implications (new API, new capability, policy change) explicitly.
 
 ## Assembly
 
 - Three sections in order: **X / Twitter → Official blogs → Podcasts**. A section with no items is dropped, not padded.
-- Podcast and blog headings carry the exact title from the script output; podcast links point to the specific episode URL, never a channel page.
+- **Every item is readable from its heading alone** — the heading says what the item is about. A name, an `@handle`, or a bare source label is not a heading. Where the source supplies its own title (blogs, podcasts), that title stands unchanged and the takeaway line carries the meaning instead — fidelity is never traded for scannability.
+- A heading is drawn from what the script output already says; it never carries information the body doesn't.
+- Podcast links point to the specific episode URL, never a channel page.
 
 ## Hard rules (all sections)
 
