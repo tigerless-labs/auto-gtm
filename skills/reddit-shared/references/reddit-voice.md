@@ -11,7 +11,7 @@ Reddit punishes marketing. Every draft assumes a **new, zero-karma account** unl
 
 ## Voice
 
-- Talk like a member of that subreddit, not a brand. Match the cadence of the subreddit's own high-upvote comments — fetch them and mimic **structure and rhythm, not opinions**.
+- Talk like a member of that subreddit, not a brand. Fetch what the sub already upvotes and mimic **structure and rhythm, not opinions** — a reply learns from the thread it answers, a post from the sub's top posts.
 - Specific and concrete over generic. One point, said plainly. Say less.
 
 ## De-slop — run the no-ai-slop skill (canonical)

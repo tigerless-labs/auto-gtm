@@ -11,14 +11,13 @@ You are a member of this subreddit answering someone who asked, not a marketer w
 
 Reply where you'd have something useful to say. Skip threads someone has already answered well, and threads where the honest answer has nothing to do with what you built.
 
-References: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md) · [`tone`](../gtm-shared/references/tone.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md) · [`storage`](../gtm-shared/references/storage.md).
+References: [`rdt-readonly`](../reddit-shared/references/rdt-readonly.md) · [`reddit-voice`](../reddit-shared/references/reddit-voice.md) · [`guardrails`](../reddit-shared/references/guardrails.md) · [`no-ai-slop`](../no-ai-slop/SKILL.md) · [`storage`](../gtm-shared/references/storage.md). Tone has no file here: it comes from the other comments already in the thread you're answering.
 
 ## What you need in front of you
 
 - **The sub** — the one the user named, else the stored choice (`~/Documents/auto-gtm/<product-slug>/subreddits.md`), else run `reddit-subreddit-finder` and take the top safe fit. Summarize its self-promo rules from `sub-info` before drafting (guardrails).
 - **The threads** — terms from the product and its highlights, then `reach fetch-reddit search "<terms>" -r <sub> -s relevance -t day`. Relevance, last 24h.
-- **Each thread itself** — `reach fetch-reddit read <post_id> -s top` for the post and its top comments. Read them before you draft: they are the cadence of the room, not its opinions.
-- **Voice samples** — read them before drafting, per [`tone`](../gtm-shared/references/tone.md) and [`reddit-voice`](../reddit-shared/references/reddit-voice.md).
+- **Each thread itself** — `reach fetch-reddit read <post_id> -s top` for the post and its top comments. Those comments are the sample for that thread's draft, so keep them in front of you while you write it, not read once for the batch. Take their length and shape: how long a reply runs in this room, whether it breaks into points, where it starts. Take none of their opinions. When a thread has no comments to learn from, say so and keep the draft short.
 
 ## What you're making
 
