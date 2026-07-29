@@ -29,7 +29,7 @@ Read every draft against [`no-ai-slop`](../no-ai-slop/SKILL.md) and its [eval](.
 
 ## Output
 
-One row per post: the **post link** and its **reply draft** in a fenced ` ```text ` block (one-click copyable, no markdown inside).
+One row per post: the **post link** and its **reply draft** in a fenced ` ```text ` block (one-click copyable, no markdown inside). Number the rows so the human can point at one.
 
 ## Boundary
 
