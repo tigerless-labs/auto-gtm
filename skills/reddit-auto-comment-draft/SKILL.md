@@ -35,7 +35,7 @@ Read every variant against [`no-ai-slop`](../no-ai-slop/SKILL.md) and its [eval]
 
 ## Output
 
-One entry per thread: the **permalink**, the three variants (restrained → forward) in fenced ` ```text ` blocks, and a **rules summary** (guardrails).
+One entry per thread: the **permalink**, the three variants (restrained → forward) in fenced ` ```text ` blocks, and a **rules summary** (guardrails). Number the threads, and head each block with its variant number and name, so the human can say "thread 2, variant 3" and be understood. A wall of unlabeled blocks is unpickable.
 
 ## Config
 
