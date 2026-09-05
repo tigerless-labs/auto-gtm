@@ -33,7 +33,7 @@ def read_manifest_version(repo_root, relative_path):
     if not path.is_file():
         raise VersionProblem(f"{relative_path} is missing — every host manifest must ship a version")
     try:
-        version = json.loads(path.read_text())["version"]
+        version = json.loads(path.read_text(encoding="utf-8"))["version"]
     except (json.JSONDecodeError, KeyError) as exc:
         raise VersionProblem(f"{relative_path} has no readable `version` field ({exc})") from exc
     if not SEMVER_PATTERN.match(str(version)):
@@ -45,7 +45,7 @@ def read_readme_badge_version(repo_root):
     path = repo_root / README
     if not path.is_file():
         raise VersionProblem(f"{README} is missing")
-    match = BADGE_PATTERN.search(path.read_text())
+    match = BADGE_PATTERN.search(path.read_text(encoding="utf-8"))
     if not match:
         raise VersionProblem(
             f"{README} has no `release-vX.Y.Z` badge — the badge is one of the version's copies "
