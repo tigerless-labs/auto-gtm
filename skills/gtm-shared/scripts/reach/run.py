@@ -54,7 +54,7 @@ DEFAULTS = {
 def _load_config():
     merged = json.loads(json.dumps(DEFAULTS))  # deep copy
     try:
-        data = json.loads(CONFIG_PATH.read_text())
+        data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     except (FileNotFoundError, ValueError, OSError):
         return merged
     for name, patch in (data.get("platforms") or {}).items():
